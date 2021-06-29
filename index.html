@@ -14,160 +14,191 @@
     <table id="tableid" class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
-                <th colspan="6" id="name_calendar">Meeting Room Calendar</th>
+                <th colspan="11" id="name_calendar">Meeting Room Calendar</th>
             </tr>
             <tr>
-                <th colspan="6" id="datepicker"> 
+                <th colspan="11"> 
                   <p id="day"></p>
-
+                  <input type="date" id="datepicker" oninput="UpdateDay()">
                 </th>
             </tr>
-          <tr id="title">
-            <th scope="col"></th>
-            <th scope="col">Strongbow</th>
-            <th scope="col">Budweiser</th>
-            <th scope="col">Saigon</th>
-            <th scope="col">Tiger</th>
-            <th scope="col">Heineken</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">8.00 AM</th>
-            <td>Maintenance</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">9.00 AM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">10.00 AM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">11.00 AM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">12.00 AM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">1.00 PM</th>
-            <td>Lunch Break</td>
-            <td>Lunch Break</td>
-            <td>Lunch Break</td>
-            <td>Lunch Break</td>
-            <td>Lunch Break</td>
-          </tr>
-          <tr>
-            <th scope="row">2.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">3.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">4.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">5.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">6.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">7.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">8.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">9.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">10.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">11.00 PM</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+            <tr id="title">
+              <th scope="col"></th>
+              <th scope="col">Strongbow</th>
+              <th scope="col">Budweiser</th>
+              <th scope="col">Saigon</th>
+              <th scope="col">Tiger</th>
+              <th scope="col">Heineken</th>
+              <th scope="col">Think tank 1</th>
+              <th scope="col">Think tank 2</th>
+              <th scope="col">Think tank 3</th>
+              <th scope="col">Think tank 4</th>
+              <th scope="col">Think tank 5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">8.00 AM</th>
+              <td>Maintenance</td>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <th scope="row">9.00 AM</th>
+              <td>5</td>
+              <td>6</td>
+              <td>7</td>
+              <td>8</td>
+              <td>9</td>
+              <td>5</td>
+              <td>6</td>
+              <td>7</td>
+              <td>8</td>
+              <td>9</td>
+              
+            </tr>
+            <tr>
+              <th scope="row">10.00 AM</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">11.00 AM</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">11.30 AM - 1.30 PM</th>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+              <td>Lunch Break</td>
+            
+            </tr>
+            <tr>
+              <th scope="row">1.30 PM</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">2.00 PM</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">3.00 PM</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">4.00 PM</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">5.00 PM</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">6.00 PM</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
         </tbody>
       </table>
 </div>
 
-<form class="col-xs-6 d-flex justify-content-center bg-white p-3">
+
+<!-- Title Form -->
+<form class="col-xs-6 d-flex justify-content-center bg-white p-3" id="title-form">
   <div class="form-group">
-    <div class="col-xs-6">
-      <input type="text" class="form-control" aria-describedby="helpId" placeholder="Add title" value="">
+    <!-- <div class="form-header d-flex justify-content-between align-items-center">
+      <h5 class="form-title">Input Title</h5>
+      <div>
+        <span>&times;</span>
+      </div>
+    </div> -->
+    <div class="col-xs-6 form-component">
+      <input type="text" class="form-control" aria-describedby="helpId" placeholder="Add title" value="" id="title-input">
+      <span class="focus-border"></span>
     </div>
     <label>
       <i class="fas fa-calendar-alt"></i>

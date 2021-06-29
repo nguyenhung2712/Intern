@@ -1,23 +1,105 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
-/* function RealTime()
-{
-    const x = new Date();
-    const days = ["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ Nhật"]
-    const months = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
-    document.getElementById('day').innerHTML = days[x.getDay()] +" ,"+" Ngày " +x.getDate()+ " "+ months[x.getMonth()] +" " + " năm "+ x.getFullYear();
-}
-RealTime(); */
+const cells = $$('td');
+const inputTitleForm = $('.form-control');
+const dayElement = $('#day');
+const dataPicker = $('#datepicker');
+const bodyRect = document.body.getBoundingClientRect();
+const titleForm = $('#title-form');
+const autoInputDate = $('#title-form span');
+const titleInput = $('#title-input');
+const saveBtn = $('.btn-save');
 
-$('.form-control').value = 'Add Title';
+let dataIn = [
+    {
+        id: '01',
+        name: 'Board Meeting',
+        time: '9:00 AM',
+        location: 'Office'
+    },
+    {
+        id: '02',
+        name: 'Sprint Planning with Team members',
+        time: '9:00 AM',
+        location: 'Office'
+    },
+    {
+        id: '03',
+        name: 'Board Meeting',
+        time: '12:00 AM',
+        location: 'Office'
+    },
+    {
+        id: '04',
+        name: 'Board Meeting',
+        time: '9:00 AM',
+        location: 'Office'
+    },
+]
 
-var cells = document.getElementsByTagName('td');
+let calenderApp = {
+    handleDefault: function() {
+        inputTitleForm.value = 'Add Title';
+        
+        dayElement.innerHTML = new Date().toDateString();
+        dataPicker.valueAsDate = new Date();
+    },
+    handleUpdateDay: function() {
+        let changeday = datePicker.value;
+        dayElement.innerHTML = new Date(changeday).toDateString();
+    },
+    handleEvent: function() {
+        cells.forEach((cell, i) => {
+            if (!(cell.textContent === 'Lunch Break')) {
+                cell.onclick = () => {
+                    
+                    titleForm.setAttribute('style', 'display: block !important')
+                    const cellRec =  cell.getBoundingClientRect()
+                    let y = Math.round(cellRec.top - bodyRect.top);
+                    let x = Math.round(cellRec.left - bodyRect.left);
+                    titleForm.style.top = y + 'px';
+                    const lastNum = Number(i.toString().split('').splice(1, 2).join(''));
+                    if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
+                        titleForm.style.left = (x - cell.offsetWidth*1.8) + 'px';
+                    } else if (i === 9 || i === 8) {
+                        titleForm.style.left = (x - cell.offsetWidth*1.8) + 'px';
+                    } else {
+                        titleForm.style.left = x  + 'px';
+                    }
+                    if (i >= 90) {
+                        titleForm.style.top = (y - cell.offsetHeight*1.8) + 'px';
+                    }
 
-for(var i = 0; i <= cells.length; i++){
-    if(cells[i]) { 
-        cells[i].addEventListener('click', () => {
-            console.log(cells[i].getBoundingClientRect().width)
-        });
+                    if (cell.textContent) {
+                        inputTitleForm.value = cell.textContent;
+                    }
+
+                    saveBtn.onclick = (e) => {
+                        e.preventDefault();
+        
+                        titleForm.setAttribute('style', 'display: none')
+                        cell.textContent = titleInput.value;
+                        inputTitleForm.value = 'Add Title';
+                    }
+                    this.setConfig('dataText', cell.textContent);
+                    this.setConfig('index', i)
+                };
+            }
+        })
+    },
+    start: function() {
+        this.handleDefault();
+        this.handleEvent();
+        this.handleUpdateDay();
+        this.loadConfig();
     }
-}
+};
+
+calenderApp.start();
+
+
+
+
+
+
