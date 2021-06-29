@@ -13,8 +13,11 @@ RealTime(); */
 $('.form-control').value = 'Add Title';
 
 var cells = document.getElementsByTagName('td');
+
 for(var i = 0; i <= cells.length; i++){
-    if(cells[i]) {
-        console.log(cells[i].offsetHeight);
+    if(cells[i]) { 
+        cells[i].addEventListener('click', () => {
+            console.log(cells[i].getBoundingClientRect().width)
+        });
     }
 }
