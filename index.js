@@ -1,6 +1,6 @@
 
 document.getElementById('day').innerHTML = new Date().toDateString();
-document.getElementById('datepicker').value = new Date("yyyy-MM-dd");
+document.getElementById('datepicker').valueAsDate = new Date();
 
 var cells = document.getElementsByTagName('td');
 for(var i = 0; i <= cells.length; i++){
