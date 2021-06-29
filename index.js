@@ -6,7 +6,7 @@ var cells = document.getElementsByTagName('td');
 for(var i = 0; i <= cells.length; i++){
     if(cells[i])
    { cells[i].addEventListener('click', function(){
-        alert(this.textContent);
+        this.textContent ='test';
     });}
 }
 
