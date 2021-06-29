@@ -11,3 +11,7 @@ tr#title th{
 tr td{
     background-color: #f6fff3 !important;
 }
+#tableid tbody{
+  
+  max-height: 300px !important;
+}
