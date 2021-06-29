@@ -11,3 +11,8 @@ tr#title th{
 tr td{
     background-color: #f6fff3 !important;
 }
+
+.form-control:focus {
+  box-shadow: none;
+  border: 1px solid rgb(0,120,214);
+}
