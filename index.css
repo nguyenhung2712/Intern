@@ -11,3 +11,53 @@ tr#title th{
 tr td{
     background-color: #f6fff3 !important;
 }
+.form-group {
+  width: 100%;
+}
+
+.form-component {
+  position: relative;
+}
+
+.form-control {
+  border-radius: 0;
+  border: 0; 
+  padding: 7px 0; 
+  border-bottom: 1px solid #ccc;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control ~ .focus-border {
+  position: absolute; 
+  bottom: 0; 
+  left: 50%; 
+  width: 0; 
+  height: 2px; 
+  background-color: #3399FF; 
+  transition: 0.4s;
+}
+
+.form-control:focus ~ .focus-border {
+  width: 100%; 
+  transition: 0.4s; 
+  left: 0;
+}
+
+#title-form {
+  display: none !important;
+  position: absolute;
+  width: 25%;
+  border-radius: 4px;
+  box-shadow: 0 0 25px rgb(138, 133, 133);
+}
+
+.form-header div:hover {
+  background-color: rgb(209, 91, 91);
+}
+
+#title-form span {
+  font-size: 14px;
+}
