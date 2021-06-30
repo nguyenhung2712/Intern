@@ -14,6 +14,7 @@ function UpdateDay()
 {
    
     let changeday = document.getElementById('datepicker').value;
+    
     document.getElementById('day').innerHTML = new Date(changeday).toDateString();
     
 }
