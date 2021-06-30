@@ -10,6 +10,8 @@ const titleForm = $('#title-form');
 const autoInputDate = $('#title-form span');
 const titleInput = $('#title-input');
 const saveBtn = $('.btn-save');
+const closeBtn = $('.btn-close');
+var dateRow = $('#date_cells');
 
 let dataIn = [
     {
@@ -41,7 +43,6 @@ let dataIn = [
 let calenderApp = {
     handleDefault: function() {
         inputTitleForm.value = 'Add Title';
-        
         dayElement.innerHTML = new Date().toDateString();
         datePicker.valueAsDate = new Date();
     },
@@ -71,9 +72,10 @@ let calenderApp = {
                     } else {
                         titleForm.style.top = y + 'px';
                     }
-
+                  
                     if (cell.textContent) {
                         inputTitleForm.value = cell.textContent;
+                   
                     }
 
                     saveBtn.onclick = (e) => {
@@ -83,8 +85,10 @@ let calenderApp = {
                         cell.textContent = titleInput.value;
                         inputTitleForm.value = 'Add Title';
                     }
-                    this.setConfig('dataText', cell.textContent);
-                    this.setConfig('index', i)
+                    closeBtn.onclick= ()=>{
+                        titleForm.setAttribute('style', 'display: none !important')
+                    }
+                   
                 };
             }
         })
@@ -93,7 +97,7 @@ let calenderApp = {
         this.handleDefault();
         this.handleEvent();
         this.handleUpdateDay();
-        this.loadConfig();
+       
     }
 };
 

@@ -61,3 +61,6 @@ tr td{
 #title-form span {
   font-size: 14px;
 }
+.close-btn{
+  text-align: right;
+}
