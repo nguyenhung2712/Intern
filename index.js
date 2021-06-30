@@ -58,7 +58,6 @@ let calenderApp = {
                     const cellRec =  cell.getBoundingClientRect()
                     let y = Math.round(cellRec.top - bodyRect.top);
                     let x = Math.round(cellRec.left - bodyRect.left);
-                    titleForm.style.top = y + 'px';
                     const lastNum = Number(i.toString().split('').splice(1, 2).join(''));
                     if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
                         titleForm.style.left = (x - cell.offsetWidth*1.8) + 'px';
@@ -69,6 +68,8 @@ let calenderApp = {
                     }
                     if (i >= 90) {
                         titleForm.style.top = (y - cell.offsetHeight*1.8) + 'px';
+                    } else {
+                        titleForm.style.top = y + 'px';
                     }
 
                     if (cell.textContent) {
