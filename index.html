@@ -20,14 +20,13 @@
             <tr>
                 <th colspan="11"> 
                   <p id="day"></p>
-                 
-                  <input type="date" id="datepicker" oninput="UpdateDay()">
-                  <button type="button" class="btn button-date" onclick="PreviousDay()"><i class="fas fa-chevron-left"></i></button>
-                  <button type="button" class="btn button-date" onclick="NextDay()"><i class="fas fa-chevron-right"></i></button>
+                  <input type="date" id="datepicker">
+                  <button type="button" class="btn button-date" id="previous-day"><i class="fas fa-chevron-left"></i></button>
+                  <button type="button" class="btn button-date" id="next-day"><i class="fas fa-chevron-right"></i></button>
                 </th>
             </tr>
             <tr id="title">
-              <th scope="col"></th>
+              <!-- <th scope="col"></th>
               <th scope="col">Strongbow</th>
               <th scope="col">Budweiser</th>
               <th scope="col">Saigon</th>
@@ -37,7 +36,7 @@
               <th scope="col">Think tank 2</th>
               <th scope="col">Think tank 3</th>
               <th scope="col">Think tank 4</th>
-              <th scope="col">Think tank 5</th>
+              <th scope="col">Think tank 5</th> -->
             </tr>
           </thead>
           <tbody>
@@ -222,6 +221,7 @@
 
 <div id="modal-event-input">
   <div class="modal-wrapper">
+    <button type="button" class="button-close btn btn-close modal_buttonclose" ></button>
     <h5 class="event-heading">New Event</h5>
     <form id="event-input-form">
       <div class="col-lg-12 col-md-12 col-sm-12 d-flex fix-margin">
@@ -243,15 +243,35 @@
           <span class="focus-border"></span>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-left: 5px">
-          <input type="text" class="form-control title-input" value="" id="to">
+          
           <label for="to" class="label-form">To</label>
           <span class="focus-border"></span>
         </div>
       </div>
+
+
+      <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 m-0 w-100">
+        <label for="comments" class="label-form">Room Type</label>
+        <input type="text" class="form-control title-input" value="" id="to">
+        <select name="" id="singlebox" multiple>
+          <option value="1" data-subtitle="room1" >Room1</option>
+          <option value="1" data-subtitle="room1" >Room1</option>
+        </select>
+        
+        <span class="focus-border"></span>
+      </div>
+
+
+      
       <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 m-0 w-100">
         <textarea id="comments" cols="100" rows="10" class="form-control title-input"></textarea>
         <label for="comments" class="label-form">Comments</label>
         <span class="focus-border"></span>
+      </div>
+      
+      <div class="d-flex justify-content-end save_cls">
+        <button type="button" class="btn"  >SAVE</button>
+        <button type="button" class="btn modal_buttonclose">CLOSE</button>
       </div>
     </form>
   </div>
