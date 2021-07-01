@@ -253,13 +253,13 @@ let calenderApp = {
                         const firstNum = Number(i.toString().split('').splice(1, 2).join(''));
                         roomName.innerText = this.roomDetails[firstNum + 1].name;
 
-                        if(cell.textContent && (!isNaN(this.roomDetails[firstNum + 1].capacity))) {
+                        /* if(cell.textContent && (!isNaN(this.roomDetails[firstNum + 1].capacity))) {
                             this.roomDetails[firstNum + 1].capacity -= 1;
                             this.render();
-                        }
+                        } */
 
                     } else if (i < 10) {
-                        roomName.innerText = this.roomDetails[i + 1].textContent;
+                        roomName.innerText = this.roomDetails[i + 1].name;
                     }
                     
                     /* Date title input default */
