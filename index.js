@@ -19,7 +19,9 @@ const roomName = $('#room-name');
 const roomHeadingTitle = $('#title');
 const previousDay = $('#previous-day');
 const nextDay = $('#next-day');
-
+const modal_closeBtn = $$('.modal_buttonclose')
+const modal_input = $('#modal-event-input')
+const detail = $('.btn-detail')
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
 let dataIn = [
@@ -262,7 +264,6 @@ let calenderApp = {
                     
                     /* Date title input default */
                     this.handleDatePickerSetting();
-
                     
                 };
             }
@@ -283,6 +284,22 @@ let calenderApp = {
         this.render();  
     }
 };
- 
+
+
+
+// modal_closeBtn.onclick() = () =>{
+//     alert('hello');
+//     modal_input.setAttribute('class', 'none'); 
+// }
+Array.from(modal_closeBtn).map((closeBtn) => {
+    closeBtn.onclick = () =>{
+        modal_input.setAttribute('style','display: none !important');
+    }
+})
+detail.onclick = (e) => {
+    e.preventDefault()
+    modal_input.setAttribute('style', 'display: flex !important');
+   
+}
 
 calenderApp.start()
