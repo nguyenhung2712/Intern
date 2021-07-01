@@ -3,6 +3,9 @@
     text-transform: uppercase;
     font-size: 1.2rem;
 }
+.button-date{
+  padding: 1px 10px 5px 10px !important;
+}
 tr#title th{
   background-color: #d3d3d3 !important;
   color: #6d5f56;
@@ -10,6 +13,13 @@ tr#title th{
 }
 tr td{
     background-color: #f6fff3 !important;
+}
+#tableid tbody{
+  max-height: 300px !important;
+}
+
+.button-date{
+  padding: 1px 5px 5px 5px !important;
 }
 .form-group {
   width: 100%;

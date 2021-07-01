@@ -1,6 +1,31 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+
+// var today = new Date().toDateString()
+// today.slice(0,3)
+// lengthToday = today.length
+function addOrSubtractDays(dateObj, numDays) {
+   dateObj.setDate(dateObj.getDate() + numDays);
+   return dateObj;
+}
+
+//The next day button
+function NextDay() {
+    let inputValue = document.getElementById('datepicker').valueAsDate;
+    addOrSubtractDays(inputValue,1);
+    document.getElementById('datepicker').valueAsDate = inputValue; 
+    document.getElementById('day').innerHTML = inputValue.toDateString(); 
+}
+
+//The previous day button
+function PreviousDay() {
+    let inputValue = document.getElementById('datepicker').valueAsDate;
+    addOrSubtractDays(inputValue,-1);
+    document.getElementById('datepicker').valueAsDate = inputValue; 
+    document.getElementById('day').innerHTML = inputValue.toDateString();
+}
+
 const cells = $$('td');
 const inputTitleForm = $('.form-control');
 const dayElement = $('#day');
@@ -46,7 +71,6 @@ let dataIn = [
         location: 'Office'
     },
 ]
-
 let calenderApp = {
     /* handleDisplay: function(targetElement, arr, start, index = 0) {
         if (i >= 10 && i < 100) {
@@ -234,7 +258,7 @@ let calenderApp = {
                         const firstNum = Number(i.toString().split('').splice(1, 2).join(''));
                         roomName.innerText = this.roomDetails[firstNum + 1].name;
                     } else if (i < 10) {
-                        roomName.innerText = roomTypes[i + 1].textContent;
+                        roomName.innerText = this.roomDetails[i + 1].textContent;
                     }
                     
                     /* Date title input default */
@@ -257,5 +281,6 @@ let calenderApp = {
         this.render();  
     }
 };
+ 
 
-calenderApp.start();
+calenderApp.start()
