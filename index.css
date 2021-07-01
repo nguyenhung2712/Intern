@@ -192,3 +192,17 @@ tr td{
 .fix-margin {
   margin-top: 16px;
 }
+
+.room-title span {
+  color: #000;
+  font-size: 14px;
+}
+
+.capacity-room {
+ font-size: 12px;
+  color: #fff;
+ 
+  float: right;
+  background-color: rgb(133,128,128);
+  padding: 0 4px;
+}
