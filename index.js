@@ -151,7 +151,7 @@ let calenderApp = {
         /* Day header default */
         dayElement.innerHTML = new Date().toDateString();
         datePicker.valueAsDate = new Date();
-
+        
     },
     handleUpdateDay: function() {
         let changeday = datePicker.value;
