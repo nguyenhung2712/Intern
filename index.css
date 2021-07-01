@@ -167,3 +167,8 @@ tr td{
 .fix-margin {
   margin-top: 16px;
 }
+#datepicker{
+  width: 50px;
+  border: none;
+  outline: none;
+}
