@@ -3,6 +3,9 @@
     text-transform: uppercase;
     font-size: 1.2rem;
 }
+.button-date{
+  padding: 1px 10px 5px 10px !important;
+}
 tr#title th{
   background-color: #d3d3d3 !important;
   color: #6d5f56;
