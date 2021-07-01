@@ -25,7 +25,7 @@ function PreviousDay() {
     document.getElementById('datepicker').valueAsDate = inputValue; 
     document.getElementById('day').innerHTML = inputValue.toDateString();
 }
-
+const detail = $('.btn-detail')
 const cells = $$('td');
 const inputTitleForm = $('.form-control');
 const dayElement = $('#day');
@@ -41,7 +41,8 @@ const dateRow = $('#date_cells');
 const timeRoom = $('#time-room');
 const dateDefaultSetting = $('#date-setting');
 const roomName = $('#room-name');
-
+const modal_input = $('#modal-event-input');
+const modal_closeBtn = $$('.modal_buttonclose');
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
 let roomDetails = {
@@ -235,6 +236,7 @@ let calenderApp = {
                     
                     /* Date title input default */
                     this.handleDatePickerSetting();
+                    
                 };
             }
         })
@@ -247,6 +249,22 @@ let calenderApp = {
         this.handleUpdateDay();
     }
 };
- 
+
+
+
+// modal_closeBtn.onclick() = () =>{
+//     alert('hello');
+//     modal_input.setAttribute('class', 'none'); 
+// }
+Array.from(modal_closeBtn).map((closeBtn) => {
+    closeBtn.onclick = () =>{
+        modal_input.setAttribute('style','display: none !important');
+    }
+})
+detail.onclick = (e) => {
+    modal_input.setAttribute('style', 'display: flex !important');
+
+    e.preventDefault()
+}
 
 calenderApp.start()

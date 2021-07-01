@@ -132,11 +132,26 @@ tr td{
   width: 10px;
 } */
 
+
+/* //form new event */
+
+.button-close{
+  position: absolute;
+  top: 15px;
+  right:  15px;
+  padding-bottom: 0px !important;
+}
+.button-close p{
+  font-size: 15px;
+}
 #modal-event-input {
-  display: flex;
+  display:none ;
   justify-content: center;
   align-items: center;
-  display: none;
+}
+
+.modal-wrapper{
+  position: relative;
 }
 #modal-event-input::after {
   content: "";
@@ -145,18 +160,28 @@ tr td{
   height: 100vh;
   top: 0;
   left: 0;
-  background-color: rgb(147,147,147, .2);
+  background-color: rgba(143, 143, 143, 0.5);
 }
 
 .modal-wrapper {
   width: 30%;
   border: 1px solid #ccc;
-  padding: 20px 40px;
+  padding: 20px 30px;
   border-radius: 5px;
   background-color: #fff;
   z-index: 1;
   position: absolute;
   top: 18%;
+}
+.save_cls {
+  margin-top: 10px;
+  margin-bottom: -15px;
+}
+#modal-event-input button:hover{
+  background-color: rgb(209, 209, 209);
+}
+.save_cls>button:first-child{
+  color: rgb(227, 22, 91);
 }
 
 .event-heading {
