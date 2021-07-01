@@ -1,31 +1,6 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
-
-// var today = new Date().toDateString()
-// today.slice(0,3)
-// lengthToday = today.length
-function addOrSubtractDays(dateObj, numDays) {
-   dateObj.setDate(dateObj.getDate() + numDays);
-   return dateObj;
-}
-
-//The next day button
-function NextDay() {
-    let inputValue = document.getElementById('datepicker').valueAsDate;
-    addOrSubtractDays(inputValue,1);
-    document.getElementById('datepicker').valueAsDate = inputValue; 
-    document.getElementById('day').innerHTML = inputValue.toDateString(); 
-}
-
-//The previous day button
-function PreviousDay() {
-    let inputValue = document.getElementById('datepicker').valueAsDate;
-    addOrSubtractDays(inputValue,-1);
-    document.getElementById('datepicker').valueAsDate = inputValue; 
-    document.getElementById('day').innerHTML = inputValue.toDateString();
-}
-
 const cells = $$('td');
 const inputTitleForm = $('.form-control');
 const dayElement = $('#day');
@@ -42,6 +17,8 @@ const timeRoom = $('#time-room');
 const dateDefaultSetting = $('#date-setting');
 const roomName = $('#room-name');
 const roomHeadingTitle = $('#title');
+const previousDay = $('#previous-day');
+const nextDay = $('#next-day');
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
@@ -172,6 +149,22 @@ let calenderApp = {
             `
         }).join('');
     },
+    toPreviousDay: function() {
+        let inputValue = datePicker.valueAsDate;
+        this.addOrSubtractDays(inputValue,-1);
+        datePicker.valueAsDate = inputValue; 
+        dayElement.innerHTML = inputValue.toDateString();
+    },
+    toNextDay: function() {
+        let inputValue = datePicker.valueAsDate;
+        this.addOrSubtractDays(inputValue,1);
+        datePicker.valueAsDate = inputValue; 
+        dayElement.innerHTML = inputValue.toDateString(); 
+    },
+    addOrSubtractDays: function(dateObj, numDays) {
+        dateObj.setDate(dateObj.getDate() + numDays);
+        return dateObj;
+    },
     handleDefault: function() {
         /* Title default */
         inputTitleForm.value = 'Add Title';
@@ -257,6 +250,12 @@ let calenderApp = {
                     } else if (i >= 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 2).join(''));
                         roomName.innerText = this.roomDetails[firstNum + 1].name;
+
+                        if(cell.textContent && (!isNaN(this.roomDetails[firstNum + 1].capacity))) {
+                            this.roomDetails[firstNum + 1].capacity -= 1;
+                            this.render();
+                        }
+
                     } else if (i < 10) {
                         roomName.innerText = this.roomDetails[i + 1].textContent;
                     }
@@ -268,6 +267,9 @@ let calenderApp = {
                 };
             }
         })
+
+        previousDay.onclick = () => this.toPreviousDay();
+        nextDay.onclick = () => this.toNextDay();
 
         datePicker.onchange = () => {
             this.handleDatePickerSetting();
