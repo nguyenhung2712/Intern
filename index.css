@@ -144,6 +144,7 @@ tr td{
   font-size: 15px;
 }
 #modal-event-input {
+  
   display:none ;
   justify-content: center;
   align-items: center;
@@ -151,6 +152,7 @@ tr td{
 
 .modal-wrapper{
   position: relative;
+  margin-top: -30px ;
 }
 #modal-event-input::after {
   content: "";
