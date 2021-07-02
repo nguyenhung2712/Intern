@@ -183,11 +183,18 @@ let calenderApp = {
         const timeInDay = Array.from(tableHeadItem).filter(time => time.scope === "row");
         if (i >= 10 && i < 100) {
             const firstNum = Number(i.toString().split('').splice(0, 1).join(''));
+            if (timeInDay[firstNum + 1].textContent === '11.30 AM - 1.30 PM') {
+                timeRoom.textContent = timeInDay[firstNum].textContent + ' - 11.30 AM';
+            } else {
+                timeRoom.textContent = timeInDay[firstNum].textContent + ' - ' + timeInDay[firstNum + 1].textContent;
+            }
             timeOfData = timeInDay[firstNum].textContent;
         } else if (i >= 100) {
             const firstNum = Number(i.toString().split('').splice(0, 2).join(''));
+            timeRoom.textContent = timeInDay[firstNum].textContent + ' - 7.00 PM';
             timeOfData = timeInDay[firstNum].textContent;
         } else if (i < 10) {
+            timeRoom.textContent = timeInDay[0].textContent + ' - ' + timeInDay[1].textContent;
             timeOfData = timeInDay[0].textContent;
         }
         return timeOfData;
