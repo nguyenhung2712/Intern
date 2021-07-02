@@ -22,46 +22,10 @@ const nextDay = $('#next-day');
 const modal_closeBtn = $$('.modal_buttonclose')
 const modal_input = $('#modal-event-input')
 const detail = $('.btn-detail')
+
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
-let dataIn = [
-    {
-        id: '01',
-        name: 'Board Meeting',
-        time: '9:00 AM',
-        location: 'Office'
-    },
-    {
-        id: '02',
-        name: 'Sprint Planning with Team members',
-        time: '9:00 AM',
-        location: 'Office'
-    },
-    {
-        id: '03',
-        name: 'Board Meeting',
-        time: '12:00 AM',
-        location: 'Office'
-    },
-    {
-        id: '04',
-        name: 'Board Meeting',
-        time: '9:00 AM',
-        location: 'Office'
-    },
-]
 let calenderApp = {
-    /* handleDisplay: function(targetElement, arr, start, index = 0) {
-        if (i >= 10 && i < 100) {
-            const firstNum = Number(i.toString().split('').splice(start, 1).join(''));
-            targetElement.innerText = arr[firstNum].textContent;
-        } else if (i >= 100) {
-            const firstNum = Number(i.toString().split('').splice(start, 2).join(''));
-            targetElement.innerText = arr[firstNum].textContent;
-        } else if (i < 10) {
-            targetElement.innerText = arr[index].textContent;
-        }
-    }, */
     roomDetails: [
         {
             name: '',
@@ -75,35 +39,40 @@ let calenderApp = {
             location: '10th Floor, VCN ...',
             capacity: 8,
             description: 'Room',
-            email: 'meetingroom2@infodation.vn'
+            email: 'meetingroom2@infodation.vn',
+            color: 'rgb(200, 33, 43)'
         },
         {
             name: 'Heineken',
             location: '10th Floor, VCN ...',
             capacity: 8,
             description: 'Room',
-            email: 'meetingroom5@infodation.vn'
+            email: 'meetingroom5@infodation.vn',
+            color: 'rgb(34, 67, 29)'
         },
         {
             name: 'Saigon',
             location: '10th Floor, VCN ...',
             capacity: 12,
             description: 'Room',
-            email: 'meetingroom3@infodation.vn'
+            email: 'meetingroom3@infodation.vn',
+            color: 'rgb(254, 161, 0)'
         },
         {
             name: 'Strongbow',
             location: '10th Floor, VCN ...',
             capacity: 8,
             description: 'Room',
-            email: 'meetingroom1@infodation.vn'
+            email: 'meetingroom1@infodation.vn',
+            color: 'rgb(78, 14, 28)'
         },
         {
             name: 'Tiger',
             location: '10th Floor, VCN ...',
             capacity: 8,
             description: 'Room',
-            email: 'meetingroom4@infodation.vn'
+            email: 'meetingroom4@infodation.vn',
+            color: 'rgb(30, 55, 132)'
         },
         {
             name: 'Think Tank 1',
@@ -141,6 +110,27 @@ let calenderApp = {
             email: 'thinktankroom5@infodation.vn'
         },
     ],
+    dataIn: JSON.parse(localStorage.getItem('dataIn')) || [],
+    setDataIn: function() {
+        localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
+    },
+    loadDataIn: function() {
+        cells.forEach((cell, i) => {
+            this.dataIn.map(obj => {
+                if (obj.index === i && obj.datePickerVal === datePicker.value) {
+                    cell.textContent = obj.name;
+                }
+            })
+        })
+    },
+    createNewData: function(name, time, index, datePickerVal) {
+        let data = {};
+        data.name = name;
+        data.time = time;
+        data.index = index;
+        data.datePickerVal = datePickerVal;
+        return data;
+    },
     render: function() {    
         roomHeadingTitle.innerHTML = this.roomDetails.map(room => {
             return `
@@ -151,17 +141,29 @@ let calenderApp = {
             `
         }).join('');
     },
+    cleanCell: function() {
+        cells.forEach(cell => {
+            if (cell.textContent !== 'Lunch Break') {
+                cell.textContent = '';
+            } 
+        })
+        this.loadDataIn();
+    },
     toPreviousDay: function() {
         let inputValue = datePicker.valueAsDate;
         this.addOrSubtractDays(inputValue,-1);
         datePicker.valueAsDate = inputValue; 
         dayElement.innerHTML = inputValue.toDateString();
+
+        this.cleanCell();
     },
     toNextDay: function() {
         let inputValue = datePicker.valueAsDate;
         this.addOrSubtractDays(inputValue,1);
         datePicker.valueAsDate = inputValue; 
-        dayElement.innerHTML = inputValue.toDateString(); 
+        dayElement.innerHTML = inputValue.toDateString();
+
+        this.cleanCell();
     },
     addOrSubtractDays: function(dateObj, numDays) {
         dateObj.setDate(dateObj.getDate() + numDays);
@@ -174,7 +176,21 @@ let calenderApp = {
         /* Day header default */
         dayElement.innerHTML = new Date().toDateString();
         datePicker.valueAsDate = new Date();
-        
+
+    },
+    handleUpdateTimeOfInput: function(i) {
+        let timeOfData;
+        const timeInDay = Array.from(tableHeadItem).filter(time => time.scope === "row");
+        if (i >= 10 && i < 100) {
+            const firstNum = Number(i.toString().split('').splice(0, 1).join(''));
+            timeOfData = timeInDay[firstNum].textContent;
+        } else if (i >= 100) {
+            const firstNum = Number(i.toString().split('').splice(0, 2).join(''));
+            timeOfData = timeInDay[firstNum].textContent;
+        } else if (i < 10) {
+            timeOfData = timeInDay[0].textContent;
+        }
+        return timeOfData;
     },
     handleUpdateDay: function() {
         let changeday = datePicker.value;
@@ -183,6 +199,13 @@ let calenderApp = {
     handleDatePickerSetting: function() {
         let datePickerArrValue =  datePicker.value.split('-');
         dateDefaultSetting.innerHTML = months[Number(datePickerArrValue[1] - 1)] + ' ' + datePickerArrValue[2] + ', ' + datePickerArrValue[0];
+    },
+    setToLocalStorage: function(cell, i) {
+        let timeOfData = this.handleUpdateTimeOfInput(i);
+        let objData = this.createNewData(cell.textContent, timeOfData, i, datePicker.value);
+        this.dataIn.push(objData);
+
+        this.setDataIn();
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -214,14 +237,7 @@ let calenderApp = {
                         inputTitleForm.value = 'Add Title';
                     }
 
-                    /* Save data when click savebtn */
-                    saveBtn.onclick = (e) => {
-                        e.preventDefault();
-                        
-                        titleForm.setAttribute('style', 'display: none')
-                        cell.textContent = titleInput.value;
-                        inputTitleForm.value = 'Add Title';
-                    }
+                    
 
                     /* Close form when click closebtn */
                     closeBtn.onclick= () => {
@@ -229,45 +245,51 @@ let calenderApp = {
                         inputTitleForm.value = 'Add Title';
                     }
 
+                    /* Save data when click savebtn */ 
+                    saveBtn.onclick = (e) => {
+                        e.preventDefault();
+                        
+                        titleForm.setAttribute('style', 'display: none')
+                        cell.textContent = titleInput.value;
+                        this.setToLocalStorage(cell, i);
+        
+                        inputTitleForm.value = 'Add Title';
+                    }
+
                     /* Focus input form when click any cells */
                     titleInput.focus();
 
                     /* Time title input default */
-                    const timeInDay = Array.from(tableHeadItem).filter(time => time.scope === "row");
-                    if (i >= 10 && i < 100) {
-                        const firstNum = Number(i.toString().split('').splice(0, 1).join(''));
-                        timeRoom.innerText = timeInDay[firstNum].textContent;
-                    } else if (i >= 100) {
-                        const firstNum = Number(i.toString().split('').splice(0, 2).join(''));
-                        timeRoom.innerText = timeInDay[firstNum].textContent;
-                    } else if (i < 10) {
-                        timeRoom.innerText = timeInDay[0].textContent;
-                    }
+                    this.handleUpdateTimeOfInput(i);
 
                     /* Room title input default */
-                    /* const roomTypes = Array.from(tableHeadItem).filter((roomType, i) => roomType.scope === "col" && i !== 0); */
                     if (i >= 10 && i < 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 1).join(''));
                         roomName.innerText = this.roomDetails[firstNum + 1].name;
                     } else if (i >= 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 2).join(''));
                         roomName.innerText = this.roomDetails[firstNum + 1].name;
-
-                        /* if(cell.textContent && (!isNaN(this.roomDetails[firstNum + 1].capacity))) {
-                            this.roomDetails[firstNum + 1].capacity -= 1;
-                            this.render();
-                        } */
-
                     } else if (i < 10) {
                         roomName.innerText = this.roomDetails[i + 1].name;
+                    }
+
+                    Array.from(modal_closeBtn).map((closeBtn) => {
+                        closeBtn.onclick = () => {
+                            modal_input.setAttribute('style','display: none !important');
+                        }
+                    })
+                    detail.onclick = (e) => {
+                        e.preventDefault()
+                        modal_input.setAttribute('style', 'display: flex !important');
                     }
                     
                     /* Date title input default */
                     this.handleDatePickerSetting();
-                    
+
                 };
             }
         })
+
 
         previousDay.onclick = () => this.toPreviousDay();
         nextDay.onclick = () => this.toNextDay();
@@ -281,25 +303,11 @@ let calenderApp = {
         this.handleDefault();
         this.handleEvent();
         this.handleUpdateDay();
-        this.render();  
+        this.render();
+        this.loadDataIn();
     }
 };
-
-
-
-// modal_closeBtn.onclick() = () =>{
-//     alert('hello');
-//     modal_input.setAttribute('class', 'none'); 
-// }
-Array.from(modal_closeBtn).map((closeBtn) => {
-    closeBtn.onclick = () =>{
-        modal_input.setAttribute('style','display: none !important');
-    }
-})
-detail.onclick = (e) => {
-    e.preventDefault()
-    modal_input.setAttribute('style', 'display: flex !important');
-   
-}
+ 
 
 calenderApp.start()
+
