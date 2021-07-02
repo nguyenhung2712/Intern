@@ -64,7 +64,7 @@ let calenderApp = {
             capacity: 8,
             description: 'Room',
             email: 'meetingroom1@infodation.vn',
-            color: 'rgb(78, 14, 28)'
+            color: 'rgb(156, 108, 15)'
         },
         {
             name: 'Tiger',
@@ -79,40 +79,55 @@ let calenderApp = {
             location: '10th Floor, VCN ...',
             capacity: 4,
             description: 'Room',
-            email: 'thinktankroom1@infodation.vn'
+            email: 'thinktankroom1@infodation.vn',
+            color: 'rgb(52, 163, 209)'
         },
         {
             name: 'Think Tank 2',
             location: '10th Floor, VCN ...',
             capacity: 6,
             description: 'Room',
-            email: 'thinktankroom2@infodation.vn'
+            email: 'thinktankroom2@infodation.vn',
+            color: 'rgb(255, 106, 66)'
         },
         {
             name: 'Think Tank 3',
             location: '10th Floor, VCN ...',
             capacity: 4,
             description: 'Room',
-            email: 'thinktankroom3@infodation.vn'
+            email: 'thinktankroom3@infodation.vn',
+            color: 'rgb(234, 63, 142)'
         },
         {
             name: 'Think Tank 4',
             location: '10th Floor, VCN ...',
             capacity: 6,
             description: 'Room',
-            email: 'thinktankroom4@infodation.vn'
+            email: 'thinktankroom4@infodation.vn',
+            color: 'rgb(200, 0, 34)'
         },
         {
             name: 'Think Tank 5',
             location: '10th Floor, VCN ...',
             capacity: 6,
             description: 'Room',
-            email: 'thinktankroom5@infodation.vn'
+            email: 'thinktankroom5@infodation.vn',
+            color: 'rgb(21, 49, 112)'
         },
     ],
     dataIn: JSON.parse(localStorage.getItem('dataIn')) || [],
     setDataIn: function() {
         localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
+    },
+    render: function() {    
+        roomHeadingTitle.innerHTML = this.roomDetails.map(room => {
+            return `
+                <th scope="col" class="room-title" style="user-select: none">
+                    <span>${room.name}</span>
+                    <div class="capacity-room">${room.capacity}</div>
+                </th>
+            `
+        }).join('');
     },
     loadDataIn: function() {
         cells.forEach((cell, i) => {
@@ -130,16 +145,6 @@ let calenderApp = {
         data.index = index;
         data.datePickerVal = datePickerVal;
         return data;
-    },
-    render: function() {    
-        roomHeadingTitle.innerHTML = this.roomDetails.map(room => {
-            return `
-                <th scope="col" class="room-title">
-                    <span>${room.name}</span>
-                    <div class="capacity-room">${room.capacity}</div>
-                </th>
-            `
-        }).join('');
     },
     cleanCell: function() {
         cells.forEach(cell => {
@@ -177,6 +182,12 @@ let calenderApp = {
         dayElement.innerHTML = new Date().toDateString();
         datePicker.valueAsDate = new Date();
 
+    },
+    handleNothingUserSelect: function() {
+        Array
+            .from(tableHeadItem)
+            .filter(x => x.scope === "row")
+            .map(x => x.style.userSelect = "none");
     },
     handleUpdateTimeOfInput: function(i) {
         let timeOfData;
@@ -312,6 +323,7 @@ let calenderApp = {
         this.handleUpdateDay();
         this.render();
         this.loadDataIn();
+        this.handleNothingUserSelect();
     }
 };
  
