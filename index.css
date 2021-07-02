@@ -199,3 +199,42 @@ float: right;
 background-color: rgb(133,128,128);
 padding: 0 4px;
 }
+
+#already-form{
+  display: none !important;
+  position: absolute;
+  width: 25%;
+  box-shadow: 25px 25px 30px rgba(0, 0, 0, 0.15);
+  padding:0;
+}
+.header{
+  background-color: #7fa900;
+  color:white;
+  height:80px;
+  padding:15px
+}
+.feature-btn{
+  text-align:end;
+}
+
+.feature-btn span{
+  margin:0 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+#title span{
+  font-weight: border;
+  
+}
+.footer{
+  padding:15px;
+  color:#838383;
+  
+}
+.footer span{
+  
+  margin-left: 10px;
+  color:#36353d;
+  font-weight: 500;
+  letter-spacing:0.5px;
+}
