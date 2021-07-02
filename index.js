@@ -29,6 +29,7 @@ const alreadyFormHeader = $('.already-form-header');
 const editBtn = $('#edit');
 const roomNameSaved = $('#room-name-saved');
 const removeFormBtn = $('#remove');
+const closeAlreadyFormBtn = $('#close');
 
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -157,10 +158,12 @@ let calenderApp = {
     },
     cleanCell: function() {
         cells.forEach(cell => {
-            if (cell.textContent !== 'Lunch Break') {
-                cell.textContent = '';
-            } 
-        })
+            this.dataIn.map(obj => {
+                if (cell.textContent !== 'Lunch Break') {
+                    cell.textContent = '';
+                } 
+            })
+        })  
         this.loadDataIn();
     },
     toPreviousDay: function() {
@@ -235,8 +238,8 @@ let calenderApp = {
         this.setDataIn();
     },
     removeFromLocalStorage: function(i) {
-        this.dataIn = this.dataIn.filter(obj => obj.index !== i);
-
+        this.dataIn = this.dataIn.filter(obj => obj.index !== i || obj.datePickerVal !== datePicker.value);
+        /* console.log(this.dataIn) */
         this.setDataIn();
     },
     handleEvent: function() {
@@ -296,7 +299,8 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: none !important');
                         inputTitleForm.value = 'Add Title';
                     }
-                    closeSpan.onclick= () =>{
+                    closeSpan.onclick= (e) =>{
+                        e.preventDefault();
                         alreadyForm.setAttribute('style', 'display:none !important');
                     }
 
@@ -373,6 +377,7 @@ let calenderApp = {
             this.handleDatePickerSetting();
             this.handleUpdateDay();
         }
+        
     },
     start: function() {
         this.handleDefault();
