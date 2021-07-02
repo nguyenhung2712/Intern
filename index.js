@@ -308,6 +308,5 @@ let calenderApp = {
     }
 };
  
-
 calenderApp.start()
 
