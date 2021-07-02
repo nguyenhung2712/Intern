@@ -7,25 +7,31 @@ const dayElement = $('#day');
 const datePicker = $('#datepicker');
 const bodyRect = document.body.getBoundingClientRect();
 const titleForm = $('#title-form');
-const autoInputDate = $('#title-form span');
 const titleInput = $('#title-input');
+const roomNameCreate = $('#room-name-create');
+const autoInputDate = $('#title-form span');
 const saveBtn = $('.btn-save');
 const closeBtn = $('.btn-close');
 const tableHeadItem = $$('[scope]');
 const dateRow = $('#date_cells');
 const timeRoom = $('#time-room');
 const dateDefaultSetting = $('#date-setting');
-const roomName = $('#room-name');
 const roomHeadingTitle = $('#title');
 const previousDay = $('#previous-day');
 const nextDay = $('#next-day');
-const modal_closeBtn = $$('.modal_buttonclose')
-const modal_input = $('#modal-event-input')
-const detail = $('.btn-detail')
-const alreadyForm = $('#already-form')
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const modal_closeBtn = $$('.modal_buttonclose');
+const modal_input = $('#modal-event-input');
+const detail = $('.btn-detail');
+const alreadyForm = $('#already-form');
 const closeSpan = $('#close');
-const spanTitle =$('#span-title')
+const spanTitle = $('#span-title');
+const alreadyFormHeader = $('.already-form-header');
+const editBtn = $('#edit');
+const roomNameSaved = $('#room-name-saved');
+const removeFormBtn = $('#remove');
+
+
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
 let calenderApp = {
     roomDetails: [
@@ -228,24 +234,25 @@ let calenderApp = {
 
         this.setDataIn();
     },
+    removeFromLocalStorage: function(i) {
+        this.dataIn = this.dataIn.filter(obj => obj.index !== i);
+
+        this.setDataIn();
+    },
     handleEvent: function() {
         /* Event clicking any cell in table */
         cells.forEach((cell, i) => {
             if (!(cell.textContent === 'Lunch Break')) {
                 cell.onclick = () => {
                    
-                   
                     const cellRec =  cell.getBoundingClientRect()
                     let y = Math.round(cellRec.top - bodyRect.top);
                     let x = Math.round(cellRec.left - bodyRect.left);
-                   
                     const lastNum = Number(i.toString().split('').splice(1, 2).join(''));
-                    if(cell.textContent ==='')     
-                    {
+                    if(cell.textContent === '') {
                         alreadyForm.setAttribute('style', 'display: none !important')
                         titleForm.setAttribute('style', 'display: block !important')
                         if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
-    
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
                         } else if (i === 9 || i === 8) {
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
@@ -256,18 +263,16 @@ let calenderApp = {
                             titleForm.style.top = (y - cell.offsetHeight*3.2) + 'px';
                         } else {
                             titleForm.style.top = y + 'px';
-                    }
-                    if (cell.textContent) {
-                        inputTitleForm.value = cell.textContent;
+                        }
+                        if (cell.textContent) {
+                            inputTitleForm.value = cell.textContent;
+                        } else {
+                            inputTitleForm.value = 'Add Title';
+                        }
                     } else {
-                        inputTitleForm.value = '';
-                    }
-                       }
-                    else{
                         alreadyForm.setAttribute('style', 'display: block !important')
                         titleForm.setAttribute('style', 'display: none !important')
                         if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
-
                             alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
                         } else if (i === 9 || i === 8) {
                             alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
@@ -278,27 +283,19 @@ let calenderApp = {
                             alreadyForm.style.top = (y - cell.offsetHeight*3.2) + 'px';
                         } else {
                             alreadyForm.style.top = y + 'px';
-                       
+                        }
+                        if (cell.textContent) {
+                            spanTitle.innerHTML = cell.textContent;
+                        } else {
+                            spanTitle.innerHTML = '';
+                        }
                     }
-                    if (cell.textContent) {
-                        spanTitle.innerHTML = cell.textContent;
-                    } else {
-                        spanTitle.innerHTML = '';
-                    }
-                       }
-                
-                    
-                   
-                   
-            
-                    
 
                     /* Close form when click closebtn */
                     closeBtn.onclick= () => {
                         titleForm.setAttribute('style', 'display: none !important');
                         inputTitleForm.value = 'Add Title';
                     }
-
                     closeSpan.onclick= () =>{
                         alreadyForm.setAttribute('style', 'display:none !important');
                     }
@@ -310,12 +307,21 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: none')
                         cell.textContent = titleInput.value;
                         this.setToLocalStorage(cell, i);
-        
+
                         inputTitleForm.value = '';
+                    }
+                    /* Remove data when click removeFormBtn*/
+                    removeFormBtn.onclick = (e) => {
+                        e.preventDefault();
+                        alreadyForm.setAttribute('style', 'display: none')
+                        cell.textContent = '';
+                        this.removeFromLocalStorage(i);
+                        inputTitleForm.value = 'Add Title';
                     }
 
                     /* Focus input form when click any cells */
                     titleInput.focus();
+                    editBtn.focus();
 
                     /* Time title input default */
                     this.handleUpdateTimeOfInput(i);
@@ -323,14 +329,17 @@ let calenderApp = {
                     /* Room title input default */
                     if (i >= 10 && i < 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 1).join(''));
-                        roomName.innerText = this.roomDetails[firstNum + 1].name;
+                        roomNameCreate.innerText = this.roomDetails[firstNum + 1].name;
+                        alreadyFormHeader.style.background = this.roomDetails[firstNum + 1].color;
                     } else if (i >= 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 2).join(''));
-                        roomName.innerText = this.roomDetails[firstNum + 1].name;
+                        roomNameCreate.innerText = this.roomDetails[firstNum + 1].name;
+                        alreadyFormHeader.style.background = this.roomDetails[firstNum + 1].color;
                     } else if (i < 10) {
-                        roomName.innerText = this.roomDetails[i + 1].name;
+                        roomNameCreate.innerText = this.roomDetails[i + 1].name;
+                        alreadyFormHeader.style.background = this.roomDetails[i + 1].color;
                     }
-
+                    roomNameSaved.innerText = roomNameCreate.innerText;
                     Array.from(modal_closeBtn).map((closeBtn) => {
                         closeBtn.onclick = () => {
                             modal_input.setAttribute('style','display: none !important');
@@ -340,10 +349,18 @@ let calenderApp = {
                         e.preventDefault()
                         modal_input.setAttribute('style', 'display: flex !important');
                     }
+
+                    editBtn.onclick = (e) => {
+                        e.preventDefault()
+                        modal_input.setAttribute('style', 'display: flex !important');
+                        alreadyForm.setAttribute('style', 'display: none');
+                    }
                     
                     /* Date title input default */
                     this.handleDatePickerSetting();
 
+                    /* Hover cell effect */
+                    
                 };
             }
         })
@@ -369,3 +386,7 @@ let calenderApp = {
  
 calenderApp.start()
 
+var x = [
+    {"name":"Add Title","time":"8.00 AM","index":4,"datePickerVal":"2021-07-02"},
+    {"name":"Add Title","time":"8.00 AM","index":5,"datePickerVal":"2021-07-02"}
+]

@@ -204,11 +204,11 @@
     <label>
       <div class="py-1">
         <i class="fas fa-calendar-alt"></i>
-        <span id="date_cells"><span id="date-setting">February 21, 2018</span> / <span id="time-room"></span></span>
+        <span id="date_cells"><span id="date-setting"></span> / <span id="time-room"></span></span>
       </div>
       <div>
         <i class="fas fa-user-friends"></i>
-        <span id="room-name"></span>
+        <span id="room-name-create"></span>
       </div>
     </label>
     <div class="d-flex justify-content-end mt-2">
@@ -279,32 +279,38 @@
 
 <form class="col-xs-6 d-flex justify-content-center bg-white" id="already-form">
   <div class="form-modal">
-    <div class="header">
+    <div class="already-form-header">
       <div class="feature-btn">
-        <span id="edit"><i class="fas fa-pencil-alt"></i></span>
-        <span id="recycle"><i class="fas fa-trash"></i></span>
-        <span id="close"><i class="fas fa-times"></i></span>
+        <button id="edit">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+        <button id="remove">
+          <i class="fas fa-trash"></i>
+        </button>
+        <button id="close">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
       <span id="span-title"></span>
     </div>
-  <div class="footer">
+    <div class="already-form-footer">
       <div>
-      <i class="fas fa-calendar-alt"></i>
-       <span>August 1 , 2018 (11:00 AM - 12:00 PM)</span>
+        <i class="fas fa-calendar-alt"></i>
+        <span>August 1 , 2018 (11:00 AM - 12:00 PM)</span>
       </div>
-      <div>
-         <i class="fas fa-map-marker-alt"></i>
-          <span>ha noi</span>
+      <div class="accept-optional">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>ha noi</span>
       </div>
-      <div>
-         <i class="fas fa-clipboard"></i>
+      <div class="accept-optional">
+        <i class="fas fa-clipboard"></i>
         <span>test test</span>
-        </div>
-        <div>
-        <i class="fas fa-users"></i>
-        <span id="room-name"></span>
-        </div>
       </div>
+      <div>
+        <i class="fas fa-user-friends"></i>
+        <span id="room-name-saved"></span>
+      </div>
+    </div>
   </div>
 </form>
 

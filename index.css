@@ -204,10 +204,12 @@ padding: 0 4px;
   display: none !important;
   position: absolute;
   width: 25%;
-  box-shadow: 25px 25px 30px rgba(0, 0, 0, 0.15);
-  padding:0;
+  box-shadow: 0 0 25px rgb(138, 133, 133);
+  padding: 0;
+  border-radius: 4px;
+  overflow: hidden;
 }
-.header{
+.already-form-header{
   background-color: #7fa900;
   color:white;
   height:80px;
@@ -217,24 +219,57 @@ padding: 0 4px;
   text-align:end;
 }
 
-.feature-btn span{
-  margin:0 8px;
+.feature-btn button{
   cursor: pointer;
   font-size: 15px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: #fff;
 }
+
 #title span{
   font-weight: border;
   
 }
-.footer{
+.already-form-footer{
   padding:15px;
   color:#838383;
   
 }
-.footer span{
-  
+.already-form-footer button{
   margin-left: 10px;
   color:#36353d;
   font-weight: 500;
   letter-spacing:0.5px;
+}
+
+#edit, #remove, #close {
+  border-radius: 50%;
+  padding: 5px 7px;
+  font-size: 12px;
+} 
+
+#edit {
+  padding: 5px 8px;
+}
+
+#remove {
+  padding: 5px 8px;
+}
+
+#close {
+  padding: 5px 9px;
+}
+
+#edit:hover, #remove:hover, #close:hover, #edit:focus {
+  background-color: rgb(218, 216, 216, .3);
+}
+
+.accept-optional {
+  display: none;
+}
+
+.span-title {
+  user-select: none;
 }
