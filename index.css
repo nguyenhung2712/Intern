@@ -273,3 +273,16 @@ padding: 0 4px;
 .span-title {
   user-select: none;
 }
+
+#title-form, #already-form {
+  animation: growth ease-in .25s;
+}
+
+@keyframes growth {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

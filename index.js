@@ -239,8 +239,12 @@ let calenderApp = {
     },
     removeFromLocalStorage: function(i) {
         this.dataIn = this.dataIn.filter(obj => obj.index !== i || obj.datePickerVal !== datePicker.value);
-        /* console.log(this.dataIn) */
         this.setDataIn();
+    },
+    resetAnimation: function(element) {
+        element.style.animation = 'none';
+        element.offsetHeight;
+        element.style.animation = null; 
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -257,10 +261,13 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: block !important')
                         if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(titleForm);
                         } else if (i === 9 || i === 8) {
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(titleForm);
                         } else {
                             titleForm.style.left = x  + 'px';
+                            this.resetAnimation(titleForm);
                         }
                         if (i >= 80) {
                             titleForm.style.top = (y - cell.offsetHeight*3.2) + 'px';
@@ -277,10 +284,13 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: none !important')
                         if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
                             alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(alreadyForm);
                         } else if (i === 9 || i === 8) {
                             alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(alreadyForm);
                         } else {
                             alreadyForm.style.left = x  + 'px';
+                            this.resetAnimation(alreadyForm);
                         }
                         if (i >= 80) {
                             alreadyForm.style.top = (y - cell.offsetHeight*3.2) + 'px';
