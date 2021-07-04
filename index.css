@@ -136,8 +136,7 @@ tr td{
   font-size: 15px;
 }
 #modal-event-input {
-
-  display:none ;
+  display: none;
   justify-content: center;
   align-items: center;
 }
@@ -165,6 +164,7 @@ tr td{
   z-index: 1;
   position: absolute;
   top: 18%;
+  animation: zoomIn ease-in .25s;
 }
 .save_cls {
   margin-top: 10px;
@@ -284,5 +284,14 @@ padding: 0 4px;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
   }
 }

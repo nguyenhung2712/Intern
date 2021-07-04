@@ -31,7 +31,6 @@ const roomNameSaved = $('#room-name-saved');
 const removeFormBtn = $('#remove');
 const closeAlreadyFormBtn = $('#close');
 
-
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
 let calenderApp = {
@@ -368,13 +367,12 @@ let calenderApp = {
                         e.preventDefault()
                         modal_input.setAttribute('style', 'display: flex !important');
                         alreadyForm.setAttribute('style', 'display: none');
+                        
                     }
                     
                     /* Date title input default */
                     this.handleDatePickerSetting();
 
-                    /* Hover cell effect */
-                    
                 };
             }
         })
@@ -400,8 +398,3 @@ let calenderApp = {
 };
  
 calenderApp.start()
-
-var x = [
-    {"name":"Add Title","time":"8.00 AM","index":4,"datePickerVal":"2021-07-02"},
-    {"name":"Add Title","time":"8.00 AM","index":5,"datePickerVal":"2021-07-02"}
-]
