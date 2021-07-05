@@ -31,16 +31,21 @@ const roomNameSaved = $('#room-name-saved');
 const removeFormBtn = $('#remove');
 const closeAlreadyFormBtn = $('#close');
 const btnDelete = $('.btn-delete')
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 const save1 = $('#save1')
 const summary = $('#summary');
 const place = $('#place');
 const commentsValue = $('#comments-value');
+
 const commentsArea = $('#comments-area');
 const locationInput = $('#location-input'); 
+const roomInput = $('#room-type');
 
-console.log(place,commentsValue,commentsArea,locationInput)
+const timeRoomSaved = $('#time-room-saved');
+const dateSettingSaved = $('#date-setting-saved');
+
+
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 /* const today = new Date(); */
 let calenderApp = {
     roomDetails: [
@@ -132,7 +137,7 @@ let calenderApp = {
             color: 'rgb(21, 49, 112)'
         },
     ],
-
+    dateRegex: /^(0?[1-9]|[1][012]):([0-5][0-9])\s(AM|PM)$/,
     dataIn: JSON.parse(localStorage.getItem('dataIn')) || [],
     setDataIn: function() {
         localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
@@ -156,15 +161,35 @@ let calenderApp = {
             })
         })
     },
+<<<<<<< HEAD
     createNewData: function(name, time, index, place,comments,datePickerVal) {
+=======
+    createNewData: function(index, name, time, datePickerVal, comments = '', place = '', room = '') {
+>>>>>>> 594edd22fae88f109bb7178e653501a50672c0ef
         let data = {};
+        data.index = index;
         data.name = name;
         data.time = time;
+<<<<<<< HEAD
         data.index = index;
         data.place = place;
         data.comments = comments;
+=======
+        data.comments = comments;
+        data.place = place;
+>>>>>>> 594edd22fae88f109bb7178e653501a50672c0ef
         data.datePickerVal = datePickerVal;
+        data.room = room;
         return data;
+    },
+    mergeDataIn: function(index, name, time, datePickerVal, comments, place, room, flagIndex) {
+        this.dataIn[flagIndex].name = name;
+        this.dataIn[flagIndex].time = time;
+        this.dataIn[flagIndex].index = index;
+        this.dataIn[flagIndex].datePickerVal = datePickerVal;
+        this.dataIn[flagIndex].comments = comments;
+        this.dataIn[flagIndex].place = place;
+        this.dataIn[flagIndex].place = place;
     },
     cleanCell: function() {
         cells.forEach(cell => {
@@ -240,21 +265,41 @@ let calenderApp = {
         let datePickerArrValue =  datePicker.value.split('-');
         dateDefaultSetting.innerHTML = months[Number(datePickerArrValue[1] - 1)] + ' ' + datePickerArrValue[2] + ', ' + datePickerArrValue[0];
     },
-    setToLocalStorage: function(cell, i) {
+    setToLocalStorage: function(cell, i, room = '', comments = '', place = '') {
         let timeOfData = this.handleUpdateTimeOfInput(i);
+<<<<<<< HEAD
         let objData = this.createNewData(cell.textContent, timeOfData, i,place.textContent,commentsValue.textContent, datePicker.value);
         this.dataIn.push(objData);
+=======
+        
+        let objData = this.createNewData(i, cell.textContent, timeOfData, datePicker.value, comments, place, room);
+        let flag = true;
+        let index;
+        for (let i = 0; i < this.dataIn.length; i++) {
+            if (this.dataIn[i].index === objData.index) {
+                flag = false;
+                index = i;
+                break;
+            }
+        }
+        if (flag === false) {
+            this.mergeDataIn(objData.index, objData.name, objData.time, objData.datePickerVal, objData.comments, objData.place, objData.room,index);
+        } else {
+            this.dataIn.push(objData);
+        }
+>>>>>>> 594edd22fae88f109bb7178e653501a50672c0ef
 
         this.setDataIn();
     },
     removeFromLocalStorage: function(i) {
         this.dataIn = this.dataIn.filter(obj => obj.index !== i || obj.datePickerVal !== datePicker.value);
+
         this.setDataIn();
     },
     resetAnimation: function(element) {
         element.style.animation = 'none';
         element.offsetHeight;
-        element.style.animation = null; 
+        element.style.animation = null;
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -269,10 +314,7 @@ let calenderApp = {
                     if(cell.textContent === '') {
                         alreadyForm.setAttribute('style', 'display: none !important')
                         titleForm.setAttribute('style', 'display: block !important')
-                        if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
-                            titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(titleForm);
-                        } else if (i === 9 || i === 8) {
+                        if ((i > 10 && (lastNum === 9 ||  lastNum === 8))||(i === 9 || i === 8)) {
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
                             this.resetAnimation(titleForm);
                         } else {
@@ -292,12 +334,9 @@ let calenderApp = {
                     } else {
                         alreadyForm.setAttribute('style', 'display: block !important')
                         titleForm.setAttribute('style', 'display: none !important')
-                        if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
-                            alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(alreadyForm);
-                        } else if (i === 9 || i === 8) {
-                            alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(alreadyForm);
+                        if ((i > 10 && (lastNum === 9 ||  lastNum === 8))||(i === 9 || i === 8)) {
+                            titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(titleForm);
                         } else {
                             alreadyForm.style.left = x  + 'px';
                             this.resetAnimation(alreadyForm);
@@ -354,6 +393,7 @@ let calenderApp = {
                         
                         modal_input.setAttribute('style', 'display: none')
                         cell.textContent = summary.value;
+<<<<<<< HEAD
                         place.textContent = locationInput.value;
                         commentsValue.textContent = commentsArea.value;
 
@@ -361,7 +401,11 @@ let calenderApp = {
                         summary.value = '';
                         locationInput.value ='';
                         commentsArea.value ='';
+=======
+                        this.setToLocalStorage(cell, i, roomInput.options[roomInput.selectedIndex].text, commentsArea.value, locationInput.value);
+>>>>>>> 594edd22fae88f109bb7178e653501a50672c0ef
                     }
+                    
                     /* Focus input form when click any cells */
                     titleInput.focus();
                     editBtn.focus();
@@ -387,7 +431,8 @@ let calenderApp = {
 
                     
                     Array.from(modal_closeBtn).map((closeBtn) => {
-                        closeBtn.onclick = () => {
+                        closeBtn.onclick = (e) => {
+                            e.preventDefault();
                             modal_input.setAttribute('style','display: none !important');
                         }
                     })
@@ -398,14 +443,45 @@ let calenderApp = {
                     }
 
                     editBtn.onclick = (e) => {
-                        e.preventDefault()
+                        e.preventDefault();
                         modal_input.setAttribute('style', 'display: flex !important');
                         alreadyForm.setAttribute('style', 'display: none');
-                        
                     }
                     
                     /* Date title input default */
                     this.handleDatePickerSetting();
+
+                    this.dataIn.map(obj => {
+                        if (obj.index === i && obj.datePickerVal === datePicker.value) {
+                            summary.value = cell.textContent;
+                            if (obj.comments) {
+                                $('#comment-show').style.display = 'block';
+                                commentsValue.textContent = obj.comments;
+                                commentsArea.value = obj.comments;
+                            } else {
+                                $('#comment-show').style.display = 'none';
+                                commentsValue.textContent = '';
+                                commentsArea.value = '';
+                            }
+                            if (obj.place) {
+                                $('#place-show').style.display = 'block';
+                                place.textContent = obj.place;
+                                locationInput.value = obj.place;
+                            } else {
+                                $('#place-show').style.display = 'none';
+                                place.textContent = '';
+                                locationInput.value = '';
+                            }
+                            if (obj.room) {
+                                roomNameSaved.innerText = obj.room;
+                                roomInput.options[roomInput.selectedIndex].text = obj.room;
+                            } else {
+                                roomNameSaved.innerText = roomNameCreate.innerText;
+                                roomInput.options[roomInput.selectedIndex].text = roomNameCreate.innerText;
+                            }
+                        }   
+                    })
+
 
                 };
             }
@@ -419,7 +495,6 @@ let calenderApp = {
             this.handleDatePickerSetting();
             this.handleUpdateDay();
         }
-        
     },
     start: function() {
         this.handleDefault();
@@ -433,3 +508,6 @@ let calenderApp = {
  
 
 calenderApp.start()
+
+
+

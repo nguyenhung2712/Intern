@@ -95,14 +95,6 @@ tr td{
   font-size: 14px;
 }
 
-#date_cells, #room-name {
-  padding: 10px;
-}
-
-#room-name {
-  padding: 4px;
-}
-
 .close-btn {
   display: flex;
   justify-content: flex-end;
@@ -165,9 +157,29 @@ tr td{
   z-index: 1;
   position: absolute;
   top: 18%;
+
+  animation: zoomIn ease-in .25s;
 }
+<<<<<<< HEAD
 .save_cls .btn-save,.modal_buttonclose{
   float:right;
+=======
+
+.save_cls .btn-save,.modal_buttonclose{
+  float:right;
+
+}
+.btn-delete:hover{
+  color:rgb(227, 22, 91) ;
+}
+.btn-delete{
+  margin-top: 10px;
+  margin-bottom: -15px;
+}
+.save_cls {
+  margin-top: 10px;
+  margin-bottom: -15px;
+>>>>>>> 594edd22fae88f109bb7178e653501a50672c0ef
 }
 #modal-event-input button:hover{
   background-color: rgb(209, 209, 209);
@@ -243,6 +255,10 @@ padding: 0 4px;
   letter-spacing:0.5px;
 }
 
+.already-form-footer div {
+  margin: 8px 0;
+}
+
 #edit, #remove, #close {
   border-radius: 50%;
   padding: 5px 7px;
@@ -265,7 +281,7 @@ padding: 0 4px;
   background-color: rgb(218, 216, 216, .3);
 }
 
-.accept-optional {
+#place-show, #comment-show {
   display: none;
 }
 
