@@ -171,7 +171,7 @@ let calenderApp = {
 
         this.cleanCell();
     },
-    toNextDay: function() {
+    toNextDay:function() {
         let inputValue = datePicker.valueAsDate;
         this.addOrSubtractDays(inputValue,1);
         datePicker.valueAsDate = inputValue; 
@@ -340,6 +340,8 @@ let calenderApp = {
                         alreadyFormHeader.style.background = this.roomDetails[i + 1].color;
                     }
                     roomNameSaved.innerText = roomNameCreate.innerText;
+
+                    
                     Array.from(modal_closeBtn).map((closeBtn) => {
                         closeBtn.onclick = () => {
                             modal_input.setAttribute('style','display: none !important');

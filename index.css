@@ -136,7 +136,6 @@ tr td{
   font-size: 15px;
 }
 #modal-event-input {
-
   display:none ;
   justify-content: center;
   align-items: center;
@@ -166,10 +165,7 @@ tr td{
   position: absolute;
   top: 18%;
 }
-.save_cls {
-  margin-top: 10px;
-  margin-bottom: -15px;
-}
+
 #modal-event-input button:hover{
   background-color: rgb(209, 209, 209);
 }
@@ -272,4 +268,9 @@ padding: 0 4px;
 
 .span-title {
   user-select: none;
+}
+button.button-date:active{
+  background-color: #74ff3b;
+   border: none;
+    outline:none;
 }
