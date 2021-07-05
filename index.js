@@ -8,6 +8,8 @@ const datePicker = $('#datepicker');
 const bodyRect = document.body.getBoundingClientRect();
 const titleForm = $('#title-form');
 const titleInput = $('#title-input');
+const titleInputEvent = $$('.input-form-event');
+const deleteBtn  = $('#btn-delete')
 const roomNameCreate = $('#room-name-create');
 const autoInputDate = $('#title-form span');
 const saveBtn = $('.btn-save');
@@ -33,6 +35,9 @@ const closeAlreadyFormBtn = $('#close');
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
+
+
+
 let calenderApp = {
     roomDetails: [
         {
@@ -316,7 +321,6 @@ let calenderApp = {
                     /* Save data when click savebtn */ 
                     saveBtn.onclick = (e) => {
                         e.preventDefault();
-                        
                         titleForm.setAttribute('style', 'display: none')
                         cell.textContent = titleInput.value;
                         this.setToLocalStorage(cell, i);
@@ -395,6 +399,16 @@ let calenderApp = {
         this.handleNothingUserSelect();
     }
 };
- 
 
+
+deleteBtn.onclick = () =>{
+    for(let key in titleInputEvent){
+        titleInputEvent[key].value = ""
+    }
+}
+/* documen.querySelector('btn-delete') = 
+function 
+for(let key in titleInputNew){
+    titleInputNew[key].value = ""
+} */
 calenderApp.start()

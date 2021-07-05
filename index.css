@@ -167,10 +167,10 @@ tr td{
   top: 18%;
   animation: zoomIn ease-in .25s;
 }
-.btn-delete:hover{
+#btn-delete:hover{
   color:rgb(227, 22, 91) ;
 }
-.btn-delete{
+#btn-delete{
   margin-top: 10px;
   margin-bottom: -15px;
 }
