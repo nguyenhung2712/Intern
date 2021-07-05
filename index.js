@@ -329,7 +329,6 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: none')
                         cell.textContent = titleInput.value;
                         this.setToLocalStorage(cell, i);
-
                         inputTitleForm.value = '';
                     }
                     /* Remove data when click removeFormBtn*/
@@ -425,4 +424,5 @@ let calenderApp = {
     }
 };
  
+
 calenderApp.start()

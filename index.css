@@ -144,6 +144,7 @@ tr td{
 .modal-wrapper{
   position: relative;
   margin-top: -30px ;
+  padding-left: 20px !important;
 }
 #modal-event-input::after {
   content: "";
@@ -165,8 +166,21 @@ tr td{
   position: absolute;
   top: 18%;
 }
+<<<<<<< HEAD
 .save_cls .btn-save,.modal_buttonclose{
   float:right;
+=======
+.btn-delete:hover{
+  color:rgb(227, 22, 91) ;
+}
+.btn-delete{
+  margin-top: 10px;
+  margin-bottom: -15px;
+}
+.save_cls {
+  margin-top: 10px;
+  margin-bottom: -15px;
+>>>>>>> f53ca2f542542d3157273f048532ea273cd9ce26
 }
 #modal-event-input button:hover{
   background-color: rgb(209, 209, 209);
