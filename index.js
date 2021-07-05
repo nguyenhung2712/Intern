@@ -31,6 +31,11 @@ const roomNameSaved = $('#room-name-saved');
 const removeFormBtn = $('#remove');
 const closeAlreadyFormBtn = $('#close');
 
+const detailsTimeTo = $$('.title-input-to');
+const detailsTimeFrom = $$('.title-input-from');
+
+const detailsModalWrapper = $('.modal-wrapper');
+
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
 let calenderApp = {
@@ -123,7 +128,7 @@ let calenderApp = {
             color: 'rgb(21, 49, 112)'
         },
     ],
-
+    dateRegex: /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{2}\s(0?[1-9]|[1][012]):([0-5][0-9])\s(AM|PM)$/,
     dataIn: JSON.parse(localStorage.getItem('dataIn')) || [],
     setDataIn: function() {
         localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
@@ -354,20 +359,20 @@ let calenderApp = {
                     }
                     roomNameSaved.innerText = roomNameCreate.innerText;
                     Array.from(modal_closeBtn).map((closeBtn) => {
-                        closeBtn.onclick = () => {
+                        closeBtn.onclick = (e) => {
+                            e.preventDefault();
                             modal_input.setAttribute('style','display: none !important');
                         }
                     })
                     detail.onclick = (e) => {
-                        e.preventDefault()
+                        e.preventDefault();
                         modal_input.setAttribute('style', 'display: flex !important');
                     }
 
                     editBtn.onclick = (e) => {
-                        e.preventDefault()
+                        e.preventDefault();
                         modal_input.setAttribute('style', 'display: flex !important');
                         alreadyForm.setAttribute('style', 'display: none');
-                        
                     }
                     
                     /* Date title input default */
@@ -385,7 +390,6 @@ let calenderApp = {
             this.handleDatePickerSetting();
             this.handleUpdateDay();
         }
-        
     },
     start: function() {
         this.handleDefault();
@@ -397,4 +401,4 @@ let calenderApp = {
     }
 };
  
-calenderApp.start()
+calenderApp.start();

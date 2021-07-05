@@ -164,6 +164,7 @@ tr td{
   z-index: 1;
   position: absolute;
   top: 18%;
+
   animation: zoomIn ease-in .25s;
 }
 .save_cls {
@@ -293,5 +294,14 @@ padding: 0 4px;
   }
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
   }
 }

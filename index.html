@@ -217,66 +217,7 @@
     </div>
   </div>
 </form>
-
-<div id="modal-event-input">
-  <div class="modal-wrapper">
-    <button type="button" class="button-close btn btn-close modal_buttonclose" ></button>
-    <h5 class="event-heading">New Event</h5>
-    <form id="event-input-form">
-      <div class="col-lg-12 col-md-12 col-sm-12 d-flex fix-margin">
-        <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-right: 5px">
-          <input type="text" class="form-control title-input" value="" id="summary">
-          <label for="summary" class="label-form">Summary</label>
-          <span class="focus-border"></span>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-left: 5px">
-          <input type="text" class="form-control title-input" value="" id="location">
-          <label for="location" class="label-form">Location</label>
-          <span class="focus-border"></span>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 d-flex fix-margin">
-        <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-right: 5px">
-          <input type="text" class="form-control title-input" value="" id="from">
-          <label for="from" class="label-form">From</label>
-          <span class="focus-border"></span>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-left: 5px">
-          
-          <label for="to" class="label-form">To</label>
-          <span class="focus-border"></span>
-        </div>
-      </div>
-
-
-      <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 m-0 w-100">
-        <label for="comments" class="label-form">Room Type</label>
-        <input type="text" class="form-control title-input" value="" id="to">
-        <select name="" id="singlebox" multiple>
-          <option value="1" data-subtitle="room1" >Room1</option>
-          <option value="1" data-subtitle="room1" >Room1</option>
-        </select>
-        
-        <span class="focus-border"></span>
-      </div>
-
-
-      
-      <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 m-0 w-100">
-        <textarea id="comments" cols="100" rows="3" class="form-control title-input"></textarea>
-        <label for="comments" class="label-form">Comments</label>
-        <span class="focus-border"></span>
-      </div>
-      
-      <div class="d-flex justify-content-end save_cls">
-        <button type="button" class="btn"  >SAVE</button>
-        <button type="button" class="btn modal_buttonclose">CLOSE</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-
+<!-- Already Form -->
 <form class="col-xs-6 d-flex justify-content-center bg-white" id="already-form">
   <div class="form-modal">
     <div class="already-form-header">
@@ -314,6 +255,66 @@
   </div>
 </form>
 
+<!-- Details Form -->
+<div id="modal-event-input">
+  <div class="modal-wrapper">
+    <button type="button" class="button-close btn btn-close modal_buttonclose" ></button>
+    <h5 class="event-heading">New Event</h5>
+    <form id="event-input-form">
+      <div class="col-lg-12 col-md-12 col-sm-12 d-flex fix-margin">
+        <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-right: 5px">
+          <input type="text" class="form-control title-input" value="" id="summary">
+          <label for="summary" class="label-form">Summary</label>
+          <span class="focus-border"></span>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-left: 5px">
+          <input type="text" class="form-control title-input" value="" id="location">
+          <label for="location" class="label-form">Location</label>
+          <span class="focus-border"></span>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 d-flex fix-margin">
+        <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-right: 5px">
+          <input type="text" class="form-control title-input title-input-from" value="">
+          <label for="from" class="label-form">From</label>
+          <span class="focus-border"></span>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-left: 5px">
+          <input type="text" class="form-control title-input title-input-to" value="">
+          <label for="to" class="label-form">To</label>
+          <span class="focus-border"></span>
+        </div>
+      </div>
+
+
+      <!-- <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 m-0 w-100">
+        <label for="comments" class="label-form">Room Type</label>
+        <input type="text" class="form-control title-input" value="" id="to">
+        <select name="" id="singlebox" multiple>
+          <option value="1" data-subtitle="room1" >Room1</option>
+          <option value="1" data-subtitle="room1" >Room1</option>
+        </select>
+        
+        <span class="focus-border"></span>
+      </div> -->
+
+
+      
+      <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 m-0 w-100">
+        <textarea id="comments" cols="100" rows="3" class="form-control title-input"></textarea>
+        <label for="comments" class="label-form">Comments</label>
+        <span class="focus-border"></span>
+      </div>
+      
+      <div class="d-flex justify-content-end save_cls">
+        <button type="button" class="btn">SAVE</button>
+        <button type="button" class="btn modal_buttonclose">CLOSE</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Invalid Form -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
