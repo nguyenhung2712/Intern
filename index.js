@@ -156,11 +156,13 @@ let calenderApp = {
             })
         })
     },
-    createNewData: function(name, time, index, datePickerVal) {
+    createNewData: function(name, time, index, place,comments,datePickerVal) {
         let data = {};
         data.name = name;
         data.time = time;
         data.index = index;
+        data.place = place;
+        data.comments = comments;
         data.datePickerVal = datePickerVal;
         return data;
     },
@@ -240,7 +242,7 @@ let calenderApp = {
     },
     setToLocalStorage: function(cell, i) {
         let timeOfData = this.handleUpdateTimeOfInput(i);
-        let objData = this.createNewData(cell.textContent, timeOfData, i, datePicker.value);
+        let objData = this.createNewData(cell.textContent, timeOfData, i,place.textContent,commentsValue.textContent, datePicker.value);
         this.dataIn.push(objData);
 
         this.setDataIn();
@@ -352,8 +354,13 @@ let calenderApp = {
                         
                         modal_input.setAttribute('style', 'display: none')
                         cell.textContent = summary.value;
-                      
-                        this.setToLocalStorage(cell, i);
+                        place.textContent = locationInput.value;
+                        commentsValue.textContent = commentsArea.value;
+
+                        this.setToLocalStorage(cell, i,locationInput,commentsArea);
+                        summary.value = '';
+                        locationInput.value ='';
+                        commentsArea.value ='';
                     }
                     /* Focus input form when click any cells */
                     titleInput.focus();
