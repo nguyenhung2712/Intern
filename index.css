@@ -95,14 +95,6 @@ tr td{
   font-size: 14px;
 }
 
-#date_cells, #room-name {
-  padding: 10px;
-}
-
-#room-name {
-  padding: 4px;
-}
-
 .close-btn {
   display: flex;
   justify-content: flex-end;
@@ -258,6 +250,10 @@ padding: 0 4px;
   letter-spacing:0.5px;
 }
 
+.already-form-footer div {
+  margin: 8px 0;
+}
+
 #edit, #remove, #close {
   border-radius: 50%;
   padding: 5px 7px;
@@ -280,7 +276,7 @@ padding: 0 4px;
   background-color: rgb(218, 216, 216, .3);
 }
 
-.accept-optional {
+#place-show, #comment-show {
   display: none;
 }
 
@@ -307,14 +303,5 @@ padding: 0 4px;
   }
   to {
     transform: scale(1);
-  }
-}
-
-@keyframes zoomOut {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(0);
   }
 }
