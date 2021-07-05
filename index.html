@@ -242,36 +242,25 @@
           <span class="focus-border"></span>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-left: 5px">
-          
+          <input type="text" class="form-control title-input" value="" id="to">
           <label for="to" class="label-form">To</label>
           <span class="focus-border"></span>
         </div>
       </div>
 
-
       <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 m-0 w-100">
-        <label for="comments" class="label-form">Room Type</label>
-        <input type="text" class="form-control title-input" value="" id="to">
-        <select name="" id="singlebox" multiple>
-          <option value="1" data-subtitle="room1" >Room1</option>
-          <option value="1" data-subtitle="room1" >Room1</option>
-        </select>
-        
-        <span class="focus-border"></span>
-      </div>
-
-
-      
-      <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 m-0 w-100">
-        <textarea id="comments" cols="100" rows="3" class="form-control title-input"></textarea>
+        <textarea id="comments" cols="100" rows="9" class="form-control title-input" placeholder="Add notes"></textarea>
         <label for="comments" class="label-form">Comments</label>
         <span class="focus-border"></span>
       </div>
-      
-      <div class="d-flex justify-content-end save_cls">
-        <button type="button" class="btn"  >SAVE</button>
-        <button type="button" class="btn modal_buttonclose">CLOSE</button>
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-delete" >DELETE</button>
+        <div class="d-flex justify-content-end save_cls">
+          <button type="button" class="btn"  >SAVE</button>
+          <button type="button" class="btn modal_buttonclose">CLOSE</button>
+        </div>
       </div>
+     
     </form>
   </div>
 </div>

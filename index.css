@@ -144,6 +144,7 @@ tr td{
 .modal-wrapper{
   position: relative;
   margin-top: -30px ;
+  padding-left: 20px !important;
 }
 #modal-event-input::after {
   content: "";
@@ -165,6 +166,13 @@ tr td{
   position: absolute;
   top: 18%;
   animation: zoomIn ease-in .25s;
+}
+.btn-delete:hover{
+  color:rgb(227, 22, 91) ;
+}
+.btn-delete{
+  margin-top: 10px;
+  margin-bottom: -15px;
 }
 .save_cls {
   margin-top: 10px;
