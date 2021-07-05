@@ -268,7 +268,7 @@ let calenderApp = {
                 break;
             }
         }
-        if (flag === false) {
+        if (flag === false && objData.datePickerVal !== datePicker.value) {
             this.mergeDataIn(objData.index, objData.name, objData.time, objData.datePickerVal, objData.comments, objData.place, objData.room,index);
         } else {
             this.dataIn.push(objData);
