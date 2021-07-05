@@ -30,13 +30,20 @@ const editBtn = $('#edit');
 const roomNameSaved = $('#room-name-saved');
 const removeFormBtn = $('#remove');
 const closeAlreadyFormBtn = $('#close');
-
 const detailsTimeTo = $$('.title-input-to');
 const detailsTimeFrom = $$('.title-input-from');
-
 const detailsModalWrapper = $('.modal-wrapper');
+const btnDelete = $('.btn-delete')
+const save1 = $('#save1')
+const summary = $('#summary');
+const place = $('#place');
+const commentsValue = $('#comments-value');
+const commentsArea = $('#comments-area');
+const locationInput = $('#location-input'); 
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+console.log(place,commentsValue,commentsArea,locationInput)
 /* const today = new Date(); */
 let calenderApp = {
     roomDetails: [
@@ -178,7 +185,7 @@ let calenderApp = {
 
         this.cleanCell();
     },
-    toNextDay: function() {
+    toNextDay:function() {
         let inputValue = datePicker.valueAsDate;
         this.addOrSubtractDays(inputValue,1);
         datePicker.valueAsDate = inputValue; 
@@ -325,7 +332,6 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: none')
                         cell.textContent = titleInput.value;
                         this.setToLocalStorage(cell, i);
-
                         inputTitleForm.value = '';
                     }
                     /* Remove data when click removeFormBtn*/
@@ -337,6 +343,21 @@ let calenderApp = {
                         inputTitleForm.value = 'Add Title';
                     }
 
+                    btnDelete.onclick = (e) => {
+                        e.preventDefault();
+                        modal_input.setAttribute('style', 'display: none')
+                        cell.textContent = '';
+                        this.removeFromLocalStorage(i);
+                        inputTitleForm.value = 'Add Title';
+                    }
+                    save1.onclick = (e) => {
+                        e.preventDefault();
+                        
+                        modal_input.setAttribute('style', 'display: none')
+                        cell.textContent = summary.value;
+                      
+                        this.setToLocalStorage(cell, i);
+                    }
                     /* Focus input form when click any cells */
                     titleInput.focus();
                     editBtn.focus();
@@ -348,6 +369,7 @@ let calenderApp = {
                     if (i >= 10 && i < 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 1).join(''));
                         roomNameCreate.innerText = this.roomDetails[firstNum + 1].name;
+                        
                         alreadyFormHeader.style.background = this.roomDetails[firstNum + 1].color;
                     } else if (i >= 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 2).join(''));
@@ -358,6 +380,8 @@ let calenderApp = {
                         alreadyFormHeader.style.background = this.roomDetails[i + 1].color;
                     }
                     roomNameSaved.innerText = roomNameCreate.innerText;
+
+                    
                     Array.from(modal_closeBtn).map((closeBtn) => {
                         closeBtn.onclick = (e) => {
                             e.preventDefault();
@@ -365,7 +389,8 @@ let calenderApp = {
                         }
                     })
                     detail.onclick = (e) => {
-                        e.preventDefault();
+                        e.preventDefault()
+                       titleForm.setAttribute('style', 'display: none !important');
                         modal_input.setAttribute('style', 'display: flex !important');
                     }
 
@@ -401,4 +426,5 @@ let calenderApp = {
     }
 };
  
-calenderApp.start();
+
+calenderApp.start()
