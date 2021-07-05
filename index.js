@@ -29,7 +29,7 @@ const alreadyFormHeader = $('.already-form-header');
 const editBtn = $('#edit');
 const roomNameSaved = $('#room-name-saved');
 const removeFormBtn = $('#remove');
-
+const closeAlreadyFormBtn = $('#close');
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 /* const today = new Date(); */
@@ -157,10 +157,12 @@ let calenderApp = {
     },
     cleanCell: function() {
         cells.forEach(cell => {
-            if (cell.textContent !== 'Lunch Break') {
-                cell.textContent = '';
-            } 
-        })
+            this.dataIn.map(obj => {
+                if (cell.textContent !== 'Lunch Break') {
+                    cell.textContent = '';
+                } 
+            })
+        })  
         this.loadDataIn();
     },
     toPreviousDay: function() {
@@ -235,9 +237,13 @@ let calenderApp = {
         this.setDataIn();
     },
     removeFromLocalStorage: function(i) {
-        this.dataIn = this.dataIn.filter(obj => obj.index !== i);
-
+        this.dataIn = this.dataIn.filter(obj => obj.index !== i || obj.datePickerVal !== datePicker.value);
         this.setDataIn();
+    },
+    resetAnimation: function(element) {
+        element.style.animation = 'none';
+        element.offsetHeight;
+        element.style.animation = null; 
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -254,10 +260,13 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: block !important')
                         if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(titleForm);
                         } else if (i === 9 || i === 8) {
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(titleForm);
                         } else {
                             titleForm.style.left = x  + 'px';
+                            this.resetAnimation(titleForm);
                         }
                         if (i >= 80) {
                             titleForm.style.top = (y - cell.offsetHeight*3.2) + 'px';
@@ -274,10 +283,13 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: none !important')
                         if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
                             alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(alreadyForm);
                         } else if (i === 9 || i === 8) {
                             alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(alreadyForm);
                         } else {
                             alreadyForm.style.left = x  + 'px';
+                            this.resetAnimation(alreadyForm);
                         }
                         if (i >= 80) {
                             alreadyForm.style.top = (y - cell.offsetHeight*3.2) + 'px';
@@ -296,7 +308,8 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: none !important');
                         inputTitleForm.value = 'Add Title';
                     }
-                    closeSpan.onclick= () =>{
+                    closeSpan.onclick= (e) =>{
+                        e.preventDefault();
                         alreadyForm.setAttribute('style', 'display:none !important');
                     }
 
@@ -356,13 +369,12 @@ let calenderApp = {
                         e.preventDefault()
                         modal_input.setAttribute('style', 'display: flex !important');
                         alreadyForm.setAttribute('style', 'display: none');
+                        
                     }
                     
                     /* Date title input default */
                     this.handleDatePickerSetting();
 
-                    /* Hover cell effect */
-                    
                 };
             }
         })
@@ -375,6 +387,7 @@ let calenderApp = {
             this.handleDatePickerSetting();
             this.handleUpdateDay();
         }
+        
     },
     start: function() {
         this.handleDefault();
@@ -387,8 +400,3 @@ let calenderApp = {
 };
  
 calenderApp.start()
-
-var x = [
-    {"name":"Add Title","time":"8.00 AM","index":4,"datePickerVal":"2021-07-02"},
-    {"name":"Add Title","time":"8.00 AM","index":5,"datePickerVal":"2021-07-02"}
-]

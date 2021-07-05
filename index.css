@@ -136,7 +136,7 @@ tr td{
   font-size: 15px;
 }
 #modal-event-input {
-  display:none ;
+  display: none;
   justify-content: center;
   align-items: center;
 }
@@ -164,6 +164,7 @@ tr td{
   z-index: 1;
   position: absolute;
   top: 18%;
+  animation: zoomIn ease-in .25s;
 }
 
 #modal-event-input button:hover{
@@ -269,8 +270,25 @@ padding: 0 4px;
 .span-title {
   user-select: none;
 }
-button.button-date:active{
-  background-color: #74ff3b;
-   border: none;
-    outline:none;
+
+#title-form, #already-form {
+  animation: growth ease-in .25s;
+}
+
+@keyframes growth {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
