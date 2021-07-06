@@ -273,6 +273,7 @@ let calenderApp = {
     handleDatePickerSetting: function() {
         let datePickerArrValue =  datePicker.value.split('-');
         dateDefaultSetting.innerHTML = months[Number(datePickerArrValue[1] - 1)] + ' ' + datePickerArrValue[2] + ', ' + datePickerArrValue[0];
+        return months[Number(datePickerArrValue[1] - 1)] + ' ' + datePickerArrValue[2] + ', ' + datePickerArrValue[0];
     },
     setToLocalStorage: function(cell, i, comments = '', place = '', tfrom='', tto='') {
         
@@ -513,11 +514,11 @@ let calenderApp = {
                             }
                             if (obj.timefrom) {
                                 $('#time-show').style.display = 'block';
-                                timefromvalue.textContent = dayElement.textContent +' / '+ obj.timefrom;
+                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ obj.timefrom;
                                 timefrom.value = obj.timefrom;
                             } else {
                                 this.handleUpdateTimeOfInput(i);
-                                timefromvalue.textContent = dayElement.textContent +' / '+ this.timeFromStorage;
+                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.timeFromStorage;
                                 timefrom.value = '';
                             }
                             if (obj.timeto) {
