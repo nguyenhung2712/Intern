@@ -25,9 +25,6 @@ tr td{
   width: 100%;
 }
 
-.form-component {
-  position: relative;
-}
 
 .label-form {
   font-size: 12px;
@@ -179,9 +176,9 @@ tr td{
   font-size: 17px;
   font-weight: 400;
 }
-
-.fix-margin {
-  margin-top: 16px;
+#room-type{
+  width:15%;
+  float:right;
 }
 
 .room-title span {
