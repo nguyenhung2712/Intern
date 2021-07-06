@@ -39,10 +39,13 @@ const commentsValue = $('#comments-value');
 const commentsArea = $('#comments-area');
 const locationInput = $('#location-input'); 
 const roomInput = $('#room-type');
+const timefrom = $('#from');
+const timeto = $('#to');
+const timefromvalue = $('#timefrom-value');
+const timetovalue = $('#timeto-value')
 
 const timeRoomSaved = $('#time-room-saved');
 const dateSettingSaved = $('#date-setting-saved');
-
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -137,7 +140,7 @@ let calenderApp = {
             color: 'rgb(21, 49, 112)'
         },
     ],
-    dateRegex: /^(0?[1-9]|[1][012]):([0-5][0-9])\s(AM|PM)$/,
+   
     dataIn: JSON.parse(localStorage.getItem('dataIn')) || [],
     setDataIn: function() {
         localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
@@ -161,25 +164,27 @@ let calenderApp = {
             })
         })
     },
-    createNewData: function(index, name, time, datePickerVal, comments = '', place = '', room = '') {
+    createNewData: function(index, name, datePickerVal, comments = '', place = '', room = '', timefrom = '', timeto = '') {
         let data = {};
         data.index = index;
         data.name = name;
-        data.time = time;
+        data.timefrom = timefrom;
+        data.timeto = timeto;
         data.comments = comments;
         data.place = place;
         data.datePickerVal = datePickerVal;
         data.room = room;
         return data;
     },
-    mergeDataIn: function(index, name, time, datePickerVal, comments, place, room, flagIndex) {
+    mergeDataIn: function(index, name, timefrom, timeto, datePickerVal, comments, place, room, flagIndex) {
         this.dataIn[flagIndex].name = name;
-        this.dataIn[flagIndex].time = time;
+        this.dataIn[flagIndex].timefrom = timefrom;
+        this.dataIn[flagIndex].timeto = timeto;
         this.dataIn[flagIndex].index = index;
         this.dataIn[flagIndex].datePickerVal = datePickerVal;
         this.dataIn[flagIndex].comments = comments;
         this.dataIn[flagIndex].place = place;
-        this.dataIn[flagIndex].place = place;
+        this.dataIn[flagIndex].room = room;
     },
     cleanCell: function() {
         cells.forEach(cell => {
@@ -227,25 +232,24 @@ let calenderApp = {
             .map(x => x.style.userSelect = "none");
     },
     handleUpdateTimeOfInput: function(i) {
-        let timeOfData;
         const timeInDay = Array.from(tableHeadItem).filter(time => time.scope === "row");
         if (i >= 10 && i < 100) {
             const firstNum = Number(i.toString().split('').splice(0, 1).join(''));
             if (timeInDay[firstNum + 1].textContent === '11.30 AM - 1.30 PM') {
                 timeRoom.textContent = timeInDay[firstNum].textContent + ' - 11.30 AM';
+                
             } else {
                 timeRoom.textContent = timeInDay[firstNum].textContent + ' - ' + timeInDay[firstNum + 1].textContent;
+                
             }
-            timeOfData = timeInDay[firstNum].textContent;
         } else if (i >= 100) {
             const firstNum = Number(i.toString().split('').splice(0, 2).join(''));
             timeRoom.textContent = timeInDay[firstNum].textContent + ' - 7.00 PM';
-            timeOfData = timeInDay[firstNum].textContent;
+            
         } else if (i < 10) {
             timeRoom.textContent = timeInDay[0].textContent + ' - ' + timeInDay[1].textContent;
-            timeOfData = timeInDay[0].textContent;
+            
         }
-        return timeOfData;
     },
     handleUpdateDay: function() {
         let changeday = datePicker.value;
@@ -255,21 +259,21 @@ let calenderApp = {
         let datePickerArrValue =  datePicker.value.split('-');
         dateDefaultSetting.innerHTML = months[Number(datePickerArrValue[1] - 1)] + ' ' + datePickerArrValue[2] + ', ' + datePickerArrValue[0];
     },
-    setToLocalStorage: function(cell, i, room = '', comments = '', place = '') {
-        let timeOfData = this.handleUpdateTimeOfInput(i);
+    setToLocalStorage: function(cell, i, room = '', comments = '', place = '', tfrom='', tto='') {
         
-        let objData = this.createNewData(i, cell.textContent, timeOfData, datePicker.value, comments, place, room);
+        let objData = this.createNewData(i, cell.textContent, datePicker.value, comments, place, room, tfrom, tto);
         let flag = true;
-        let index;
+        let indexCheck;
         for (let i = 0; i < this.dataIn.length; i++) {
-            if (this.dataIn[i].index === objData.index) {
+            if (this.dataIn[i].index === objData.index && this.dataIn[i].datePickerVal === datePicker.value) {
                 flag = false;
-                index = i;
+                indexCheck = i;
                 break;
             }
         }
+
         if (flag === false && objData.datePickerVal !== datePicker.value) {
-            this.mergeDataIn(objData.index, objData.name, objData.time, objData.datePickerVal, objData.comments, objData.place, objData.room,index);
+            this.mergeDataIn(objData.index, objData.name, objData.tfrom, objData.tto, objData.datePickerVal, objData.comments, objData.place, objData.room, indexCheck);
         } else {
             this.dataIn.push(objData);
         }
@@ -378,9 +382,14 @@ let calenderApp = {
                         
                         modal_input.setAttribute('style', 'display: none')
                         cell.textContent = summary.value;
-                        this.setToLocalStorage(cell, i, roomInput.options[roomInput.selectedIndex].text, commentsArea.value, locationInput.value);
-                    }
+                        this.setToLocalStorage(cell, i, roomInput.options[roomInput.selectedIndex].text, commentsArea.value, locationInput.value, timefrom.value, timeto.value);
                     
+                    }
+                    resetdata = () => {
+                        summary.value = '';
+                        locationInput.value = '';
+                        commentsArea.value = '';
+                    }
                     /* Focus input form when click any cells */
                     titleInput.focus();
                     editBtn.focus();
@@ -415,12 +424,14 @@ let calenderApp = {
                         e.preventDefault()
                        titleForm.setAttribute('style', 'display: none !important');
                         modal_input.setAttribute('style', 'display: flex !important');
+                        resetdata();
                     }
 
                     editBtn.onclick = (e) => {
                         e.preventDefault();
                         modal_input.setAttribute('style', 'display: flex !important');
                         alreadyForm.setAttribute('style', 'display: none');
+                        
                     }
                     
                     /* Date title input default */
@@ -453,6 +464,22 @@ let calenderApp = {
                             } else {
                                 roomNameSaved.innerText = roomNameCreate.innerText;
                                 roomInput.options[roomInput.selectedIndex].text = roomNameCreate.innerText;
+                            }
+
+                            if (obj.timefrom) {
+                                timefromvalue.textContent = obj.timefrom;
+                                timefrom.value = obj.timefrom;
+                            } else {
+                                timefromvalue.textContent = '';
+                                timefrom.value = '';
+                            }
+
+                            if (obj.timeto) {
+                                timetovalue.textContent = obj.timeto;
+                                timeto.value = obj.timeto;
+                            } else {
+                                timetovalue.textContent = '';
+                                timeto.value = '';
                             }
                         }   
                     })

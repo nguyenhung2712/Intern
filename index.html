@@ -236,8 +236,10 @@
     </div>
     <div class="already-form-footer">
       <div>
-        <i class="fas fa-calendar-alt me-2"></i>
-        <span><span id="date-setting-saved"></span> ( <span id="time-room-saved"></span> )</span>
+        <div id="time-show">
+          <i class="fas fa-calendar-alt me-2"></i>
+          <span class="total-time-value"><span id="timefrom-value"></span> - <span id="timeto-value"></span> </span>
+        </div>
       </div>
       <div id="place-show">
         <i class="fas fa-map-marker-alt me-2"></i>
@@ -274,12 +276,12 @@
       </div>
       <div class="col-lg-12 col-md-12 col-sm-12 d-flex fix-margin">
         <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-right: 5px">
-          <input type="text" class="form-control title-input title-input-from" id="from">
+          <input type="time" class="form-control title-input title-input-from" id="from">
           <label for="from" class="label-form">From</label>
           <span class="focus-border"></span>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 form-component form-distance p-0" style="margin-left: 5px">
-          <input type="text" class="form-control title-input title-input-to" id="to">
+          <input type="time" class="form-control title-input title-input-to" id="to">
           <label for="to" class="label-form">To</label>
           <span class="focus-border"></span>
         </div>

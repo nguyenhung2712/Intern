@@ -168,14 +168,6 @@ tr td{
 .btn-delete:hover{
   color:rgb(227, 22, 91) ;
 }
-.btn-delete{
-  margin-top: 10px;
-  margin-bottom: -15px;
-}
-.save_cls {
-  margin-top: 10px;
-  margin-bottom: -15px;
-}
 #modal-event-input button:hover{
   background-color: rgb(209, 209, 209);
 }
