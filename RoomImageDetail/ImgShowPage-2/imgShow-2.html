@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../icons/fontawesome-free-5.13.0/css/all.min.css">
+</head>
+<body>
+    <section>
+        <img src="media/thumbnail-1.jpg" id="img-show">
+        <ul class="navigation">
+            <li onclick="imgUrl('media/thumbnail-1.jpg')"><img src="media/thumbnail-1.jpg"></li>
+            <li onclick="imgUrl('media/thumbnail-1.jpg')"><img src="media/thumbnail-1.jpg"></li>
+            <li onclick="imgUrl('media/thumbnail-1.jpg')"><img src="media/thumbnail-1.jpg"></li>
+            <li onclick="imgUrl('media/thumbnail-1.jpg')"><img src="media/thumbnail-1.jpg"></li>
+        </ul>
+    </section>
+    <div class="back-btn" onclick="history.back();">
+        <i class="fas fa-chevron-left"></i>
+    </div>
+    <script>
+        function imgUrl(url) {
+            document.getElementById('img-show').src = url;
+        }
+    </script>
+</body>
+</html>

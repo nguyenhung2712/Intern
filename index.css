@@ -184,6 +184,20 @@ tr td{
   float:right;
 }
 
+.room-title {
+  position: relative;
+}
+
+.room-title img {
+  /* display: none; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 150px;
+  z-index: 9999;
+}
+
 .room-title span {
   color: #000;
   font-size: 14px;
@@ -278,6 +292,17 @@ padding: 0 4px;
 
 #title-form, #already-form {
   animation: growth ease-in .25s;
+}
+
+.room-image {
+  position: absolute;
+  width: 130px;
+  height: 90px;
+  top: 40px;
+  background-size: cover;
+  display: none;
+  border-radius: 8px;
+  animation: growth ease-in .2s;
 }
 
 @keyframes growth {

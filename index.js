@@ -61,7 +61,9 @@ let calenderApp = {
             location: '',
             capacity: '',
             description: '',
-            email: ''
+            email: '',
+            pathImg: '',
+            isImgShow: false,
         },
         {
             name: 'Budweiser',
@@ -69,7 +71,9 @@ let calenderApp = {
             capacity: 8,
             description: 'Room',
             email: 'meetingroom2@infodation.vn',
-            color: 'rgb(200, 33, 43)'
+            color: 'rgb(200, 33, 43)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Heineken',
@@ -77,7 +81,9 @@ let calenderApp = {
             capacity: 8,
             description: 'Room',
             email: 'meetingroom5@infodation.vn',
-            color: 'rgb(34, 67, 29)'
+            color: 'rgb(34, 67, 29)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Saigon',
@@ -85,7 +91,9 @@ let calenderApp = {
             capacity: 12,
             description: 'Room',
             email: 'meetingroom3@infodation.vn',
-            color: 'rgb(254, 161, 0)'
+            color: 'rgb(254, 161, 0)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Strongbow',
@@ -93,7 +101,9 @@ let calenderApp = {
             capacity: 8,
             description: 'Room',
             email: 'meetingroom1@infodation.vn',
-            color: 'rgb(156, 108, 15)'
+            color: 'rgb(156, 108, 15)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Tiger',
@@ -101,7 +111,9 @@ let calenderApp = {
             capacity: 8,
             description: 'Room',
             email: 'meetingroom4@infodation.vn',
-            color: 'rgb(30, 55, 132)'
+            color: 'rgb(30, 55, 132)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Think Tank 1',
@@ -109,7 +121,9 @@ let calenderApp = {
             capacity: 4,
             description: 'Room',
             email: 'thinktankroom1@infodation.vn',
-            color: 'rgb(52, 163, 209)'
+            color: 'rgb(52, 163, 209)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Think Tank 2',
@@ -117,7 +131,9 @@ let calenderApp = {
             capacity: 6,
             description: 'Room',
             email: 'thinktankroom2@infodation.vn',
-            color: 'rgb(255, 106, 66)'
+            color: 'rgb(255, 106, 66)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Think Tank 3',
@@ -125,7 +141,9 @@ let calenderApp = {
             capacity: 4,
             description: 'Room',
             email: 'thinktankroom3@infodation.vn',
-            color: 'rgb(234, 63, 142)'
+            color: 'rgb(234, 63, 142)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Think Tank 4',
@@ -133,7 +151,9 @@ let calenderApp = {
             capacity: 6,
             description: 'Room',
             email: 'thinktankroom4@infodation.vn',
-            color: 'rgb(200, 0, 34)'
+            color: 'rgb(200, 0, 34)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
         {
             name: 'Think Tank 5',
@@ -141,7 +161,9 @@ let calenderApp = {
             capacity: 6,
             description: 'Room',
             email: 'thinktankroom5@infodation.vn',
-            color: 'rgb(21, 49, 112)'
+            color: 'rgb(21, 49, 112)',
+            pathImg: 'image/img-1.jpg',
+            isImgShow: false,
         },
     ],
    
@@ -152,14 +174,42 @@ let calenderApp = {
     timeFromStorage: '',
     timeToStorage: '',
     render: function() {    
-        roomHeadingTitle.innerHTML = this.roomDetails.map(room => {
+        roomHeadingTitle.innerHTML = this.roomDetails.map((room) => {
             return `
                 <th scope="col" class="room-title" style="user-select: none">
                     <span>${room.name}</span>
                     <div class="capacity-room">${room.capacity}</div>
+                    <div class="room-image" style="background-image: url('${room.pathImg}');"></div>
                 </th>
             `
         }).join('');
+
+    },
+    handleEventTitleRoom: function() {
+        let titleRoomArr = Array.from(roomHeadingTitle.childNodes).filter(room => room.scope === "col");
+        titleRoomArr.map((element, index) => {
+            element.onmouseover = () => {
+                if (!this.roomDetails[index].isImgShow) {
+                    this.roomDetails[index].isImgShow = true;
+                    element.childNodes[5].style.display = 'block';
+                    if (index === 10) {
+                        element.childNodes[5].style.right = '10px';
+                    }
+                }
+            }
+            element.onmouseout = () => {
+                if (this.roomDetails[index].isImgShow) {
+                    this.roomDetails[index].isImgShow = false;
+                    element.childNodes[5].style.display = 'none';
+                    if (index === 10) {
+                        element.childNodes[5].style.right = '10px';
+                    }
+                }
+            }
+            element.ondblclick = () => {
+                location.assign(`RoomImageDetail/ImgShowPage-${index}/imgShow-${index}.html`);
+            }
+        })
     },
     loadDataIn: function() {
         cells.forEach((cell, i) => {
@@ -555,11 +605,11 @@ let calenderApp = {
         this.render();
         this.loadDataIn();
         this.handleNothingUserSelect();
+        this.handleEventTitleRoom();
     }
 };
 
 
 calenderApp.start()
-
 
 
