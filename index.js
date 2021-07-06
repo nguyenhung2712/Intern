@@ -33,16 +33,25 @@ const roomNameSaved = $('#room-name-saved');
 const removeFormBtn = $('#remove');
 const closeAlreadyFormBtn = $('#close');
 const btnDelete = $('.btn-delete')
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 const save1 = $('#save1')
 const summary = $('#summary');
 const place = $('#place');
 const commentsValue = $('#comments-value');
+
 const commentsArea = $('#comments-area');
 const locationInput = $('#location-input'); 
+const roomInput = $('#room-type');
+const timefrom = $('#from');
+const timeto = $('#to');
+const timefromvalue = $('#timefrom-value');
+const timetovalue = $('#timeto-value')
 
-console.log(place,commentsValue,commentsArea,locationInput)
+console.log(timefrom,timeto,timefromvalue,timetovalue)
+const timeRoomSaved = $('#time-room-saved');
+const dateSettingSaved = $('#date-setting-saved');
+
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 /* const today = new Date(); */
 
 
@@ -137,7 +146,7 @@ let calenderApp = {
             color: 'rgb(21, 49, 112)'
         },
     ],
-
+   
     dataIn: JSON.parse(localStorage.getItem('dataIn')) || [],
     setDataIn: function() {
         localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
@@ -161,13 +170,27 @@ let calenderApp = {
             })
         })
     },
-    createNewData: function(name, time, index, datePickerVal) {
+    createNewData: function(index, name, timefrom, timeto, datePickerVal, comments = '', place = '', room = '') {
         let data = {};
-        data.name = name;
-        data.time = time;
         data.index = index;
+        data.name = name;
+        data.timefrom = timefrom;
+        data.timeto = timeto;
+        data.comments = comments;
+        data.place = place;
         data.datePickerVal = datePickerVal;
+        data.room = room;
         return data;
+    },
+    mergeDataIn: function(index, name, timefrom,timeto, datePickerVal, comments, place, room, flagIndex) {
+        this.dataIn[flagIndex].name = name;
+        this.dataIn[flagIndex].timefrom = timefrom;
+        this.dataIn[flagIndex].timeto = timeto;
+        this.dataIn[flagIndex].index = index;
+        this.dataIn[flagIndex].datePickerVal = datePickerVal;
+        this.dataIn[flagIndex].comments = comments;
+        this.dataIn[flagIndex].place = place;
+        this.dataIn[flagIndex].room = room;
     },
     cleanCell: function() {
         cells.forEach(cell => {
@@ -243,21 +266,36 @@ let calenderApp = {
         let datePickerArrValue =  datePicker.value.split('-');
         dateDefaultSetting.innerHTML = months[Number(datePickerArrValue[1] - 1)] + ' ' + datePickerArrValue[2] + ', ' + datePickerArrValue[0];
     },
-    setToLocalStorage: function(cell, i) {
+    setToLocalStorage: function(cell, i, room = '', comments = '', place = '',tfrom='',tto='') {
         let timeOfData = this.handleUpdateTimeOfInput(i);
-        let objData = this.createNewData(cell.textContent, timeOfData, i, datePicker.value);
-        this.dataIn.push(objData);
+        
+        let objData = this.createNewData(i, cell.textContent, tfrom,tto, datePicker.value, comments, place, room);
+        let flag = true;
+        let index;
+        for (let i = 0; i < this.dataIn.length; i++) {
+            if (this.dataIn[i].index === objData.index) {
+                flag = false;
+                index = i;
+                break;
+            }
+        }
+        if (flag === false  && objData.datePickerVal !== datePicker.value) {
+            this.mergeDataIn(objData.index, objData.name, objData.tfrom,objData.tto, objData.datePickerVal, objData.comments, objData.place, objData.room,index);
+        } else {
+            this.dataIn.push(objData);
+        }
 
         this.setDataIn();
     },
     removeFromLocalStorage: function(i) {
         this.dataIn = this.dataIn.filter(obj => obj.index !== i || obj.datePickerVal !== datePicker.value);
+
         this.setDataIn();
     },
     resetAnimation: function(element) {
         element.style.animation = 'none';
         element.offsetHeight;
-        element.style.animation = null; 
+        element.style.animation = null;
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -272,10 +310,7 @@ let calenderApp = {
                     if(cell.textContent === '') {
                         alreadyForm.setAttribute('style', 'display: none !important')
                         titleForm.setAttribute('style', 'display: block !important')
-                        if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
-                            titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(titleForm);
-                        } else if (i === 9 || i === 8) {
+                        if ((i > 10 && (lastNum === 9 ||  lastNum === 8))||(i === 9 || i === 8)) {
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
                             this.resetAnimation(titleForm);
                         } else {
@@ -295,12 +330,9 @@ let calenderApp = {
                     } else {
                         alreadyForm.setAttribute('style', 'display: block !important')
                         titleForm.setAttribute('style', 'display: none !important')
-                        if (i > 10 && (lastNum === 9 ||  lastNum === 8)) {
-                            alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(alreadyForm);
-                        } else if (i === 9 || i === 8) {
-                            alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(alreadyForm);
+                        if ((i > 10 && (lastNum === 9 ||  lastNum === 8))||(i === 9 || i === 8)) {
+                            titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(titleForm);
                         } else {
                             alreadyForm.style.left = x  + 'px';
                             this.resetAnimation(alreadyForm);
@@ -356,8 +388,13 @@ let calenderApp = {
                         
                         modal_input.setAttribute('style', 'display: none')
                         cell.textContent = summary.value;
-                      
-                        this.setToLocalStorage(cell, i);
+                        this.setToLocalStorage(cell, i, roomInput.options[roomInput.selectedIndex].text, commentsArea.value, locationInput.value,timefrom.value,timeto.value);
+                    
+                    }
+                    resetdata = () => {
+                        summary.value = '';
+                        locationInput.value = '';
+                        commentsArea.value = '';
                     }
                     /* Focus input form when click any cells */
                     titleInput.focus();
@@ -384,7 +421,8 @@ let calenderApp = {
 
                     
                     Array.from(modal_closeBtn).map((closeBtn) => {
-                        closeBtn.onclick = () => {
+                        closeBtn.onclick = (e) => {
+                            e.preventDefault();
                             modal_input.setAttribute('style','display: none !important');
                         }
                     })
@@ -392,10 +430,11 @@ let calenderApp = {
                         e.preventDefault()
                        titleForm.setAttribute('style', 'display: none !important');
                         modal_input.setAttribute('style', 'display: flex !important');
+                        resetdata();
                     }
 
                     editBtn.onclick = (e) => {
-                        e.preventDefault()
+                        e.preventDefault();
                         modal_input.setAttribute('style', 'display: flex !important');
                         alreadyForm.setAttribute('style', 'display: none');
                         
@@ -403,6 +442,56 @@ let calenderApp = {
                     
                     /* Date title input default */
                     this.handleDatePickerSetting();
+
+                    this.dataIn.map(obj => {
+                        if (obj.index === i && obj.datePickerVal === datePicker.value) {
+                            summary.value = cell.textContent;
+                            if (obj.comments) {
+                                $('#comment-show').style.display = 'block';
+                                commentsValue.textContent = obj.comments;
+                                commentsArea.value = obj.comments;
+                            } else {
+                                $('#comment-show').style.display = 'none';
+                                commentsValue.textContent = '';
+                                commentsArea.value = '';
+                            }
+                            if (obj.place) {
+                                $('#place-show').style.display = 'block';
+                                place.textContent = obj.place;
+                                locationInput.value = obj.place;
+                            } else {
+                                $('#place-show').style.display = 'none';
+                                place.textContent = '';
+                                locationInput.value = '';
+                            }
+                            if (obj.room) {
+                                roomNameSaved.innerText = obj.room;
+                                roomInput.options[roomInput.selectedIndex].text = obj.room;
+                            } else {
+                                roomNameSaved.innerText = roomNameCreate.innerText;
+                                roomInput.options[roomInput.selectedIndex].text = roomNameCreate.innerText;
+                            }
+                            if (obj.tfrom) {
+                                $('#time-show').style.display = 'block';
+                                timefromvalue.textContent = obj.tfrom;
+                                timefrom.value = obj.tfrom;
+                            } else {
+                                $('#comment-show').style.display = 'none';
+                                timefromvalue.textContent = '';
+                                timefrom.value = '';
+                            }
+                            if (obj.tto) {
+                                $('#time-show').style.display = 'block';
+                                timetovalue.textContent = obj.tto;
+                                timeto.value = obj.tto;
+                            } else {
+                                $('#comment-show').style.display = 'none';
+                                timetovalue.textContent = '';
+                                timeto.value = '';
+                            }
+                        }   
+                    })
+
 
                 };
             }
@@ -416,7 +505,6 @@ let calenderApp = {
             this.handleDatePickerSetting();
             this.handleUpdateDay();
         }
-        
     },
     start: function() {
         this.handleDefault();
@@ -436,3 +524,6 @@ let calenderApp = {
 } */
 
 calenderApp.start()
+
+
+
