@@ -25,6 +25,9 @@ tr td{
   width: 100%;
 }
 
+.form-component {
+  position: relative;
+}
 
 .label-form {
   font-size: 12px;
