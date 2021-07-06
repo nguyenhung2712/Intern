@@ -54,8 +54,6 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 /* const today = new Date(); */
 
-
-
 let calenderApp = {
     roomDetails: [
         {
@@ -472,7 +470,7 @@ let calenderApp = {
                     })
                     detail.onclick = (e) => {
                         e.preventDefault()
-                       titleForm.setAttribute('style', 'display: none !important');
+                        titleForm.setAttribute('style', 'display: none !important');
                         modal_input.setAttribute('style', 'display: flex !important');
                         resetdata();
                     }
