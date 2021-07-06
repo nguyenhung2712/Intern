@@ -145,6 +145,8 @@ let calenderApp = {
     setDataIn: function() {
         localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
     },
+    timeFromStorage: '',
+    timeToStorage: '',
     render: function() {    
         roomHeadingTitle.innerHTML = this.roomDetails.map(room => {
             return `
@@ -164,7 +166,7 @@ let calenderApp = {
             })
         })
     },
-    createNewData: function(index, name, datePickerVal, comments = '', place = '', room = '', timefrom = '', timeto = '') {
+    createNewData: function(index, name, datePickerVal, comments = '', place = '', timefrom = '', timeto = '') {
         let data = {};
         data.index = index;
         data.name = name;
@@ -173,10 +175,9 @@ let calenderApp = {
         data.comments = comments;
         data.place = place;
         data.datePickerVal = datePickerVal;
-        data.room = room;
         return data;
     },
-    mergeDataIn: function(index, name, timefrom, timeto, datePickerVal, comments, place, room, flagIndex) {
+    mergeDataIn: function(index, name, timefrom, timeto, datePickerVal, comments, place, flagIndex) {
         this.dataIn[flagIndex].name = name;
         this.dataIn[flagIndex].timefrom = timefrom;
         this.dataIn[flagIndex].timeto = timeto;
@@ -184,7 +185,6 @@ let calenderApp = {
         this.dataIn[flagIndex].datePickerVal = datePickerVal;
         this.dataIn[flagIndex].comments = comments;
         this.dataIn[flagIndex].place = place;
-        this.dataIn[flagIndex].room = room;
     },
     cleanCell: function() {
         cells.forEach(cell => {
@@ -237,18 +237,28 @@ let calenderApp = {
             const firstNum = Number(i.toString().split('').splice(0, 1).join(''));
             if (timeInDay[firstNum + 1].textContent === '11.30 AM - 1.30 PM') {
                 timeRoom.textContent = timeInDay[firstNum].textContent + ' - 11.30 AM';
+                this.timeFromStorage = timeInDay[firstNum].textContent;
+                this.timeToStorage = '11.30 AM';
             } else {
                 timeRoom.textContent = timeInDay[firstNum].textContent + ' - ' + timeInDay[firstNum + 1].textContent;
+                this.timeFromStorage = timeInDay[firstNum].textContent;
+                this.timeToStorage = timeInDay[firstNum + 1].textContent;
             }
         } else if (i >= 170) {
             const firstNum = Number(i.toString().split('').splice(0, 2).join(''));
             timeRoom.textContent = timeInDay[firstNum].textContent + ' - 7.00 PM';
+            this.timeFromStorage = timeInDay[firstNum].textContent;
+            this.timeToStorage = '7.00 PM';
         } else if (i >= 100 && i < 170) {
             const firstNum = Number(i.toString().split('').splice(0, 2).join(''));
             timeRoom.textContent = timeInDay[firstNum].textContent + ' - ' + timeInDay[firstNum + 1].textContent;
+            this.timeFromStorage = timeInDay[firstNum].textContent;
+            this.timeToStorage = timeInDay[firstNum + 1].textContent;
         } else if (i < 10) {
             timeRoom.textContent = timeInDay[0].textContent + ' - ' + timeInDay[1].textContent;
-        }
+            this.timeFromStorage = timeInDay[0].textContent;
+            this.timeToStorage = timeInDay[1].textContent;
+        }   
     },
     handleUpdateDay: function() {
         let changeday = datePicker.value;
@@ -258,9 +268,9 @@ let calenderApp = {
         let datePickerArrValue =  datePicker.value.split('-');
         dateDefaultSetting.innerHTML = months[Number(datePickerArrValue[1] - 1)] + ' ' + datePickerArrValue[2] + ', ' + datePickerArrValue[0];
     },
-    setToLocalStorage: function(cell, i, room = '', comments = '', place = '', tfrom='', tto='') {
+    setToLocalStorage: function(cell, i, comments = '', place = '', tfrom='', tto='') {
         
-        let objData = this.createNewData(i, cell.textContent, datePicker.value, comments, place, room, tfrom, tto);
+        let objData = this.createNewData(i, cell.textContent, datePicker.value, comments, place, tfrom, tto);
         let flag = true;
         let indexCheck;
         for (let i = 0; i < this.dataIn.length; i++) {
@@ -272,7 +282,7 @@ let calenderApp = {
         }
 
         if (flag === false && objData.datePickerVal !== datePicker.value) {
-            this.mergeDataIn(objData.index, objData.name, objData.tfrom, objData.tto, objData.datePickerVal, objData.comments, objData.place, objData.room, indexCheck);
+            this.mergeDataIn(objData.index, objData.name, objData.tfrom, objData.tto, objData.datePickerVal, objData.comments, objData.place, indexCheck);
         } else {
             this.dataIn.push(objData);
         }
@@ -288,6 +298,17 @@ let calenderApp = {
         element.style.animation = 'none';
         element.offsetHeight;
         element.style.animation = null;
+    },
+    changeToAMPM: function(date) {
+        let part;
+        let dateArr = date.split(':');
+        if (dateArr[0] > 12) {
+            dateArr[0] -= 12;
+            part = 'PM';
+        } else {
+            part = 'AM';
+        }
+        return dateArr[0] + '.' + dateArr[1] + ' ' + part;
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -394,7 +415,7 @@ let calenderApp = {
                         
                         modal_input.setAttribute('style', 'display: none')
                         cell.textContent = summary.value;
-                        this.setToLocalStorage(cell, i, roomInput.options[roomInput.selectedIndex].text, commentsArea.value, locationInput.value, timefrom.value, timeto.value);
+                        this.setToLocalStorage(cell, i, commentsArea.value, locationInput.value, this.changeToAMPM(timefrom.value), this.changeToAMPM(timeto.value));
                     
                     }
                     resetdata = () => {
@@ -473,17 +494,16 @@ let calenderApp = {
                             }
                             if (obj.room) {
                                 roomNameSaved.innerText = obj.room;
-                                roomInput.options[roomInput.selectedIndex].text = obj.room;
                             } else {
                                 roomNameSaved.innerText = roomNameCreate.innerText;
-                                roomInput.options[roomInput.selectedIndex].text = roomNameCreate.innerText;
                             }
                             if (obj.timefrom) {
                                 $('#time-show').style.display = 'block';
                                 timefromvalue.textContent = dayElement.textContent +' / '+ obj.timefrom;
                                 timefrom.value = obj.timefrom;
                             } else {
-                                timefromvalue.textContent = '';
+                                this.handleUpdateTimeOfInput(i);
+                                timefromvalue.textContent = dayElement.textContent +' / '+ this.timeFromStorage;
                                 timefrom.value = '';
                             }
                             if (obj.timeto) {
@@ -491,7 +511,7 @@ let calenderApp = {
                                 timetovalue.textContent =  obj.timeto;
                                 timeto.value = obj.timeto;
                             } else {
-                                timetovalue.textContent = '';
+                                timetovalue.textContent = this.timeToStorage;
                                 timeto.value = '';
                             }
                         }   
