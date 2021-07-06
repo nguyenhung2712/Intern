@@ -326,6 +326,7 @@ let calenderApp = {
             }
         }
     },
+    
     handleEvent: function() {
         /* Event clicking any cell in table */
         cells.forEach((cell, i) => {
@@ -559,8 +560,5 @@ let calenderApp = {
     }
 };
 
-<<<<<<< HEAD
-=======
 
 calenderApp.start()
->>>>>>> fa69dd35628a2d142516984f3ad6171f07677113
