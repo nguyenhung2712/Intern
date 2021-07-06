@@ -9,6 +9,7 @@ const bodyRect = document.body.getBoundingClientRect();
 const titleForm = $('#title-form');
 const titleInput = $('#title-input');
 //const titleInputEvent = $$('.input-form-event');
+const titlePage = $('title')
 const roomType = $('#room-type')
 const deleteBtn  = $('#btn-delete')
 const roomNameCreate = $('#room-name-create');
@@ -40,8 +41,7 @@ const place = $('#place');
 const commentsValue = $('#comments-value');
 
 const commentsArea = $('#comments-area');
-const locationInput = $('#location-input'); 
-const roomInput = $('#room-type');
+const locationInput = $('#location-input');
 const timefrom = $('#from');
 const timeto = $('#to');
 const timefromvalue = $('#timefrom-value');
@@ -316,6 +316,15 @@ let calenderApp = {
         }
         return dateArr[0] + '.' + dateArr[1] + ' ' + part;
     },
+    changeSelectBox: function(obj) {
+        let options = obj.children ;
+        for(let key in options){
+            if (options[key].selected){
+                titlePage.innerHTML = titlePage.innerHTML.slice(0, 21)
+                titlePage.innerHTML = titlePage.innerHTML + ' - ' + options[key].innerHTML
+            }
+        }
+    },
     handleEvent: function() {
         /* Event clicking any cell in table */
         cells.forEach((cell, i) => {
@@ -535,6 +544,9 @@ let calenderApp = {
             this.handleDatePickerSetting();
             this.handleUpdateDay();
         }
+
+        //thay đổi title page 
+        roomType.onchange = () => this.changeSelectBox(roomType);
     },
     start: function() {
         this.handleDefault();
@@ -546,16 +558,5 @@ let calenderApp = {
     }
 };
 
-//thay đổi title page 
-const titlePage = $('title')
 
-function changeSelectBox(obj) {
-    let options = obj.children ;
-    for(let key in options){
-        if (options[key].selected){
-            titlePage.innerHTML = titlePage.innerHTML.slice(0,21)
-            titlePage.innerHTML = titlePage.innerHTML + ' - ' + options[key].innerHTML
-        }
-    }
-}
 calenderApp.start()
