@@ -8,6 +8,9 @@ const datePicker = $('#datepicker');
 const bodyRect = document.body.getBoundingClientRect();
 const titleForm = $('#title-form');
 const titleInput = $('#title-input');
+//const titleInputEvent = $$('.input-form-event');
+const roomType = $('#room-type')
+const deleteBtn  = $('#btn-delete')
 const roomNameCreate = $('#room-name-create');
 const autoInputDate = $('#title-form span');
 const saveBtn = $('.btn-save');
@@ -50,6 +53,9 @@ const dateSettingSaved = $('#date-setting-saved');
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 /* const today = new Date(); */
+
+
+
 let calenderApp = {
     roomDetails: [
         {
@@ -388,7 +394,6 @@ let calenderApp = {
                     /* Save data when click savebtn */ 
                     saveBtn.onclick = (e) => {
                         e.preventDefault();
-                        
                         titleForm.setAttribute('style', 'display: none')
                         cell.textContent = titleInput.value;
                         this.setToLocalStorage(cell, i);
@@ -540,6 +545,17 @@ let calenderApp = {
         this.handleNothingUserSelect();
     }
 };
- 
 
+//thay đổi title page 
+const titlePage = $('title')
+
+function changeSelectBox(obj) {
+    let options = obj.children ;
+    for(let key in options){
+        if (options[key].selected){
+            titlePage.innerHTML = titlePage.innerHTML.slice(0,21)
+            titlePage.innerHTML = titlePage.innerHTML + ' - ' + options[key].innerHTML
+        }
+    }
+}
 calenderApp.start()

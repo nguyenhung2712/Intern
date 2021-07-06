@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Meeting Room Calendar</title>
+    <link rel="shortcut icon" href="./image/SYMBOL.png">
     <link rel="stylesheet" href="icons/fontawesome-free-5.13.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
@@ -25,17 +26,10 @@
                   <button type="button" class="btn button-date" id="next-day"><i class="fas fa-chevron-right"></i></button>
                  
                  
-                    <select class="form-select title-input title-input-to" id="room-type">
-                      <option selected>Budweiser</option>
-                      <option>Heineken</option>
-                      <option>Saigon</option>
-                      <option>Strongbow</option>
-                      <option>Tiger</option>
-                      <option>Think Tank 1</option>
-                      <option>Think Tank 2</option>
-                      <option>Think Tank 3</option>
-                      <option>Think Tank 4</option>
-                      <option>Think Tank 5</option>
+                    <select class="form-select title-input title-input-to" id="room-type" onchange="changeSelectBox(this)">
+                      <option selected >Room type</option>
+                      <option value="metting_room">Meeting Room</option>
+                      <option value="think_tank">Think Tank</option>
                     </select>
                     <span class="focus-border"></span>
                   
@@ -394,10 +388,6 @@
         </div>
       </div>
 
-     
-      
-    
-      
       <div class="col-lg-12 col-md-12 col-sm-12 form-component form-distance fix-margin p-0 w-100">
         <textarea id="comments-area" cols="100" rows="4" class="form-control title-input"></textarea>
         <label for="comments" class="label-form">Comments</label>
@@ -406,10 +396,8 @@
       
       <div class="save_cls">
         <button type="button" class="btn btn-delete">DELETE</button>
-    
         <button type="button" class="btn btn-save" id="save1">SAVE</button>
         <button type="button" class="btn modal_buttonclose">CLOSE</button>
-      
     </form>
   </div>
 </div>

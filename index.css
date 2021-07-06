@@ -163,9 +163,9 @@ tr td{
 
 .save_cls .btn-save,.modal_buttonclose{
   float:right;
-
 }
 .btn-delete:hover{
+
   color:rgb(227, 22, 91) ;
 }
 #modal-event-input button:hover{
