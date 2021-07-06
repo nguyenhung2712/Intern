@@ -237,18 +237,17 @@ let calenderApp = {
             const firstNum = Number(i.toString().split('').splice(0, 1).join(''));
             if (timeInDay[firstNum + 1].textContent === '11.30 AM - 1.30 PM') {
                 timeRoom.textContent = timeInDay[firstNum].textContent + ' - 11.30 AM';
-                
             } else {
                 timeRoom.textContent = timeInDay[firstNum].textContent + ' - ' + timeInDay[firstNum + 1].textContent;
-                
             }
-        } else if (i >= 100) {
+        } else if (i >= 170) {
             const firstNum = Number(i.toString().split('').splice(0, 2).join(''));
             timeRoom.textContent = timeInDay[firstNum].textContent + ' - 7.00 PM';
-            
+        } else if (i >= 100 && i < 170) {
+            const firstNum = Number(i.toString().split('').splice(0, 2).join(''));
+            timeRoom.textContent = timeInDay[firstNum].textContent + ' - ' + timeInDay[firstNum + 1].textContent;
         } else if (i < 10) {
             timeRoom.textContent = timeInDay[0].textContent + ' - ' + timeInDay[1].textContent;
-            
         }
     },
     handleUpdateDay: function() {
@@ -295,26 +294,32 @@ let calenderApp = {
         cells.forEach((cell, i) => {
             if (!(cell.textContent === 'Lunch Break')) {
                 cell.onclick = () => {
-                   
                     const cellRec =  cell.getBoundingClientRect()
                     let y = Math.round(cellRec.top - bodyRect.top);
                     let x = Math.round(cellRec.left - bodyRect.left);
-                    const lastNum = Number(i.toString().split('').splice(1, 2).join(''));
+                    const lastNum = Number(i.toString().split('').pop());
                     if(cell.textContent === '') {
-                        alreadyForm.setAttribute('style', 'display: none !important')
-                        titleForm.setAttribute('style', 'display: block !important')
-                        if ((i > 10 && (lastNum === 9 ||  lastNum === 8))||(i === 9 || i === 8)) {
+                        alreadyForm.setAttribute('style', 'display: none !important');
+                        titleForm.setAttribute('style', 'display: block !important');
+                        if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
                             titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(titleForm);
+                        } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
+                            titleForm.style.left = (x - cell.offsetWidth*2)  + 'px';
                             this.resetAnimation(titleForm);
                         } else {
                             titleForm.style.left = x  + 'px';
                             this.resetAnimation(titleForm);
                         }
-                        if (i >= 80) {
-                            titleForm.style.top = (y - cell.offsetHeight*3.2) + 'px';
-                        } else {
+
+                        if (i >= 150) {
+                            titleForm.style.top = (y + cell.offsetHeight*2.8) + 'px';
+                        } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                            titleForm.style.top = (y + cell.offsetHeight*3) + 'px';
+                        } else if (i < 150) {
                             titleForm.style.top = y + 'px';
                         }
+
                         if (cell.textContent) {
                             inputTitleForm.value = cell.textContent;
                         } else {
@@ -323,18 +328,25 @@ let calenderApp = {
                     } else {
                         alreadyForm.setAttribute('style', 'display: block !important')
                         titleForm.setAttribute('style', 'display: none !important')
-                        if ((i > 10 && (lastNum === 9 ||  lastNum === 8))||(i === 9 || i === 8)) {
-                            titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(titleForm);
+                        if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
+                            alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(alreadyForm);
+                        } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
+                            alreadyForm.style.left = (x - cell.offsetWidth*2)  + 'px';
+                            this.resetAnimation(alreadyForm);
                         } else {
                             alreadyForm.style.left = x  + 'px';
                             this.resetAnimation(alreadyForm);
                         }
-                        if (i >= 80) {
-                            alreadyForm.style.top = (y - cell.offsetHeight*3.2) + 'px';
-                        } else {
+                        
+                        if (i >= 150) {
+                            alreadyForm.style.top = (y + cell.offsetHeight*2.8) + 'px';
+                        } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                            alreadyForm.style.top = (y + cell.offsetHeight*3) + 'px';
+                        } else if (i < 150) {
                             alreadyForm.style.top = y + 'px';
                         }
+
                         if (cell.textContent) {
                             spanTitle.innerHTML = cell.textContent;
                         } else {
@@ -389,6 +401,8 @@ let calenderApp = {
                         summary.value = '';
                         locationInput.value = '';
                         commentsArea.value = '';
+                        timefrom.value = '';
+                        timeto.value = '';
                     }
                     /* Focus input form when click any cells */
                     titleInput.focus();
@@ -401,10 +415,9 @@ let calenderApp = {
                     if (i >= 10 && i < 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 1).join(''));
                         roomNameCreate.innerText = this.roomDetails[firstNum + 1].name;
-                        
                         alreadyFormHeader.style.background = this.roomDetails[firstNum + 1].color;
                     } else if (i >= 100) {
-                        const firstNum = Number(i.toString().split('').splice(1, 2).join(''));
+                        const firstNum = Number(i.toString().split('').splice(2, 2).join(''));
                         roomNameCreate.innerText = this.roomDetails[firstNum + 1].name;
                         alreadyFormHeader.style.background = this.roomDetails[firstNum + 1].color;
                     } else if (i < 10) {
@@ -465,17 +478,17 @@ let calenderApp = {
                                 roomNameSaved.innerText = roomNameCreate.innerText;
                                 roomInput.options[roomInput.selectedIndex].text = roomNameCreate.innerText;
                             }
-
                             if (obj.timefrom) {
-                                timefromvalue.textContent = obj.timefrom;
+                                $('#time-show').style.display = 'block';
+                                timefromvalue.textContent = dayElement.textContent +' / '+ obj.timefrom;
                                 timefrom.value = obj.timefrom;
                             } else {
                                 timefromvalue.textContent = '';
                                 timefrom.value = '';
                             }
-
                             if (obj.timeto) {
-                                timetovalue.textContent = obj.timeto;
+                                $('#time-show').style.display = 'block';
+                                timetovalue.textContent =  obj.timeto;
                                 timeto.value = obj.timeto;
                             } else {
                                 timetovalue.textContent = '';
@@ -510,6 +523,3 @@ let calenderApp = {
  
 
 calenderApp.start()
-
-
-
