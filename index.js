@@ -395,6 +395,8 @@ let calenderApp = {
                         summary.value = '';
                         locationInput.value = '';
                         commentsArea.value = '';
+                        timefrom.value = '';
+                        timeto.value = '';
                     }
                     /* Focus input form when click any cells */
                     titleInput.focus();
@@ -471,19 +473,19 @@ let calenderApp = {
                                 roomNameSaved.innerText = roomNameCreate.innerText;
                                 roomInput.options[roomInput.selectedIndex].text = roomNameCreate.innerText;
                             }
-                            if (obj.tfrom) {
+                            if (obj.timefrom) {
                                 $('#time-show').style.display = 'block';
-                                timefromvalue.textContent = obj.tfrom;
-                                timefrom.value = obj.tfrom;
+                                timefromvalue.textContent = dayElement.textContent +' / '+ obj.timefrom;
+                                timefrom.value = obj.timefrom;
                             } else {
                                 $('#comment-show').style.display = 'none';
                                 timefromvalue.textContent = '';
                                 timefrom.value = '';
                             }
-                            if (obj.tto) {
+                            if (obj.timeto) {
                                 $('#time-show').style.display = 'block';
-                                timetovalue.textContent = obj.tto;
-                                timeto.value = obj.tto;
+                                timetovalue.textContent =  obj.timeto;
+                                timeto.value = obj.timeto;
                             } else {
                                 $('#comment-show').style.display = 'none';
                                 timetovalue.textContent = '';
