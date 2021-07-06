@@ -136,7 +136,7 @@ tr td{
   font-size: 15px;
 }
 #modal-event-input {
-  display: none;
+  display:none ;
   justify-content: center;
   align-items: center;
 }
@@ -165,9 +165,13 @@ tr td{
   z-index: 1;
   position: absolute;
   top: 18%;
-  animation: zoomIn ease-in .25s;
 }
-#btn-delete:hover{
+
+.save_cls .btn-save,.modal_buttonclose{
+  float:right;
+}
+.btn-delete:hover{
+
   color:rgb(227, 22, 91) ;
 }
 #btn-delete{
@@ -177,6 +181,7 @@ tr td{
 .save_cls {
   margin-top: 10px;
   margin-bottom: -15px;
+
 }
 #modal-event-input button:hover{
   background-color: rgb(209, 209, 209);

@@ -8,7 +8,7 @@ const datePicker = $('#datepicker');
 const bodyRect = document.body.getBoundingClientRect();
 const titleForm = $('#title-form');
 const titleInput = $('#title-input');
-const titleInputEvent = $$('.input-form-event');
+//const titleInputEvent = $$('.input-form-event');
 const deleteBtn  = $('#btn-delete')
 const roomNameCreate = $('#room-name-create');
 const autoInputDate = $('#title-form span');
@@ -32,8 +32,17 @@ const editBtn = $('#edit');
 const roomNameSaved = $('#room-name-saved');
 const removeFormBtn = $('#remove');
 const closeAlreadyFormBtn = $('#close');
-
+const btnDelete = $('.btn-delete')
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const save1 = $('#save1')
+const summary = $('#summary');
+const place = $('#place');
+const commentsValue = $('#comments-value');
+const commentsArea = $('#comments-area');
+const locationInput = $('#location-input'); 
+
+console.log(place,commentsValue,commentsArea,locationInput)
 /* const today = new Date(); */
 
 
@@ -178,7 +187,7 @@ let calenderApp = {
 
         this.cleanCell();
     },
-    toNextDay: function() {
+    toNextDay:function() {
         let inputValue = datePicker.valueAsDate;
         this.addOrSubtractDays(inputValue,1);
         datePicker.valueAsDate = inputValue; 
@@ -335,6 +344,21 @@ let calenderApp = {
                         inputTitleForm.value = 'Add Title';
                     }
 
+                    btnDelete.onclick = (e) => {
+                        e.preventDefault();
+                        modal_input.setAttribute('style', 'display: none')
+                        cell.textContent = '';
+                        this.removeFromLocalStorage(i);
+                        inputTitleForm.value = 'Add Title';
+                    }
+                    save1.onclick = (e) => {
+                        e.preventDefault();
+                        
+                        modal_input.setAttribute('style', 'display: none')
+                        cell.textContent = summary.value;
+                      
+                        this.setToLocalStorage(cell, i);
+                    }
                     /* Focus input form when click any cells */
                     titleInput.focus();
                     editBtn.focus();
@@ -346,6 +370,7 @@ let calenderApp = {
                     if (i >= 10 && i < 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 1).join(''));
                         roomNameCreate.innerText = this.roomDetails[firstNum + 1].name;
+                        
                         alreadyFormHeader.style.background = this.roomDetails[firstNum + 1].color;
                     } else if (i >= 100) {
                         const firstNum = Number(i.toString().split('').splice(1, 2).join(''));
@@ -356,6 +381,8 @@ let calenderApp = {
                         alreadyFormHeader.style.background = this.roomDetails[i + 1].color;
                     }
                     roomNameSaved.innerText = roomNameCreate.innerText;
+
+                    
                     Array.from(modal_closeBtn).map((closeBtn) => {
                         closeBtn.onclick = () => {
                             modal_input.setAttribute('style','display: none !important');
@@ -363,6 +390,7 @@ let calenderApp = {
                     })
                     detail.onclick = (e) => {
                         e.preventDefault()
+                       titleForm.setAttribute('style', 'display: none !important');
                         modal_input.setAttribute('style', 'display: flex !important');
                     }
 
@@ -401,14 +429,10 @@ let calenderApp = {
 };
 
 
-deleteBtn.onclick = () =>{
+/* deleteBtn.onclick = () =>{
     for(let key in titleInputEvent){
         titleInputEvent[key].value = ""
     }
-}
-/* documen.querySelector('btn-delete') = 
-function 
-for(let key in titleInputNew){
-    titleInputNew[key].value = ""
 } */
+
 calenderApp.start()
