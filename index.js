@@ -430,7 +430,7 @@ let calenderApp = {
                         
                         modal_input.setAttribute('style', 'display: none')
                         cell.textContent = summary.value;
-                        this.setToLocalStorage(cell, i, commentsArea.value, locationInput.value, this.changeToAMPM(timefrom.value), this.changeToAMPM(timeto.value));
+                        this.setToLocalStorage(cell, i, commentsArea.value, locationInput.value, timefrom.value, timeto.value);
                     
                     }
                     resetdata = () => {
@@ -514,7 +514,7 @@ let calenderApp = {
                             }
                             if (obj.timefrom) {
                                 $('#time-show').style.display = 'block';
-                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ obj.timefrom;
+                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.changeToAMPM(obj.timefrom);
                                 timefrom.value = obj.timefrom;
                             } else {
                                 this.handleUpdateTimeOfInput(i);
@@ -523,7 +523,7 @@ let calenderApp = {
                             }
                             if (obj.timeto) {
                                 $('#time-show').style.display = 'block';
-                                timetovalue.textContent =  obj.timeto;
+                                timetovalue.textContent =  this.changeToAMPM(obj.timeto);
                                 timeto.value = obj.timeto;
                             } else {
                                 timetovalue.textContent = this.timeToStorage;
@@ -561,3 +561,6 @@ let calenderApp = {
 
 
 calenderApp.start()
+
+
+
