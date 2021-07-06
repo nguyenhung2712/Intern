@@ -9,6 +9,7 @@ const bodyRect = document.body.getBoundingClientRect();
 const titleForm = $('#title-form');
 const titleInput = $('#title-input');
 //const titleInputEvent = $$('.input-form-event');
+const roomType = $('#room-type')
 const deleteBtn  = $('#btn-delete')
 const roomNameCreate = $('#room-name-create');
 const autoInputDate = $('#title-form span');
@@ -518,13 +519,18 @@ let calenderApp = {
     }
 };
 
+//thay đổi title page 
+const titlePage = $('title')
 
-/* deleteBtn.onclick = () =>{
-    for(let key in titleInputEvent){
-        titleInputEvent[key].value = ""
+function changeSelectBox(obj) {
+    let options = obj.children ;
+    for(let key in options){
+        if (options[key].selected){
+            titlePage.innerHTML = titlePage.innerHTML.slice(0,21)
+            titlePage.innerHTML = titlePage.innerHTML + ' - ' + options[key].innerHTML
+        }
     }
-} */
-
+}
 calenderApp.start()
 
 
