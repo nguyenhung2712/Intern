@@ -302,7 +302,14 @@ padding: 0 4px;
   background-size: cover;
   display: none;
   border-radius: 8px;
-  animation: growth ease-in .2s;
+  box-shadow: 0 0 25px rgb(138, 133, 133);
+  animation: growth ease-in .5s;
+}
+
+.hide-cell {
+  display: none;
+  border: none;
+  
 }
 
 @keyframes growth {
