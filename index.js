@@ -676,3 +676,23 @@ let calenderApp = {
 calenderApp.start()
 
 
+const name_email = $("#name_email");
+const data_email = $(".data")
+const signinbtn = $('.g-signin2');
+
+   function onSignIn(googleUser) {
+var profile = googleUser.getBasicProfile();
+data_email.setAttribute('style', 'display: block')
+signinbtn.setAttribute('style', 'display: none')
+name_email.innerHTML = profile.getName(); // This is null if the 'email' scope is not present.
+}
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    alert('You have signed out !!!')
+    signinbtn.setAttribute('style', 'display: block')
+    data_email.setAttribute('style', 'display: none')
+
+  });
+}
