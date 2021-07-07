@@ -421,9 +421,9 @@ let calenderApp = {
                     })
                 }
             })
+            this.changeSelectBox(roomType);
         }
         
-        /* console.log(this.dataOfCells); */
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -659,8 +659,6 @@ let calenderApp = {
             this.handleUpdateDay();
         }
 
-        //thay đổi title page 
-        roomType.onchange = () => this.changeSelectBox(roomType);
     },
     start: function() {
         this.handleDefault();
