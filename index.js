@@ -189,7 +189,7 @@ let calenderApp = {
     handleEventTitleRoom: function() {
         let titleRoomArr = Array.from(roomHeadingTitle.childNodes).filter(room => room.scope === "col");
         titleRoomArr.map((element, index) => {
-            element.onmouseover = () => {
+            element.childNodes[1].onmouseover = () => {
                 if (!this.roomDetails[index].isImgShow) {
                     this.roomDetails[index].isImgShow = true;
                     element.childNodes[5].style.display = 'block';
@@ -198,7 +198,7 @@ let calenderApp = {
                     }
                 }
             }
-            element.onmouseout = () => {
+            element.childNodes[1].onmouseout = () => {
                 if (this.roomDetails[index].isImgShow) {
                     this.roomDetails[index].isImgShow = false;
                     element.childNodes[5].style.display = 'none';
