@@ -1,3 +1,4 @@
+
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
@@ -82,7 +83,7 @@ let calenderApp = {
             description: 'Room',
             email: 'meetingroom5@infodation.vn',
             color: 'rgb(34, 67, 29)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-2.jpg',
             isImgShow: false,
         },
         {
@@ -92,7 +93,7 @@ let calenderApp = {
             description: 'Room',
             email: 'meetingroom3@infodation.vn',
             color: 'rgb(254, 161, 0)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-3.jpg',
             isImgShow: false,
         },
         {
@@ -102,7 +103,7 @@ let calenderApp = {
             description: 'Room',
             email: 'meetingroom1@infodation.vn',
             color: 'rgb(156, 108, 15)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-4.jpg',
             isImgShow: false,
         },
         {
@@ -112,7 +113,7 @@ let calenderApp = {
             description: 'Room',
             email: 'meetingroom4@infodation.vn',
             color: 'rgb(30, 55, 132)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-5.jpg',
             isImgShow: false,
         },
         {
@@ -122,7 +123,7 @@ let calenderApp = {
             description: 'Room',
             email: 'thinktankroom1@infodation.vn',
             color: 'rgb(52, 163, 209)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-6.jpg',
             isImgShow: false,
         },
         {
@@ -132,7 +133,7 @@ let calenderApp = {
             description: 'Room',
             email: 'thinktankroom2@infodation.vn',
             color: 'rgb(255, 106, 66)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-7.jpg',
             isImgShow: false,
         },
         {
@@ -142,7 +143,7 @@ let calenderApp = {
             description: 'Room',
             email: 'thinktankroom3@infodation.vn',
             color: 'rgb(234, 63, 142)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-8.jpg',
             isImgShow: false,
         },
         {
@@ -152,7 +153,7 @@ let calenderApp = {
             description: 'Room',
             email: 'thinktankroom4@infodation.vn',
             color: 'rgb(200, 0, 34)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-9.jpg',
             isImgShow: false,
         },
         {
@@ -162,7 +163,7 @@ let calenderApp = {
             description: 'Room',
             email: 'thinktankroom5@infodation.vn',
             color: 'rgb(21, 49, 112)',
-            pathImg: 'image/img-1.jpg',
+            pathImg: 'image/img-10.jpg',
             isImgShow: false,
         },
     ],
@@ -208,7 +209,8 @@ let calenderApp = {
                 }
             }
             element.ondblclick = () => {
-                location.assign(`RoomImageDetail/ImgShowPage-${index}/imgShow-${index}.html`);
+               
+                setTimeout(location.assign(`RoomImageDetail/ImgShowPage-${index}/imgShow-${index}.html`),10000);
             }
         })
     },
@@ -787,3 +789,7 @@ function signOut() {
 
   });
 }
+
+
+
+

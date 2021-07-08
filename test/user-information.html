@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <meta name="google-signin-client_id" content="784869871468-vrkcr0cefpqi8nkmtclo2neoek40qtkg.apps.googleusercontent.com">
-    <link rel="stylesheet" href="../icons/fontawesome-free-5.13.0/css/all.min.css">
-    <link rel="stylesheet" href="../icons/fontawesome-free-5.13.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/icons/fontawesome-free-5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="/icons/fontawesome-free-5.13.0/css/fontawesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="user-page.css"> 
 </head>
@@ -17,13 +17,9 @@
     <div class="user-left text-center">
         <a class="user-link mt-3" href="user-information.html">Personal Information</a>
         <br>
-        <a class="user-link mt-3" href="user-change-password.html">Change Password</a>
-        <br>
-        <a class="user-link mt-3" href="user-change-email.html">Change Email</a>
-        <br>
         <a class="user-link mt-3" href="../index.html">Homepage</a>
         <br>
-        <a class="user-link mt-3" href="#">Log Out</a>
+        <a class="user-link mt-3" href="#" onclick="signOut()">Log Out</a>
     </div>
     <div class="user-right">
         <h3 class="user-tittle" style="float: left;">Personal Information</h3>
@@ -41,7 +37,7 @@
             </tr>     
             <tr class="line">
                 <td class="user-about">Username</td>
-                <td class="user-text">nhan1269180000</td>   
+                <td class="user-text"><span id="username"></span></td>   
             </tr>
             
             <tr class="line">
@@ -57,42 +53,42 @@
 
             <tr class="line">
                 <td class="user-about">Gender</td>
-                <td class="user-text">Male</td>   
+                <td class="user-text"><span id="gender"></span></td>   
             </tr>
 
             <tr class="line">
                 <td class="user-about">Birthday</td>
-                <td class="user-text">21/04/2001</td>   
+                <td class="user-text"><span id="birthday"></span></td>   
             </tr>
 
             <tr class="line">
                 <td class="user-about">Job</td>
-                <td class="user-text">...</td>   
+                <td class="user-text"><span id="job"></span></td>   
             </tr>
 
             <tr class="line">
                 <td class="user-about">Location</td>
-                <td class="user-text">...</td>   
+                <td class="user-text"><span id="place"></span></td>   
             </tr>
 
             <tr class="line">
                 <td class="user-about">Phone Number</td>
-                <td class="user-text">0896497728</td>   
+                <td class="user-text"><span id="phonenum"></span></td>   
             </tr>
 
             <tr class="line">
                 <td class="user-about">Facebook</td>
-                <td class="user-text">...</td>   
+                <td class="user-text"><a href=""><span id="facebook"></span></a></td>   
             </tr>
 
             <tr class="line">
                 <td class="user-about">Skype</td>
-                <td class="user-text">...</td>   
+                <td class="user-text"><span id="skype"></td>   
             </tr>
 
             <tr class="line">
                 <td class="user-about">About</td>
-                <td class="user-text">...</td>   
+                <td class="user-text"><span id="about"></td>   
             </tr>
         </table>
         
@@ -104,6 +100,52 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-   <script src="test.js"></script>
+   <script>
+       var name_email = document.getElementById("name_email");
+    var email = document.getElementById("email")
+    var photo = document.getElementById("image")
+    var data_email = document.querySelector(".data")
+    var signinbtn = document.querySelector('.g-signin2');
+    
+
+    var fb =document.getElementById('facebook')
+    var username =document.getElementById('username')
+    var gender =document.getElementById('gender')
+    var birthday =document.getElementById('birthday')
+    var job =document.getElementById('job')
+    var place =document.getElementById('place')
+    var phonenum =document.getElementById('phonenum')
+    var skype =document.getElementById('skype')
+    var about =document.getElementById('about')
+
+
+    function onSignIn(googleUser) {
+    const profile = googleUser.getBasicProfile();
+    name_email.innerHTML = profile.getName();
+    photo.setAttribute('src',profile.getImageUrl());
+    email.innerHTML = profile.getEmail();
+    localStorage.setItem('key',email.innerHTML)
+    let  obj = JSON.parse(localStorage.getItem(email.innerHTML));
+    
+    fb.innerHTML = obj.fb
+    username.innerHTML = obj.id
+    birthday.innerHTML = obj.DoB
+    job.innerHTML = obj.job
+    place.innerHTML = obj.place
+    phonenum.innerHTML = obj.phone
+    skype.innerHTML = obj.skype
+    about.innerHTML = obj.about
+    gender.innerHTML =obj.gender
+    }
+   
+  
+    function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      alert('You have signed out !!!')
+    location.assign("/index.html")
+    });
+  }
+   </script>
 </body>
 </html>
