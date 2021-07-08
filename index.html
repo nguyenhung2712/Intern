@@ -14,23 +14,23 @@
 <body>
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
   <div class="data">
-    <div>
-      <span>Welcome: </span>
-    <a href="/test/user-information.html"><span id="name_email"></span></a>
-    </div>
-    <div class="feature">
-      <span id="signout-btn" onclick="signOut();"><i class="fas fa-sign-out-alt"></i></span>
-      <span onclick="setTimeout(location.assign('test/user-information.html'),5000)"><i class="fas fa-user"></i></span>
-   </div>
+      <div>
+        <span>Welcome: </span>
+        <a href="/test/user-information.html"><span id="name_email"></span></a>
+      </div>
+      <div class="feature">
+        <span id="signout-btn" onclick="signOut();"><i class="fas fa-sign-out-alt"></i></span>
+        <span onclick="setTimeout(location.assign('test/user-information.html'),5000)"><i class="fas fa-user" id="user-info"></i></span>
+      </div>
   </div>
     <div class="table-responsive">
       
     <table id="tableid" class="table table-bordered table-striped table-hover">
         <thead>
-            <tr>
+            <tr class="project-heading">
                 <th colspan="11" id="name_calendar">Meeting Room Calendar</th>
             </tr>
-            <tr>
+            <tr class="project-heading">
                 <th colspan="11"> 
                   <p id="day"></p>
                   <input type="date" id="datepicker" style="height: 35px;">
@@ -76,7 +76,7 @@
             </tr>
             <tr>
               <th scope="row">8.30 AM</th>
-              <td ></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>

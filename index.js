@@ -281,7 +281,7 @@ let calenderApp = {
     },
     handleDefault: function() {
         /* Title default */
-        inputTitleForm.value = 'Add Title';
+        inputTitleForm.value = '';
 
         /* Day header default */
         dayElement.innerHTML = new Date().toDateString();
@@ -424,6 +424,98 @@ let calenderApp = {
             this.changeSelectBox(roomType);
         }
         
+    },
+    findFirstIndexAndAmount: function(arr) {
+        let newArr = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === arr[i + 1]) {
+                newArr.push({index: i, name: arr[i]});
+            }
+            if (arr[i] !== arr[i + 1] && arr[i] === arr[i - 1]) {
+                newArr.push({index: i, name: arr[i]});
+            }
+            if (arr[i] === 'Lunch Break' || arr[i] === '') {
+                newArr.push({index: i, name: ''});
+            }
+        }
+
+        /* Find length of cells and first index to merge */
+        let tempObj = [];
+        let resultObj = [];
+        newArr.map(obj => {
+            if (obj.name !== '') {
+                tempObj.push(obj);
+            } else {
+                resultObj.push(tempObj);
+                tempObj = [];
+            }
+        })
+
+        let firstIndex = [];
+        let remainingIndex = [];
+        let amountNum = [];
+        resultObj.map(arr => {
+            if (arr.length !== 0) {
+                amountNum.push(arr.length)
+            }
+            return arr.map((obj, i) => {
+                if (i == 0) {
+                    firstIndex.push(obj.index);
+                } else {
+                    remainingIndex.push(obj.index)
+                }
+            })
+        })
+        return [firstIndex, remainingIndex, amountNum];
+    },
+    handleMergeOneCollumn: function(room, color) {
+        let text = room.map(obj => {
+            return obj.cell.textContent
+        })
+        let indexOfFirst = this.findFirstIndexAndAmount(text)[0];
+        let remainingIndex = this.findFirstIndexAndAmount(text)[1];
+        let amountNum = this.findFirstIndexAndAmount(text)[2];
+        room.map((obj, index) => {
+            remainingIndex.map(remaining => {
+                indexOfFirst.map((first, indexF) => {
+                    amountNum.map((amount, indexA) => {
+                        if (indexF === indexA && index === first) {
+                            obj.cell.setAttribute('rowspan', `${amount}`);
+                            obj.cell.style.backgroundColor = `${color} `;
+                            obj.cell.style.fontWeight = 'bold'
+                            obj.cell.style.color = '#f6fff3';
+                        }
+                        if (remaining === index) {
+                            obj.cell.style.display = 'none';
+                        }
+                    })
+                })
+            })
+        })  
+        
+    },
+    handleMergeCell: function() {
+        let budweiserRoom = this.dataOfCells.filter(obj => obj.roomName === 'Budweiser');
+        let heinekenRoom = this.dataOfCells.filter(obj => obj.roomName === 'Heineken');
+        let saigonRoom = this.dataOfCells.filter(obj => obj.roomName === 'Saigon');
+        let strongbowRoom = this.dataOfCells.filter(obj => obj.roomName === 'Strongbow');
+        let tigerRoom = this.dataOfCells.filter(obj => obj.roomName === 'Tiger');
+        let thinkTank1Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 1');
+        let thinkTank2Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 2');
+        let thinkTank3Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 3');
+        let thinkTank4Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 4');
+        let thinkTank5Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 5');
+        
+        this.handleMergeOneCollumn(budweiserRoom, this.roomDetails[1].color)
+        this.handleMergeOneCollumn(heinekenRoom, this.roomDetails[2].color);
+        this.handleMergeOneCollumn(saigonRoom, this.roomDetails[3].color);
+        this.handleMergeOneCollumn(strongbowRoom, this.roomDetails[4].color);
+        this.handleMergeOneCollumn(tigerRoom, this.roomDetails[5].color);
+        this.handleMergeOneCollumn(thinkTank1Room, this.roomDetails[6].color);
+        this.handleMergeOneCollumn(thinkTank2Room, this.roomDetails[7].color);
+        this.handleMergeOneCollumn(thinkTank3Room, this.roomDetails[8].color);
+        this.handleMergeOneCollumn(thinkTank4Room, this.roomDetails[9].color);
+        this.handleMergeOneCollumn(thinkTank5Room, this.roomDetails[10].color);
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -629,8 +721,6 @@ let calenderApp = {
                             }
                         }   
                     })
-
-
                 };
             }
         })
@@ -669,6 +759,7 @@ let calenderApp = {
         this.handleEventTitleRoom();
         this.handleFilterRoomType();
         this.loadDataIn();
+        this.handleMergeCell();
     }
 };
 
@@ -680,11 +771,11 @@ const name_email = $("#name_email");
 const data_email = $(".data")
 const signinbtn = $('.g-signin2');
 
-   function onSignIn(googleUser) {
-var profile = googleUser.getBasicProfile();
-data_email.setAttribute('style', 'display: block')
-signinbtn.setAttribute('style', 'display: none')
-name_email.innerHTML = profile.getName(); // This is null if the 'email' scope is not present.
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    data_email.setAttribute('style', 'display: block')
+    signinbtn.setAttribute('style', 'display: none')
+    name_email.innerHTML = profile.getName(); // This is null if the 'email' scope is not present.
 }
 
 function signOut() {

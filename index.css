@@ -11,9 +11,9 @@ tr#title th{
   color: #6d5f56;
   font-size:1rem;
 }
-tr td{
+/* tr td{
   background-color: #f6fff3 !important;
-}
+} */
 #tableid tbody{
   max-height: 300px !important;
 }
@@ -336,15 +336,17 @@ padding: 0 4px;
 .feature{
   font-size:20px;
 }
-.feature .fa-sign-out-alt ,.fa-user{
+.feature .fa-sign-out-alt ,.feature .fa-user{
   color:#293042;
   cursor: pointer;
   margin:10px 10px;
 }
-.feature .fa-sign-out-alt:hover ,.fa-user:hover{
+
+.feature .fa-sign-out-alt:hover ,.feature .fa-user:hover{
   opacity:0.5;
   animation:fadeInFromNone 0.2s ease-out;
 }
+
 @keyframes fadeInFromNone {
     0% {
         display: none;
