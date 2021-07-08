@@ -570,9 +570,9 @@ let calenderApp = {
                         }
                         
                         if (i >= 150) {
-                            alreadyForm.style.top = (y + cell.offsetHeight*2.8) + 'px';
+                            alreadyForm.style.top = (y + 200) + 'px';
                         } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                            alreadyForm.style.top = (y + cell.offsetHeight*3) + 'px';
+                            alreadyForm.style.top = (y + 200) + 'px';
                         } else if (i < 150) {
                             alreadyForm.style.top = y + 'px';
                         }

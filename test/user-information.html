@@ -126,8 +126,9 @@
     email.innerHTML = profile.getEmail();
     localStorage.setItem('key',email.innerHTML)
     let  obj = JSON.parse(localStorage.getItem(email.innerHTML));
-    
     fb.innerHTML = obj.fb
+    document.querySelector('.user-text a').setAttribute('href', fb.innerHTML);
+
     username.innerHTML = obj.id
     birthday.innerHTML = obj.DoB
     job.innerHTML = obj.job

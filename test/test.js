@@ -34,10 +34,9 @@ function CheckGender()
   return gender.value;
 }
 
-function createNewData(id='',image='',place='',DoB='',fb='',skype='',job='',phone='',about='',gender=''){
+function createNewData(id='',place='',DoB='',fb='',skype='',job='',phone='',about='',gender=''){
     let data = {};
     data.id = id;
-    data.image = image
     data.place = place
     data.DoB = DoB
     data.fb = fb
@@ -51,7 +50,7 @@ function createNewData(id='',image='',place='',DoB='',fb='',skype='',job='',phon
 
 function setToLocalStorage(){
   var Key = localStorage.getItem('key');
-    var dataIn = createNewData(nameData.value,image.value,place.value,DoB.value,fb.value,skype.value,job.value,phone.value,about.value,CheckGender())
+    var dataIn = createNewData(nameData.value,place.value,DoB.value,fb.value,skype.value,job.value,phone.value,about.value,CheckGender())
+
     localStorage.setItem(Key, JSON.stringify(dataIn))
-   
 }
