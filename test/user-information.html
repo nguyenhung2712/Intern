@@ -78,7 +78,7 @@
 
             <tr class="line">
                 <td class="user-about">Facebook</td>
-                <td class="user-text"><a href=""><span id="facebook"></span></a></td>   
+                <td class="user-text"><a href="" id="fb-address"><span id="facebook"></span></a></td>   
             </tr>
 
             <tr class="line">
@@ -117,7 +117,7 @@
     var phonenum =document.getElementById('phonenum')
     var skype =document.getElementById('skype')
     var about =document.getElementById('about')
-
+    var fb_add = document.getElementById('fb-address');
 
     function onSignIn(googleUser) {
     const profile = googleUser.getBasicProfile();
@@ -127,6 +127,7 @@
     localStorage.setItem('key',email.innerHTML)
     let  obj = JSON.parse(localStorage.getItem(email.innerHTML));
     fb.innerHTML = obj.fb
+    fb_add.setAttribute('href',obj.fb)
     document.querySelector('.user-text a').setAttribute('href', fb.innerHTML);
 
     username.innerHTML = obj.id
