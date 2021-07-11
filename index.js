@@ -614,19 +614,25 @@ let calenderApp = {
 
                     /* Save data when click savebtn */ 
                     saveBtn.onclick = (e) => {
-                        e.preventDefault();
+                        if(isLogin == true)
+                       { e.preventDefault();
                         titleForm.setAttribute('style', 'display: none')
                         cell.textContent = titleInput.value;
                         this.setToLocalStorage(cell, i, roomNameSaved.innerText);
-                        inputTitleForm.value = '';
+                        inputTitleForm.value = '';}
+                        else
+                        return false;
                     }
                     /* Remove data when click removeFormBtn*/
                     removeFormBtn.onclick = (e) => {
-                        e.preventDefault();
+                        if(isLogin == true)
+                       { e.preventDefault();
                         alreadyForm.setAttribute('style', 'display: none')
                         cell.textContent = '';
                         this.removeFromLocalStorage(i);
-                        inputTitleForm.value = 'Add Title';
+                        inputTitleForm.value = 'Add Title';}
+                        else
+                        return false;
                     }
 
                     btnDelete.onclick = (e) => {
@@ -664,16 +670,23 @@ let calenderApp = {
                         }
                     })
                     detail.onclick = (e) => {
-                        e.preventDefault()
+                        if(isLogin == true)
+                        {e.preventDefault()
                         titleForm.setAttribute('style', 'display: none !important');
                         modal_input.setAttribute('style', 'display: flex !important');
-                        resetdata();
+                        resetdata();}
+                        else
+                        return false;
+
                     }
 
                     editBtn.onclick = (e) => {
-                        e.preventDefault();
+                        if(isLogin == true)
+                      {  e.preventDefault();
                         modal_input.setAttribute('style', 'display: flex !important');
-                        alreadyForm.setAttribute('style', 'display: none');
+                        alreadyForm.setAttribute('style', 'display: none');}
+                        else
+                        return false;
                         
                     }
                     
@@ -768,7 +781,7 @@ let calenderApp = {
 
 calenderApp.start()
 
-
+var isLogin = false;
 const name_email = $("#name_email");
 const data_email = $(".data")
 const signinbtn = $('.g-signin2');
@@ -778,6 +791,7 @@ function onSignIn(googleUser) {
     data_email.setAttribute('style', 'display: block')
     signinbtn.setAttribute('style', 'display: none')
     name_email.innerHTML = profile.getName(); // This is null if the 'email' scope is not present.
+    isLogin = true;
 }
 
 function signOut() {
@@ -786,7 +800,7 @@ function signOut() {
     alert('You have signed out !!!')
     signinbtn.setAttribute('style', 'display: block')
     data_email.setAttribute('style', 'display: none')
-
+    isLogin = false;
   });
 }
 
