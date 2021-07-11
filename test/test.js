@@ -51,6 +51,6 @@ function createNewData(id='',place='',DoB='',fb='',skype='',job='',phone='',abou
 function setToLocalStorage(){
   var Key = localStorage.getItem('key');
     var dataIn = createNewData(nameData.value,place.value,DoB.value,fb.value,skype.value,job.value,phone.value,about.value,CheckGender())
-
+    
     localStorage.setItem(Key, JSON.stringify(dataIn))
 }

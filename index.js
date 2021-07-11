@@ -9,7 +9,6 @@ const datePicker = $('#datepicker');
 const bodyRect = document.body.getBoundingClientRect();
 const titleForm = $('#title-form');
 const titleInput = $('#title-input');
-//const titleInputEvent = $$('.input-form-event');
 const titlePage = $('title')
 const roomType = $('#room-type')
 const deleteBtn  = $('#btn-delete')
@@ -172,6 +171,7 @@ let calenderApp = {
     setDataIn: function() {
         localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
     },
+    /* flagIndexMerge: {}, */
     dataOfCells: [],
     timeFromStorage: '',
     timeToStorage: '',
@@ -223,10 +223,12 @@ let calenderApp = {
             })
         })
     },
-    createDataOfRoom: function(cell, roomName) {
+    createDataOfRoom: function(cell, roomName, tFrom, tTo) {
         let data = {};
         data.cell = cell;
         data.roomName = roomName;
+        data.tFrom = tFrom;
+        data.tTo = tTo;
         return data;
     },
     createNewData: function(index, name, datePickerVal, room = '', comments = '', place = '', timefrom = '', timeto = '') {
@@ -323,7 +325,7 @@ let calenderApp = {
             timeRoom.textContent = timeInDay[0].textContent + ' - ' + timeInDay[1].textContent;
             this.timeFromStorage = timeInDay[0].textContent;
             this.timeToStorage = timeInDay[1].textContent;
-        }   
+        }
     },
     handleUpdateDay: function() {
         let changeday = datePicker.value;
@@ -374,6 +376,14 @@ let calenderApp = {
             part = 'AM';
         }
         return dateArr[0] + '.' + dateArr[1] + ' ' + part;
+    },
+    changeToTime: function(date) {
+        let partArr = date.split(' ');
+        let partTimeArr = partArr[0].split('.');
+        if (partArr[1] == 'PM') {
+            partTimeArr[0] = parseInt(partTimeArr[0]) + 12;
+        }
+        return partTimeArr[0] + ':' + partTimeArr[1];
     },
     changeSelectBox: function(obj) {
         let options = obj.children ;
@@ -436,7 +446,7 @@ let calenderApp = {
             if (arr[i] !== arr[i + 1] && arr[i] === arr[i - 1]) {
                 newArr.push({index: i, name: arr[i]});
             }
-            if (arr[i] === 'Lunch Break' || arr[i] === '') {
+            if ((arr[i] === 'Lunch Break' || arr[i] === '') || (arr[i] !== arr[i + 1])) {
                 newArr.push({index: i, name: ''});
             }
         }
@@ -444,7 +454,7 @@ let calenderApp = {
         /* Find length of cells and first index to merge */
         let tempObj = [];
         let resultObj = [];
-        newArr.map(obj => {
+        newArr.map((obj, index) => {
             if (obj.name !== '') {
                 tempObj.push(obj);
             } else {
@@ -456,19 +466,23 @@ let calenderApp = {
         let firstIndex = [];
         let remainingIndex = [];
         let amountNum = [];
+        let lastIndex = [];
         resultObj.map(arr => {
             if (arr.length !== 0) {
                 amountNum.push(arr.length)
             }
             return arr.map((obj, i) => {
-                if (i == 0) {
+                if (i === 0) {
                     firstIndex.push(obj.index);
                 } else {
                     remainingIndex.push(obj.index)
                 }
+                if (i === arr.length - 1) {
+                    lastIndex.push(obj.index);
+                }
             })
         })
-        return [firstIndex, remainingIndex, amountNum];
+        return [firstIndex, remainingIndex, amountNum, lastIndex];
     },
     handleMergeOneCollumn: function(room, color) {
         let text = room.map(obj => {
@@ -476,25 +490,67 @@ let calenderApp = {
         })
         let indexOfFirst = this.findFirstIndexAndAmount(text)[0];
         let remainingIndex = this.findFirstIndexAndAmount(text)[1];
-        let amountNum = this.findFirstIndexAndAmount(text)[2];
+        let amountNum = this.findFirstIndexAndAmount(text)[2]; 
+        let indexOfLast = this.findFirstIndexAndAmount(text)[3];
+        let timeToArr = [];
+        let timeFromArr = [];
         room.map((obj, index) => {
-            remainingIndex.map(remaining => {
+            indexOfFirst.map(first => {
+                indexOfLast.map(last => {
+                    if (last === index) {
+                        timeToArr.push(obj.tTo);
+                    }
+                    if (first === index) {
+                        timeFromArr.push(obj.tFrom);
+                    }
+                })
+            })
+        })
+        
+        room.map((obj, index) => {
+            amountNum.map((amount, indexA) => {
                 indexOfFirst.map((first, indexF) => {
-                    amountNum.map((amount, indexA) => {
-                        if (indexF === indexA && index === first) {
-                            obj.cell.setAttribute('rowspan', `${amount}`);
-                            obj.cell.style.backgroundColor = `${color} `;
-                            obj.cell.style.fontWeight = 'bold'
-                            obj.cell.style.color = '#f6fff3';
-                        }
-                        if (remaining === index) {
-                            obj.cell.style.display = 'none';
-                        }
+                    indexOfLast.map((last, indexL) => {
+                        timeToArr.map((timeTo, indexTo) => {
+                            timeFromArr.map((timeFrom, indexFrom) => {
+                                remainingIndex.map(remaining => {
+                                    if (indexF === indexA && index === first) {
+                                        obj.cell.setAttribute('rowspan', `${amount}`);
+                                        obj.cell.style.backgroundColor = `${color} `;
+                                        obj.cell.style.fontWeight = 'bold'
+                                        obj.cell.style.color = '#f6fff3';
+                                        if (indexTo === indexF) {
+                                            obj.cell.dataset.timeTo = timeTo;
+                                        }
+                                        if (indexFrom === indexF) {
+                                            obj.cell.dataset.timeFrom = timeFrom;
+                                        }
+                                    }
+                                    if (remaining === index) {
+                                        obj.cell.style.display = 'none';
+                                        obj.cell.textContent = '';
+                                    }
+                                })
+                            })
+                        })
                     })
                 })
             })
         })  
-        
+        let _this = this;
+        room.map((obj) => {
+            obj.cell.ondblclick = function (event) {
+                if (event.target === obj.cell) {
+                    timetovalue.textContent = event.target.getAttribute('data-time-to');
+                    timeto.value = _this.changeToTime(timetovalue.textContent);
+                    let timeFrom = event.target.getAttribute('data-time-from');
+                    timefromvalue.textContent = _this.handleDatePickerSetting() +' / '+ timeFrom;
+                    timefrom.value = _this.changeToTime(timeFrom);
+                }
+            }
+        })
+
+
     },
     handleMergeCell: function() {
         let budweiserRoom = this.dataOfCells.filter(obj => obj.roomName === 'Budweiser');
@@ -570,11 +626,11 @@ let calenderApp = {
                         }
                         
                         if (i >= 150) {
-                            alreadyForm.style.top = (y + 200) + 'px';
+                            alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
                         } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                            alreadyForm.style.top = (y + 200) + 'px';
+                            alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
                         } else if (i < 150) {
-                            alreadyForm.style.top = y + 'px';
+                            alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
                         }
 
                         if (cell.textContent) {
@@ -654,9 +710,6 @@ let calenderApp = {
                     titleInput.focus();
                     editBtn.focus();
 
-                    
-
-                    
                     Array.from(modal_closeBtn).map((closeBtn) => {
                         closeBtn.onclick = (e) => {
                             e.preventDefault();
@@ -712,35 +765,40 @@ let calenderApp = {
                             } else {
                                 this.handleUpdateTimeOfInput(i);
                                 timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.timeFromStorage;
-                                timefrom.value = '';
+                                timefrom.value = this.changeToTime(this.timeFromStorage);
                             }
                             if (obj.timeto) {
                                 timetovalue.textContent =  this.changeToAMPM(obj.timeto);
                                 timeto.value = obj.timeto;
                             } else {
                                 timetovalue.textContent = this.timeToStorage;
-                                timeto.value = '';
+                                timeto.value = this.changeToTime(this.timeToStorage);
                             }
                         }   
                     })
+
+
                 };
+            }
+
+            if (i >= 10 && i < 100) {
+                this.handleUpdateTimeOfInput(i);
+                const firstNum = Number(i.toString().split('').splice(1, 1).join(''));
+                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[firstNum + 1].name, this.timeFromStorage, this.timeToStorage);
+                this.dataOfCells.push(objDataRoom);
+            } else if (i >= 100) {
+                this.handleUpdateTimeOfInput(i);
+                const firstNum = Number(i.toString().split('').splice(2, 2).join(''));
+                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[firstNum + 1].name, this.timeFromStorage, this.timeToStorage);
+                this.dataOfCells.push(objDataRoom);
+            } else if (i < 10) {
+                this.handleUpdateTimeOfInput(i);
+                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[i + 1].name, this.timeFromStorage, this.timeToStorage);
+                this.dataOfCells.push(objDataRoom);
             }
         })
 
-        Array.from(cells).map((cell, i) => {
-            if (i >= 10 && i < 100) {
-                const firstNum = Number(i.toString().split('').splice(1, 1).join(''));
-                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[firstNum + 1].name);
-                this.dataOfCells.push(objDataRoom);
-            } else if (i >= 100) {
-                const firstNum = Number(i.toString().split('').splice(2, 2).join(''));
-                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[firstNum + 1].name);
-                this.dataOfCells.push(objDataRoom);
-            } else if (i < 10) {
-                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[i + 1].name);
-                this.dataOfCells.push(objDataRoom);
-            }
-        })
+        /* Check object isempty ? */
 
 
         previousDay.onclick = () => this.toPreviousDay();
@@ -751,17 +809,20 @@ let calenderApp = {
             this.handleUpdateDay();
         }
 
+
+        let objDetailsTimeMerged = this.handleMergeCell();
     },
     start: function() {
         this.handleDefault();
-        this.handleEvent();
         this.handleUpdateDay();
         this.render();
         this.handleNothingUserSelect();
         this.handleEventTitleRoom();
         this.handleFilterRoomType();
         this.loadDataIn();
-        this.handleMergeCell();
+        this.handleEvent();
+
+
     }
 };
 

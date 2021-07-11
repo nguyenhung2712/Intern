@@ -161,6 +161,10 @@ tr#title th{
   animation: zoomIn ease-in .25s;
 }
 
+.fix-margin {
+  margin-top: 12px;
+}
+
 .save_cls .btn-save,.modal_buttonclose{
   float:right;
 }
