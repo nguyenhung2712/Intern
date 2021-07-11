@@ -28,9 +28,8 @@ function CheckGender()
   gender.value = 'Male'
   else if (female.checked==true)
   gender.value ='Female'
-  else if (other.checked==true)
-  gender.value ='Other'
-
+  else
+  gender.value ='';
   return gender.value;
 }
 
@@ -53,4 +52,5 @@ function setToLocalStorage(){
     var dataIn = createNewData(nameData.value,place.value,DoB.value,fb.value,skype.value,job.value,phone.value,about.value,CheckGender())
     
     localStorage.setItem(Key, JSON.stringify(dataIn))
+
 }
