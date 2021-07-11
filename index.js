@@ -377,14 +377,6 @@ let calenderApp = {
         }
         return dateArr[0] + '.' + dateArr[1] + ' ' + part;
     },
-    changeToTime: function(date) {
-        let partArr = date.split(' ');
-        let partTimeArr = partArr[0].split('.');
-        if (partArr[1] == 'PM') {
-            partTimeArr[0] = parseInt(partTimeArr[0]) + 12;
-        }
-        return partTimeArr[0] + ':' + partTimeArr[1];
-    },
     changeSelectBox: function(obj) {
         let options = obj.children ;
         for(let key in options){
@@ -539,15 +531,15 @@ let calenderApp = {
         })  
         let _this = this;
         room.map((obj) => {
-            obj.cell.ondblclick = function (event) {
+            obj.cell.addEventListener('click',function (event) {
                 if (event.target === obj.cell) {
                     timetovalue.textContent = event.target.getAttribute('data-time-to');
-                    timeto.value = _this.changeToTime(timetovalue.textContent);
+                    timeto.value =(timetovalue.textContent);
                     let timeFrom = event.target.getAttribute('data-time-from');
                     timefromvalue.textContent = _this.handleDatePickerSetting() +' / '+ timeFrom;
-                    timefrom.value = _this.changeToTime(timeFrom);
+                    timefrom.value = (timeFrom);
                 }
-            }
+            })
         })
 
 
@@ -579,7 +571,7 @@ let calenderApp = {
         /* Event clicking any cell in table */
         cells.forEach((cell, i) => {
             if (!(cell.textContent === 'Lunch Break')) {
-                cell.onclick = () => {
+                var set = cell.addEventListener("click" , () => {
                     const cellRec =  cell.getBoundingClientRect()
                     let y = Math.round(cellRec.top - bodyRect.top);
                     let x = Math.round(cellRec.left - bodyRect.left);
@@ -778,20 +770,20 @@ let calenderApp = {
                             } else {
                                 this.handleUpdateTimeOfInput(i);
                                 timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.timeFromStorage;
-                                timefrom.value = this.changeToTime(this.timeFromStorage);
+                                timefrom.value = (this.timeFromStorage);
                             }
                             if (obj.timeto) {
                                 timetovalue.textContent =  this.changeToAMPM(obj.timeto);
                                 timeto.value = obj.timeto;
                             } else {
                                 timetovalue.textContent = this.timeToStorage;
-                                timeto.value = this.changeToTime(this.timeToStorage);
+                                timeto.value = (this.timeToStorage);
                             }
                         }   
                     })
 
 
-                };
+                });
             }
 
             if (i >= 10 && i < 100) {
