@@ -166,12 +166,10 @@ let calenderApp = {
             isImgShow: false,
         },
     ],
-   
     dataIn: JSON.parse(localStorage.getItem('dataIn')) || [],
     setDataIn: function() {
         localStorage.setItem('dataIn', JSON.stringify(this.dataIn))
     },
-    /* flagIndexMerge: {}, */
     dataOfCells: [],
     timeFromStorage: '',
     timeToStorage: '',
@@ -459,11 +457,13 @@ let calenderApp = {
         let remainingIndex = [];
         let amountNum = [];
         let lastIndex = [];
+        let totalIndex = [];
         resultObj.map(arr => {
             if (arr.length !== 0) {
                 amountNum.push(arr.length)
             }
             return arr.map((obj, i) => {
+                totalIndex.push(obj.index)
                 if (i === 0) {
                     firstIndex.push(obj.index);
                 } else {
@@ -497,40 +497,58 @@ let calenderApp = {
                     }
                 })
             })
+            timeToArr = [...new Set(timeToArr)];
+            timeFromArr = [...new Set(timeFromArr)];
         })
+
+        /* room.map((obj, index) => {
+            indexOfFirst.map((first, indexF) => {
+                timeToArr.map((timeTo, indexT) => {
+                    if (index === first && indexT === indexF) {
+                        obj.cell.dataset.timeTo = timeTo;
+                    }
+                })
+                timeFromArr.map((timeFrom, indexFrom) => {
+                    if (index === first && indexFrom === indexF) {
+                        obj.cell.dataset.timeFrom = timeFrom;
+                    }
+                })
+            })
+        }) */
         
         room.map((obj, index) => {
             amountNum.map((amount, indexA) => {
                 indexOfFirst.map((first, indexF) => {
-                    indexOfLast.map((last, indexL) => {
-                        timeToArr.map((timeTo, indexTo) => {
-                            timeFromArr.map((timeFrom, indexFrom) => {
-                                remainingIndex.map(remaining => {
-                                    if (indexF === indexA && index === first) {
-                                        obj.cell.setAttribute('rowspan', `${amount}`);
-                                        obj.cell.style.backgroundColor = `${color} `;
-                                        obj.cell.style.fontWeight = 'bold'
-                                        obj.cell.style.color = '#f6fff3';
-                                        if (indexTo === indexF) {
-                                            obj.cell.dataset.timeTo = timeTo;
-                                        }
-                                        if (indexFrom === indexF) {
-                                            obj.cell.dataset.timeFrom = timeFrom;
-                                        }
-                                    }
-                                    if (remaining === index) {
-                                        obj.cell.style.display = 'none';
-                                        obj.cell.textContent = '';
-                                    }
-                                })
-                            })
-                        })
+                    remainingIndex.map(remaining => {
+                        if (indexF === indexA && index === first) {
+                            obj.cell.setAttribute('rowspan', `${amount}`);
+                            obj.cell.style.backgroundColor = `${color} `;
+                            obj.cell.style.fontWeight = 'bold'
+                            obj.cell.style.color = '#f6fff3';
+                            obj.cell.dataset.isMerged = true;
+                        } 
+                        if (remaining === index) {
+                            obj.cell.style.display = 'none';
+                            obj.cell.textContent = '';
+                        }
+                    })
+                    timeToArr.map((timeTo, indexT) => {
+                        if (index === first && indexT === indexF) {
+                            obj.cell.dataset.timeTo = timeTo;
+                        }
+                    })
+                    timeFromArr.map((timeFrom, indexFrom) => {
+                        if (index === first && indexFrom === indexF) {
+                            obj.cell.dataset.timeFrom = timeFrom;
+                        }
                     })
                 })
             })
         })  
+
         let _this = this;
         room.map((obj) => {
+<<<<<<< HEAD
             obj.cell.addEventListener('click',function (event) {
                 if (event.target === obj.cell) {
                     timetovalue.textContent = event.target.getAttribute('data-time-to');
@@ -538,13 +556,19 @@ let calenderApp = {
                     let timeFrom = event.target.getAttribute('data-time-from');
                     timefromvalue.textContent = _this.handleDatePickerSetting() +' / '+ timeFrom;
                     timefrom.value = (timeFrom);
+=======
+            obj.cell.addEventListener('click', function (event) {
+                if (event.target === obj.cell && event.target.getAttribute('data-is-merged')) {
+                    timetovalue.textContent = event.target.getAttribute('data-time-to');
+                    timeto.value = _this.changeToTime(timetovalue.textContent);
+>>>>>>> 02d4a08055e24bb04e4a09a8989ff98cfb9ad452
                 }
             })
         })
 
-
     },
     handleMergeCell: function() {
+
         let budweiserRoom = this.dataOfCells.filter(obj => obj.roomName === 'Budweiser');
         let heinekenRoom = this.dataOfCells.filter(obj => obj.roomName === 'Heineken');
         let saigonRoom = this.dataOfCells.filter(obj => obj.roomName === 'Saigon');
@@ -571,7 +595,11 @@ let calenderApp = {
         /* Event clicking any cell in table */
         cells.forEach((cell, i) => {
             if (!(cell.textContent === 'Lunch Break')) {
+<<<<<<< HEAD
              cell.addEventListener("click" , () => {
+=======
+                cell.addEventListener('click', () => {
+>>>>>>> 02d4a08055e24bb04e4a09a8989ff98cfb9ad452
                     const cellRec =  cell.getBoundingClientRect()
                     let y = Math.round(cellRec.top - bodyRect.top);
                     let x = Math.round(cellRec.left - bodyRect.left);
@@ -772,18 +800,24 @@ let calenderApp = {
                                 timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.timeFromStorage;
                                 timefrom.value = (this.timeFromStorage);
                             }
+
+
                             if (obj.timeto) {
                                 timetovalue.textContent =  this.changeToAMPM(obj.timeto);
                                 timeto.value = obj.timeto;
                             } else {
+                                this.handleUpdateTimeOfInput(i);
                                 timetovalue.textContent = this.timeToStorage;
                                 timeto.value = (this.timeToStorage);
                             }
-                        }   
-                    })
 
-
+<<<<<<< HEAD
                 });
+=======
+                        }
+                    })
+                })
+>>>>>>> 02d4a08055e24bb04e4a09a8989ff98cfb9ad452
             }
 
             if (i >= 10 && i < 100) {
