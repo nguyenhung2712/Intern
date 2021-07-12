@@ -571,7 +571,7 @@ let calenderApp = {
         /* Event clicking any cell in table */
         cells.forEach((cell, i) => {
             if (!(cell.textContent === 'Lunch Break')) {
-                var set = cell.addEventListener("click" , () => {
+             cell.addEventListener("click" , () => {
                     const cellRec =  cell.getBoundingClientRect()
                     let y = Math.round(cellRec.top - bodyRect.top);
                     let x = Math.round(cellRec.left - bodyRect.left);
