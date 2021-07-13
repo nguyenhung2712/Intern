@@ -59,6 +59,8 @@ const btn_saveEmail = document.querySelector('#btn--add');
 const btn_addEmail = document.querySelector('#addmember')
 const email_close = $('#email-close')
 const btn_removeEmail = document.querySelector('#btn--remove')
+const btn_sent =$('#btn--sent')
+console.log(btn_sent)
 /* const today = new Date(); */
 
 let calenderApp = {
@@ -852,7 +854,42 @@ let calenderApp = {
                         this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);
                         email_area.textContent = old_data;
                     }
-
+                    btn_sent.onclick = () => {
+                        var old_data;
+                        var roomName_data;
+                        var placeName_data;
+                      
+                        var planName_data;
+                        this.dataIn.map(obj => {
+                            old_data = obj.members
+                            roomName_data = obj.room
+                            placeName_data = obj.place
+                            planName_data = obj.name
+                        })
+                        for(let i = 0 ; i < old_data.length ;i++)
+                        { 
+                            Email.send({
+                                SecureToken : "82f41c5e-19ca-4888-a9d3-d94f3204d3e2",
+                                To :old_data[i],
+                                From : "nguyenthach617@gmail.com",
+                                Subject : "You have been added to plan:" + planName_data ,
+                                Body :+ 'Room: ' + roomName_data  + '     ||     '
+                                    + 'Location: ' + placeName_data + '     ||     '
+                                    + 'Time: ' + timefromvalue.textContent + ' - ' + timetovalue.textContent
+                               }).then(
+                              message => {
+                                if(message=='OK')
+                                 { alert('Calendar Plan is sent!')
+                                
+                                }
+                                else{
+                                  alert('Something wrong!!!')
+                                  console.log(message)
+                                }
+                              })
+                               ;
+                          }
+                    }
                     /* Date title input default */
                     this.handleDatePickerSetting();
 
