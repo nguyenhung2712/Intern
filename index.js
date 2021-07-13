@@ -284,7 +284,7 @@ let calenderApp = {
         this.addOrSubtractDays(inputValue,1);
         datePicker.valueAsDate = inputValue; 
         dayElement.innerHTML = inputValue.toDateString();
-        cells.clearContent();
+        
         this.cleanCell();
     },
     addOrSubtractDays: function(dateObj, numDays) {
