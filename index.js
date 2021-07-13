@@ -253,12 +253,12 @@ let calenderApp = {
     },
     cleanCell: function() {
         cells.forEach(cell => {
-            this.dataIn.map(obj => {
-                if (cell.textContent !== 'Lunch Break') {
-                    cell.textContent = '';
-                } 
-            })
-        })  
+            if (cell.textContent !== 'Lunch Break') {
+                cell.textContent = '';
+                cell.rowSpan = '1';
+            }
+        })
+
         this.loadDataIn();
     },
     toPreviousDay: function() {
@@ -266,7 +266,6 @@ let calenderApp = {
         this.addOrSubtractDays(inputValue,-1);
         datePicker.valueAsDate = inputValue; 
         dayElement.innerHTML = inputValue.toDateString();
-
         this.cleanCell();
     },
     toNextDay:function() {
@@ -274,7 +273,6 @@ let calenderApp = {
         this.addOrSubtractDays(inputValue,1);
         datePicker.valueAsDate = inputValue; 
         dayElement.innerHTML = inputValue.toDateString();
-
         this.cleanCell();
     },
     addOrSubtractDays: function(dateObj, numDays) {
@@ -508,22 +506,6 @@ let calenderApp = {
             timeToArr = [...new Set(timeToArr)];
             timeFromArr = [...new Set(timeFromArr)];
         })
-
-        /* room.map((obj, index) => {
-            indexOfFirst.map((first, indexF) => {
-                timeToArr.map((timeTo, indexT) => {
-                    if (index === first && indexT === indexF) {
-                        obj.cell.dataset.timeTo = timeTo;
-                    }
-                })
-                timeFromArr.map((timeFrom, indexFrom) => {
-                    if (index === first && indexFrom === indexF) {
-                        obj.cell.dataset.timeFrom = timeFrom;
-                    }
-                })
-            })
-        }) */
-        
         room.map((obj, index) => {
             amountNum.map((amount, indexA) => {
                 indexOfFirst.map((first, indexF) => {
@@ -827,19 +809,21 @@ let calenderApp = {
             }
         })
 
-        /* Check object isempty ? */
+        let isChangedDay = false;
 
-
-        previousDay.onclick = () => this.toPreviousDay();
-        nextDay.onclick = () => this.toNextDay();
+        previousDay.onclick = () => {
+            this.toPreviousDay();
+            
+        }
+        nextDay.onclick = () => {
+            this.toNextDay();
+        }
 
         datePicker.onchange = () => {
             this.handleDatePickerSetting();
             this.handleUpdateDay();
         }
-
-
-        let objDetailsTimeMerged = this.handleMergeCell();
+        this.handleMergeCell()
     },
     start: function() {
         this.handleDefault();

@@ -361,3 +361,8 @@ padding: 0 4px;
         opacity: 1;
     }
 }
+
+.cell-merge {
+  position: absolute;
+  
+}
