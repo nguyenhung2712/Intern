@@ -264,7 +264,7 @@ padding: 0 4px;
   margin: 8px 0;
 }
 
-#edit, #remove, #close {
+#edit, #remove, #close,#addmember{
   border-radius: 50%;
   padding: 5px 7px;
   font-size: 12px;
@@ -281,8 +281,10 @@ padding: 0 4px;
 #close {
   padding: 5px 9px;
 }
-
-#edit:hover, #remove:hover, #close:hover, #edit:focus {
+#addmember{
+  padding: 5px 9px;
+}
+#edit:hover, #remove:hover, #close:hover,#addmember:hover,#edit:focus {
   background-color: rgb(218, 216, 216, .3);
 }
 
@@ -360,4 +362,41 @@ padding: 0 4px;
         display: block;
         opacity: 1;
     }
+}
+#email--form{
+  display:none !important;
+  position: absolute;
+  width: 20%;
+  box-shadow: 0 0 25px rgb(138, 133, 133);
+  padding: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+#email--form .btn--email button{
+ margin-top:20px;
+ width:49%;
+ padding:5px;
+ border-radius:6px;
+}
+#email--form textarea{
+  border:0.2px solid rgb(138, 123, 123);
+  letter-spacing:1px;
+  padding:5px;
+  line-height:30px;
+  color:green;
+  text-align: center;
+}
+
+#email--form .form-headding #email-close{
+  border:none;
+  outline:none;
+  float:right;
+  width:15%;
+  border-radius: 15%;
+}
+#email--form .form-headding #email-close:hover{
+  opacity: 0.5;
 }
