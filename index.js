@@ -59,6 +59,8 @@ const btn_saveEmail = document.querySelector('#btn--add');
 const btn_addEmail = document.querySelector('#addmember')
 const email_close = $('#email-close')
 const btn_removeEmail = document.querySelector('#btn--remove')
+const btn_sent =$('#btn--sent')
+console.log(btn_sent)
 /* const today = new Date(); */
 
 let calenderApp = {
@@ -607,7 +609,6 @@ let calenderApp = {
 
         let trueFirstIndex = indexOfFirst.map(index => indexFilter + index*10);
         let trueRemainIndex = remainingIndex.map(index => indexFilter + index*10)
-        console.log(trueRemainIndex, trueFirstIndex)
 
         this.setToDefaultStorage(trueFirstIndex, trueRemainIndex, datePicker.value);
     },
@@ -616,24 +617,24 @@ let calenderApp = {
         let budweiserRoom = this.dataOfCells.filter(obj => obj.roomName === 'Budweiser');
         let heinekenRoom = this.dataOfCells.filter(obj => obj.roomName === 'Heineken');
         let saigonRoom = this.dataOfCells.filter(obj => obj.roomName === 'Saigon');
-        /* let strongbowRoom = this.dataOfCells.filter(obj => obj.roomName === 'Strongbow');
-        let tigerRoom = this.dataOfCells.filter(obj => obj.roomName === 'Tiger');
-        let thinkTank1Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 1');
-        let thinkTank2Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 2');
-        let thinkTank3Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 3');
-        let thinkTank4Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 4');
-        let thinkTank5Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 5'); */
+    let strongbowRoom = this.dataOfCells.filter(obj => obj.roomName === 'Strongbow');
+    let tigerRoom = this.dataOfCells.filter(obj => obj.roomName === 'Tiger');
+    let thinkTank1Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 1');
+    let thinkTank2Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 2');
+    let thinkTank3Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 3');
+    let thinkTank4Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 4');
+    let thinkTank5Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 5');
         
         this.handleMergeOneCollumn(budweiserRoom, this.roomDetails[1].color, 0)
         this.handleMergeOneCollumn(heinekenRoom, this.roomDetails[2].color, 1);
         this.handleMergeOneCollumn(saigonRoom, this.roomDetails[3].color, 2);
-        /* this.handleMergeOneCollumn(strongbowRoom, this.roomDetails[4].color, 3);
+        this.handleMergeOneCollumn(strongbowRoom, this.roomDetails[4].color, 3);
         this.handleMergeOneCollumn(tigerRoom, this.roomDetails[5].color, 4);
         this.handleMergeOneCollumn(thinkTank1Room, this.roomDetails[6].color, 5);
         this.handleMergeOneCollumn(thinkTank2Room, this.roomDetails[7].color, 6);
         this.handleMergeOneCollumn(thinkTank3Room, this.roomDetails[8].color, 7);
         this.handleMergeOneCollumn(thinkTank4Room, this.roomDetails[9].color, 8);
-        this.handleMergeOneCollumn(thinkTank5Room, this.roomDetails[10].color, 9); */
+        this.handleMergeOneCollumn(thinkTank5Room, this.roomDetails[10].color, 9);
     },
     handleEvent: function() {
         /* Event clicking any cell in table */
@@ -851,7 +852,42 @@ let calenderApp = {
                         this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);
                         email_area.textContent = old_data;
                     }
-
+                    btn_sent.onclick = () => {
+                        var old_data;
+                        var roomName_data;
+                        var placeName_data;
+                      
+                        var planName_data;
+                        this.dataIn.map(obj => {
+                            old_data = obj.members
+                            roomName_data = obj.room
+                            placeName_data = obj.place
+                            planName_data = obj.name
+                        })
+                        for(let i = 0 ; i < old_data.length ;i++)
+                        { 
+                            Email.send({
+                                SecureToken : "82f41c5e-19ca-4888-a9d3-d94f3204d3e2",
+                                To :old_data[i],
+                                From : "nguyenthach617@gmail.com",
+                                Subject : "You have been added to plan:" + planName_data ,
+                                Body :+ 'Room: ' + roomName_data  + '     ||     '
+                                    + 'Location: ' + placeName_data + '     ||     '
+                                    + 'Time: ' + timefromvalue.textContent + ' - ' + timetovalue.textContent
+                               }).then(
+                              message => {
+                                if(message=='OK')
+                                 { alert('Calendar Plan is sent!')
+                                
+                                }
+                                else{
+                                  alert('Something wrong!!!')
+                                  console.log(message)
+                                }
+                              })
+                               ;
+                          }
+                    }
                     /* Date title input default */
                     this.handleDatePickerSetting();
 
