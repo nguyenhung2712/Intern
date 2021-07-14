@@ -59,8 +59,7 @@ const btn_saveEmail = document.querySelector('#btn--add');
 const btn_addEmail = document.querySelector('#addmember')
 const email_close = $('#email-close')
 const btn_removeEmail = document.querySelector('#btn--remove')
-const btn_sent =$('#btn--sent')
-console.log(btn_sent)
+const btn_sent =$('#btn--sent');
 /* const today = new Date(); */
 
 let calenderApp = {
@@ -287,6 +286,7 @@ let calenderApp = {
                         cell.rowSpan = '1';
                         cell.style.backgroundColor = 'transparent';
                         cell.style.color = 'black';
+                        cell.style.fontWeight = '400'
                     }
                 })
                 this.defaultData[i].remainIndexArr.map(index => {
@@ -422,7 +422,7 @@ let calenderApp = {
         element.offsetHeight;
         element.style.animation = null;
     },
-/*     changeToAMPM: function(date) {
+    changeToAMPM: function(date) {
         let part;
         let dateArr = date.split(':');
         if (dateArr[0] > 12) {
@@ -434,13 +434,13 @@ let calenderApp = {
         return dateArr[0] + '.' + dateArr[1] + ' ' + part;
     },
     changeToTime: function(date) {
-        let partArr = date.split('');
+        let partArr = date.split(' ');
         let partTimeArr = partArr[0].split('.');
         if (partArr[1] == 'PM') {
             partTimeArr[0] = parseInt(partTimeArr[0]) + 12;
         }
         return partTimeArr[0] + ':' + partTimeArr[1];
-    }, */
+    },
     changeSelectBox: function(obj) {
         let options = obj.children ;
         for(let key in options){
@@ -594,36 +594,47 @@ let calenderApp = {
                     })
                 })
             })
-        })  
+        })
+
+        let trueFirstIndex = indexOfFirst.map(index => indexFilter + index*10);
+        let trueRemainIndex = remainingIndex.map(index => indexFilter + index*10);
+
+        this.setToDefaultStorage(trueFirstIndex, trueRemainIndex, datePicker.value);
 
         let _this = this;
         room.map((obj) => {
             obj.cell.addEventListener('click', function (event) {
                 if (event.target === obj.cell && event.target.getAttribute('data-is-merged')) {
                     timetovalue.textContent = event.target.getAttribute('data-time-to');
-                    timeto.value = (timetovalue.textContent);
+                    timeto.value = _this.changeToTime(timetovalue.textContent);
+
+                    removeFormBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        alreadyForm.setAttribute('style', 'display: none')
+                        obj.cell.textContent = '';
+                        trueRemainIndex.map(index => {
+                            _this.removeFromLocalStorage(index);
+                        })
+                        inputTitleForm.value = 'Add Title';
+                        email_area.textContent ='';
+                    })
                 }
             })
         })
-
-
-        let trueFirstIndex = indexOfFirst.map(index => indexFilter + index*10);
-        let trueRemainIndex = remainingIndex.map(index => indexFilter + index*10)
-
-        this.setToDefaultStorage(trueFirstIndex, trueRemainIndex, datePicker.value);
+        
     },
     handleMergeCell: function() {
 
         let budweiserRoom = this.dataOfCells.filter(obj => obj.roomName === 'Budweiser');
         let heinekenRoom = this.dataOfCells.filter(obj => obj.roomName === 'Heineken');
         let saigonRoom = this.dataOfCells.filter(obj => obj.roomName === 'Saigon');
-    let strongbowRoom = this.dataOfCells.filter(obj => obj.roomName === 'Strongbow');
-    let tigerRoom = this.dataOfCells.filter(obj => obj.roomName === 'Tiger');
-    let thinkTank1Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 1');
-    let thinkTank2Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 2');
-    let thinkTank3Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 3');
-    let thinkTank4Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 4');
-    let thinkTank5Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 5');
+        let strongbowRoom = this.dataOfCells.filter(obj => obj.roomName === 'Strongbow');
+        let tigerRoom = this.dataOfCells.filter(obj => obj.roomName === 'Tiger');
+        let thinkTank1Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 1');
+        let thinkTank2Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 2');
+        let thinkTank3Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 3');
+        let thinkTank4Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 4');
+        let thinkTank5Room = this.dataOfCells.filter(obj => obj.roomName === 'Think Tank 5');
         
         this.handleMergeOneCollumn(budweiserRoom, this.roomDetails[1].color, 0)
         this.handleMergeOneCollumn(heinekenRoom, this.roomDetails[2].color, 1);
@@ -731,28 +742,26 @@ let calenderApp = {
 
                     /* Save data when click savebtn */ 
                     saveBtn.onclick = (e) => {
-                        if(isLogin == true)
-                       { e.preventDefault();
-                        titleForm.setAttribute('style', 'display: none')
-                        cell.textContent = titleInput.value;
-                        this.setToLocalStorage(cell, i, roomNameSaved.innerText);
-                        inputTitleForm.value = '';}
-                        else
-                        return false;
+                        if(isLogin == true) { 
+                            e.preventDefault();
+                            titleForm.setAttribute('style', 'display: none')
+                            cell.textContent = titleInput.value;
+                            this.setToLocalStorage(cell, i, roomNameSaved.innerText);
+                            inputTitleForm.value = '';
+                        }
+                        else return false;
                     }
                     /* Remove data when click removeFormBtn*/
-                    removeFormBtn.onclick = (e) => {
-                        if(isLogin == true)
-                       { e.preventDefault();
-                        alreadyForm.setAttribute('style', 'display: none')
-                        cell.textContent = '';
-                        this.removeFromLocalStorage(i);
-                        inputTitleForm.value = 'Add Title';
-                        email_area.textContent ='';
-                    }
-                        else
-                        return false;
-                    }
+                    removeFormBtn.addEventListener('click', (e) => {
+                        if(isLogin == true) {
+                            e.preventDefault();
+                            alreadyForm.setAttribute('style', 'display: none')
+                            cell.textContent = '';
+                            this.removeFromLocalStorage(i);
+                            inputTitleForm.value = 'Add Title';
+                            email_area.textContent ='';
+                        } else return false;
+                    })
 
                     btnDelete.onclick = (e) => {
                         e.preventDefault();
@@ -918,29 +927,30 @@ let calenderApp = {
                                 roomNameSaved.innerText = roomNameCreate.innerText;
                             }
                             if (obj.timefrom) {
-                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ (obj.timefrom);
+                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.changeToAMPM(obj.timefrom);
                                 timefrom.value = obj.timefrom;
                             } else {
                                 this.handleUpdateTimeOfInput(i);
                                 timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.timeFromStorage;
-                                timefrom.value = (this.timeFromStorage);
+                                timefrom.value = this.changeToTime(this.timeFromStorage);
                             }
 
 
                             if (obj.timeto) {
-                                timetovalue.textContent =  (obj.timeto);
+                                timetovalue.textContent =  this.changeToAMPM(obj.timeto);
                                 timeto.value = obj.timeto;
                             } else {
                                 this.handleUpdateTimeOfInput(i);
                                 timetovalue.textContent = this.timeToStorage;
-                                timeto.value = (this.timeToStorage);
+                                timeto.value = this.changeToTime(this.timeToStorage);
                             }
+
                             if (obj.members) {
                                 email_area.textContent = obj.members;
-                              
                             } else {
-                               email_area.textContent = '';
+                                email_area.textContent = '';
                             }
+
                         }
                     })
                 })
