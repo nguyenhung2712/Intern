@@ -422,7 +422,7 @@ let calenderApp = {
         element.offsetHeight;
         element.style.animation = null;
     },
-    changeToAMPM: function(date) {
+/*     changeToAMPM: function(date) {
         let part;
         let dateArr = date.split(':');
         if (dateArr[0] > 12) {
@@ -440,7 +440,7 @@ let calenderApp = {
             partTimeArr[0] = parseInt(partTimeArr[0]) + 12;
         }
         return partTimeArr[0] + ':' + partTimeArr[1];
-    },
+    }, */
     changeSelectBox: function(obj) {
         let options = obj.children ;
         for(let key in options){
@@ -601,7 +601,7 @@ let calenderApp = {
             obj.cell.addEventListener('click', function (event) {
                 if (event.target === obj.cell && event.target.getAttribute('data-is-merged')) {
                     timetovalue.textContent = event.target.getAttribute('data-time-to');
-                    timeto.value = _this.changeToTime(timetovalue.textContent);
+                    timeto.value = (timetovalue.textContent);
                 }
             })
         })
@@ -781,8 +781,8 @@ let calenderApp = {
                         summary.value = '';
                         locationInput.value = '';
                         commentsArea.value = '';
-                        timefrom.value = '';
-                        timeto.value = '';
+                        timefrom.value = timeRoom.textContent.split(' ').slice(0,2).join(' ');
+                        timeto.value = timeRoom.textContent.split(' ').slice(3,5).join(' ');
                     }
                     /* Focus input form when click any cells */
                     titleInput.focus();
@@ -918,7 +918,7 @@ let calenderApp = {
                                 roomNameSaved.innerText = roomNameCreate.innerText;
                             }
                             if (obj.timefrom) {
-                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.changeToAMPM(obj.timefrom);
+                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ (obj.timefrom);
                                 timefrom.value = obj.timefrom;
                             } else {
                                 this.handleUpdateTimeOfInput(i);
@@ -928,7 +928,7 @@ let calenderApp = {
 
 
                             if (obj.timeto) {
-                                timetovalue.textContent =  this.changeToAMPM(obj.timeto);
+                                timetovalue.textContent =  (obj.timeto);
                                 timeto.value = obj.timeto;
                             } else {
                                 this.handleUpdateTimeOfInput(i);
