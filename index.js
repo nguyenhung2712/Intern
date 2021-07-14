@@ -287,7 +287,7 @@ let calenderApp = {
                         cell.rowSpan = '1';
                         cell.style.backgroundColor = 'transparent';
                         cell.style.color = 'black';
-                        cell.style.fontWeight = '300'
+                        cell.style.fontWeight = '400'
                     }
                 })
                 this.defaultData[i].remainIndexArr.map(index => {
@@ -602,8 +602,9 @@ let calenderApp = {
             obj.cell.addEventListener('click', function (event) {
                 if (event.target === obj.cell && event.target.getAttribute('data-is-merged')) {
                     timetovalue.textContent = event.target.getAttribute('data-time-to');
-                    timeto.value = _this.changeToTime(timetovalue.textContent);
-                    console.log(timeto.value)
+                    timeto.value = _this.changeToTime(event.target.getAttribute('data-time-to'));
+                    timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ event.target.getAttribute('data-time-from');
+                    timefrom.value = _this.changeToTime(event.target.getAttribute('data-time-from'));
                 }
             })
         })
