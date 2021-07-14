@@ -59,8 +59,7 @@ const btn_saveEmail = document.querySelector('#btn--add');
 const btn_addEmail = document.querySelector('#addmember')
 const email_close = $('#email-close')
 const btn_removeEmail = document.querySelector('#btn--remove')
-const btn_sent =$('#btn--sent')
-console.log(btn_sent)
+const btn_sent =$('#btn--sent');
 /* const today = new Date(); */
 
 let calenderApp = {
@@ -597,25 +596,32 @@ let calenderApp = {
             })
         })
 
+        let trueFirstIndex = indexOfFirst.map(index => indexFilter + index*10);
+        let trueRemainIndex = remainingIndex.map(index => indexFilter + index*10);
+
+        this.setToDefaultStorage(trueFirstIndex, trueRemainIndex, datePicker.value);
+
         let _this = this;
         room.map((obj) => {
             obj.cell.addEventListener('click', function (event) {
                 if (event.target === obj.cell && event.target.getAttribute('data-is-merged')) {
                     timetovalue.textContent = event.target.getAttribute('data-time-to');
-                    timeto.value = _this.changeToTime(event.target.getAttribute('data-time-to'));
-                    timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ event.target.getAttribute('data-time-from');
-                    timefrom.value = _this.changeToTime(event.target.getAttribute('data-time-from'));
+                    timeto.value = _this.changeToTime(timetovalue.textContent);
+
+                    removeFormBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        alreadyForm.setAttribute('style', 'display: none')
+                        obj.cell.textContent = '';
+                        trueRemainIndex.map(index => {
+                            _this.removeFromLocalStorage(index);
+                        })
+                        inputTitleForm.value = 'Add Title';
+                        email_area.textContent ='';
+                    })
                 }
             })
         })
-
-
-        let trueFirstIndex = indexOfFirst.map(index => indexFilter + index*10);
-        let trueRemainIndex = remainingIndex.map(index => indexFilter + index*10);
-
-        this.setToDefaultStorage(trueFirstIndex, trueRemainIndex, datePicker.value);
         
-
     },
     handleMergeCell: function() {
 
@@ -747,7 +753,7 @@ let calenderApp = {
                     }
                     /* Remove data when click removeFormBtn*/
                     removeFormBtn.addEventListener('click', (e) => {
-                        if(isLogin == true) { 
+                        if(isLogin == true) {
                             e.preventDefault();
                             alreadyForm.setAttribute('style', 'display: none')
                             cell.textContent = '';
@@ -784,8 +790,8 @@ let calenderApp = {
                         summary.value = '';
                         locationInput.value = '';
                         commentsArea.value = '';
-                        timefrom.value = '';
-                        timeto.value = '';
+                        timefrom.value = timeRoom.textContent.split(' ').slice(0,2).join(' ');
+                        timeto.value = timeRoom.textContent.split(' ').slice(3,5).join(' ');
                     }
                     /* Focus input form when click any cells */
                     titleInput.focus();

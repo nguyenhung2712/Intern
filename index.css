@@ -400,3 +400,13 @@ padding: 0 4px;
 #email--form .form-headding #email-close:hover{
   opacity: 0.5;
 }
+.from{
+  position: relative;
+}
+.fa-clock{
+  position:absolute;
+  top:30%;
+  right:0.5%;
+  padding:9px 10px;
+  color:rgb(116, 110, 110);
+}
