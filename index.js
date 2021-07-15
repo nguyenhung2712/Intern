@@ -60,6 +60,8 @@ const btn_addEmail = document.querySelector('#addmember')
 const email_close = $('#email-close')
 const btn_removeEmail = document.querySelector('#btn--remove')
 const btn_sent =$('#btn--sent');
+const container = $('tbody')
+
 /* const today = new Date(); */
 
 let calenderApp = {
@@ -620,15 +622,23 @@ let calenderApp = {
                     timeto.value = (timetovalue.textContent);
 
                     removeFormBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
+                     if(isLogin == true)  
+                      {   
+                          e.preventDefault();
                         resultGroupMerge.map((obj, i) => {
                             if (obj.first == index) {
                                 obj.remain.map(remain => {
                                     _this.removeFromLocalStorage(indexFilter + remain*10);
-                                })
+                                   }
+                                )
                             }
                         })
-                    })
+                         document.location.reload()
+                    }
+                    else{
+                        return false;
+                    }
+                })
                     
                 }
             })
@@ -800,6 +810,7 @@ let calenderApp = {
                     /* Remove data when click removeFormBtn*/
                     removeFormBtn.addEventListener('click', (e) => {
                         if(isLogin == true) {
+                           
                             e.preventDefault();
                             alreadyForm.setAttribute('style', 'display: none')
                             cell.textContent = '';
@@ -807,7 +818,7 @@ let calenderApp = {
                             inputTitleForm.value = 'Add Title';
                             email_area.textContent ='';
                         } else {
-                            return false;
+                           removeFormBtn.disabled = true;
                         }
                     })
 
@@ -880,13 +891,22 @@ let calenderApp = {
                             return false;
                         }
                     }
+                   validateEmail = (email) =>{
+                     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                        return re.test(email);
+                   }
+
                     btn_saveEmail.onclick = () => {
+                        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         if (isLogin == true) {
-                            email_area.textContent += email_input.value + '\n';
+                           
                             email_input.focus();
-                            if (email_input.value === '') {
+                            if (email_input.value === '' || validateEmail(email_input.value) === false) {
                                 alert('Please enter a valid email!');
-                            } else {
+                              
+                            } 
+                            else {
+                                email_area.textContent += email_input.value + '\n';
                                 var old_data
                                 this.dataIn.map(obj => {
                                     old_data = obj.members
@@ -894,7 +914,9 @@ let calenderApp = {
                                 old_data.push(email_input.value + '\t')
                                 this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);
                             }
+                          
                             email_input.value ='';
+                          
                         } else {
                             return false;
                         }
@@ -1058,6 +1080,7 @@ function onSignIn(googleUser) {
     signinbtn.setAttribute('style', 'display: none')
     name_email.innerHTML = profile.getName(); // This is null if the 'email' scope is not present.
     isLogin = true;
+    removeFormBtn.disabled = false;
 }
 
 function signOut() {
