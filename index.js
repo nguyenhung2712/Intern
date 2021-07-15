@@ -668,98 +668,94 @@ let calenderApp = {
                     let y = Math.round(cellRec.top - bodyRect.top);
                     let x = Math.round(cellRec.left - bodyRect.left);
                     const lastNum = Number(i.toString().split('').pop());
-                if(isLogin === true)
-                    {
+                    if(isLogin === true) {
                         if(cell.textContent === '') {
-                        alreadyForm.setAttribute('style', 'display: none !important');
-                        titleForm.setAttribute('style', 'display: block !important');
-                        if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
-                            titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(titleForm);
-                        } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
-                            titleForm.style.left = (x - cell.offsetWidth*2)  + 'px';
-                            this.resetAnimation(titleForm);
-                        } else {
-                            titleForm.style.left = x  + 'px';
-                            this.resetAnimation(titleForm);
-                        }
+                            alreadyForm.setAttribute('style', 'display: none !important');
+                            titleForm.setAttribute('style', 'display: block !important');
+                            if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
+                                titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                                this.resetAnimation(titleForm);
+                            } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
+                                titleForm.style.left = (x - cell.offsetWidth*2)  + 'px';
+                                this.resetAnimation(titleForm);
+                            } else {
+                                titleForm.style.left = x  + 'px';
+                                this.resetAnimation(titleForm);
+                            }
 
-                        if (i >= 150) {
-                            titleForm.style.top = (y + cell.offsetHeight*2.8) + 'px';
-                        } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                            titleForm.style.top = (y + cell.offsetHeight*3) + 'px';
-                        } else if (i < 150) {
-                            titleForm.style.top = y + 'px';
-                        }
+                            if (i >= 150) {
+                                titleForm.style.top = (y + cell.offsetHeight*2.8) + 'px';
+                            } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                                titleForm.style.top = (y + cell.offsetHeight*3) + 'px';
+                            } else if (i < 150) {
+                                titleForm.style.top = y + 'px';
+                            }
 
-                        if (cell.textContent) {
-                            inputTitleForm.value = cell.textContent;
+                            if (cell.textContent) {
+                                inputTitleForm.value = cell.textContent;
+                            } else {
+                                inputTitleForm.value = 'Add Title';
+                            }
                         } else {
-                            inputTitleForm.value = 'Add Title';
+                            alreadyForm.setAttribute('style', 'display: block !important')
+                            titleForm.setAttribute('style', 'display: none !important')
+                            if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
+                                alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                                this.resetAnimation(alreadyForm);
+                            } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
+                                alreadyForm.style.left = (x - cell.offsetWidth*2)  + 'px';
+                                this.resetAnimation(alreadyForm);
+                            } else {
+                                alreadyForm.style.left = x  + 'px';
+                                this.resetAnimation(alreadyForm);
+                            }
+                            
+                            if (i >= 150) {
+                                alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
+                            } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                                alreadyForm.style.top = (y + cell.offsetWidth/2) + 'px';
+                            } else if (i < 150) {
+                                alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
+                            }
+
+                            if (cell.textContent) {
+                                spanTitle.innerHTML = cell.textContent;
+                            } else {
+                                spanTitle.innerHTML = '';
+                            }
                         }
                     } else {
-                        alreadyForm.setAttribute('style', 'display: block !important')
-                        titleForm.setAttribute('style', 'display: none !important')
-                        if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
-                            alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(alreadyForm);
-                        } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
-                            alreadyForm.style.left = (x - cell.offsetWidth*2)  + 'px';
-                            this.resetAnimation(alreadyForm);
-                        } else {
-                            alreadyForm.style.left = x  + 'px';
-                            this.resetAnimation(alreadyForm);
-                        }
-                        
-                        if (i >= 150) {
-                            alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
-                        } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                            alreadyForm.style.top = (y + cell.offsetWidth/2) + 'px';
-                        } else if (i < 150) {
-                            alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
-                        }
+                        if(cell.textContent!=='') {
+                            alreadyForm.setAttribute('style', 'display: block !important')
+                            titleForm.setAttribute('style', 'display: none !important')
+                            if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
+                                alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                                this.resetAnimation(alreadyForm);
+                            } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
+                                alreadyForm.style.left = (x - cell.offsetWidth*2)  + 'px';
+                                this.resetAnimation(alreadyForm);
+                            } else {
+                                alreadyForm.style.left = x  + 'px';
+                                this.resetAnimation(alreadyForm);
+                            }
+                            
+                            if (i >= 150) {
+                                alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
+                            } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                                alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
+                            } else if (i < 150) {
+                                alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
+                            }
 
-                        if (cell.textContent) {
-                            spanTitle.innerHTML = cell.textContent;
+                            if (cell.textContent) {
+                                spanTitle.innerHTML = cell.textContent;
+                            } else {
+                                spanTitle.innerHTML = '';
+                            }
                         } else {
-                            spanTitle.innerHTML = '';
-                        }}
+                            return false;
+                        }
                     }
-                    else
-                   {
-                       if(cell.textContent!=='') {
-                        alreadyForm.setAttribute('style', 'display: block !important')
-                        titleForm.setAttribute('style', 'display: none !important')
-                        if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
-                            alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                            this.resetAnimation(alreadyForm);
-                        } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
-                            alreadyForm.style.left = (x - cell.offsetWidth*2)  + 'px';
-                            this.resetAnimation(alreadyForm);
-                        } else {
-                            alreadyForm.style.left = x  + 'px';
-                            this.resetAnimation(alreadyForm);
-                        }
-                        
-                        if (i >= 150) {
-                            alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
-                        } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                            alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
-                        } else if (i < 150) {
-                            alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
-                        }
-
-                        if (cell.textContent) {
-                            spanTitle.innerHTML = cell.textContent;
-                        } else {
-                            spanTitle.innerHTML = '';
-                        }
-                       }
-                       else
-                       {
-                           return false;
-                       }
-                   }
 
                     /* Time title input default */
                     this.handleUpdateTimeOfInput(i);
@@ -784,7 +780,7 @@ let calenderApp = {
                         titleForm.setAttribute('style', 'display: none !important');
                         inputTitleForm.value = 'Add Title';
                     }
-                    closeSpan.onclick= (e) =>{
+                    closeSpan.onclick= (e) => {
                         e.preventDefault();
                         alreadyForm.setAttribute('style', 'display:none !important');
                     }
@@ -797,8 +793,9 @@ let calenderApp = {
                             cell.textContent = titleInput.value;
                             this.setToLocalStorage(cell, i, roomNameSaved.innerText);
                             inputTitleForm.value = '';
+                        } else {
+                            return false;
                         }
-                        else return false;
                     }
                     /* Remove data when click removeFormBtn*/
                     removeFormBtn.addEventListener('click', (e) => {
@@ -809,7 +806,9 @@ let calenderApp = {
                             this.removeFromLocalStorage(i);
                             inputTitleForm.value = 'Add Title';
                             email_area.textContent ='';
-                        } else return false;
+                        } else {
+                            return false;
+                        }
                     })
 
                     btnDelete.onclick = (e) => {
@@ -853,60 +852,60 @@ let calenderApp = {
                         }
                     })
                     detail.onclick = (e) => {
-                        if(isLogin == true)
-                        {e.preventDefault()
-                        titleForm.setAttribute('style', 'display: none !important');
-                        modal_input.setAttribute('style', 'display: flex !important');
-                        resetdata();}
-                        else
-                        return false;
-
+                        if(isLogin == true) {
+                            e.preventDefault()
+                            titleForm.setAttribute('style', 'display: none !important');
+                            modal_input.setAttribute('style', 'display: flex !important');
+                            resetdata();
+                        } else {
+                            return false;
+                        }
                     }
 
                     editBtn.onclick = (e) => {
-                        if(isLogin == true)
-                      {  e.preventDefault();
-                        modal_input.setAttribute('style', 'display: flex !important');
-                        alreadyForm.setAttribute('style', 'display: none');}
-                        else
-                        return false;
-                        
+                        if(isLogin == true) {  
+                            e.preventDefault();
+                            modal_input.setAttribute('style', 'display: flex !important');
+                            alreadyForm.setAttribute('style', 'display: none');
+                        } else {
+                            return false;
+                        }
                     }
                     btn_addEmail.onclick = (e) =>{
-                        if(isLogin == true)
-                        { e.preventDefault();
-                         email_form.setAttribute('style', 'display: block !important')
-                         alreadyForm.setAttribute('style', 'display:none')
-                         }
-                         else
-                         return false;
-                    }
-                    btn_saveEmail.onclick = () =>{
-                        if(isLogin == true)
-                        {email_area.textContent += email_input.value + '\n';
-                        email_input.focus();
-                        if(email_input.value ==='')
-                        {
-                            alert('Please enter a valid email!')
+                        if(isLogin == true) { 
+                            e.preventDefault();
+                            email_form.setAttribute('style', 'display: block !important')
+                            alreadyForm.setAttribute('style', 'display:none')
+                        } else {
+                            return false;
                         }
-                        else
-                        {
-                            var old_data
-                        this.dataIn.map(obj => {
-                            old_data = obj.members
-                        })
-                        old_data.push(email_input.value + '\t')
-                        this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);}
-                        email_input.value ='';}
-                        else
-                        return false;
                     }
-                    btn_removeEmail.onclick = () =>{
-                        var old_data
-                            this.dataIn.map(obj => {
-                                old_data = obj.members
-                            })
-                        old_data.splice(old_data.length-1,1)
+                    btn_saveEmail.onclick = () => {
+                        if (isLogin == true) {
+                            email_area.textContent += email_input.value + '\n';
+                            email_input.focus();
+                            if (email_input.value === '') {
+                                alert('Please enter a valid email!');
+                            } else {
+                                var old_data
+                                this.dataIn.map(obj => {
+                                    old_data = obj.members
+                                })
+                                old_data.push(email_input.value + '\t')
+                                this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);
+                            }
+                            email_input.value ='';
+                        } else {
+                            return false;
+                        }
+                    }
+                    btn_removeEmail.onclick = () => {
+                        var old_data;
+
+                        this.dataIn.map(obj => {
+                            old_data = obj.members;
+                        })
+                        old_data.splice(old_data.length-1,1);
                         this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);
                         email_area.textContent = old_data;
                     }
@@ -917,12 +916,12 @@ let calenderApp = {
                       
                         var planName_data;
                         this.dataIn.map(obj => {
-                            old_data = obj.members
-                            roomName_data = obj.room
-                            placeName_data = obj.place
-                            planName_data = obj.name
+                            old_data = obj.members;
+                            roomName_data = obj.room;
+                            placeName_data = obj.place;
+                            planName_data = obj.name;
                         })
-                        for(let i = 0 ; i < old_data.length ;i++)
+                        for (let i = 0 ;i < old_data.length; i++)
                         { 
                             Email.send({
                                 SecureToken : "82f41c5e-19ca-4888-a9d3-d94f3204d3e2",
@@ -932,19 +931,15 @@ let calenderApp = {
                                 Body :+ 'Room: ' + roomName_data  + '     ||     '
                                     + 'Location: ' + placeName_data + '     ||     '
                                     + 'Time: ' + timefromvalue.textContent + ' - ' + timetovalue.textContent
-                               }).then(
-                              message => {
-                                if(message=='OK')
-                                 { alert('Calendar Plan is sent!')
-                                
-                                }
-                                else{
-                                  alert('Something wrong!!!')
-                                  console.log(message)
-                                }
-                              })
-                               ;
-                          }
+                                }).then(message => {
+                                        if(message=='OK') { 
+                                            alert('Calendar Plan is sent!')
+                                        } else {
+                                            alert('Something wrong!!!')
+                                            console.log(message)
+                                        }
+                                    });
+                        }
                     }
                     /* Date title input default */
                     this.handleDatePickerSetting();
