@@ -617,7 +617,7 @@ let calenderApp = {
             obj.cell.addEventListener('click', function (event) {
                 if (event.target === obj.cell && event.target.getAttribute('data-is-merged')) {
                     timetovalue.textContent = event.target.getAttribute('data-time-to');
-                    timeto.value = _this.changeToTime(timetovalue.textContent);
+                    timeto.value = (timetovalue.textContent);
 
                     removeFormBtn.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -668,7 +668,9 @@ let calenderApp = {
                     let y = Math.round(cellRec.top - bodyRect.top);
                     let x = Math.round(cellRec.left - bodyRect.left);
                     const lastNum = Number(i.toString().split('').pop());
-                    if(cell.textContent === '') {
+                if(isLogin === true)
+                    {
+                        if(cell.textContent === '') {
                         alreadyForm.setAttribute('style', 'display: none !important');
                         titleForm.setAttribute('style', 'display: block !important');
                         if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
@@ -721,8 +723,43 @@ let calenderApp = {
                             spanTitle.innerHTML = cell.textContent;
                         } else {
                             spanTitle.innerHTML = '';
-                        }
+                        }}
                     }
+                    else
+                   {
+                       if(cell.textContent!=='') {
+                        alreadyForm.setAttribute('style', 'display: block !important')
+                        titleForm.setAttribute('style', 'display: none !important')
+                        if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
+                            alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                            this.resetAnimation(alreadyForm);
+                        } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
+                            alreadyForm.style.left = (x - cell.offsetWidth*2)  + 'px';
+                            this.resetAnimation(alreadyForm);
+                        } else {
+                            alreadyForm.style.left = x  + 'px';
+                            this.resetAnimation(alreadyForm);
+                        }
+                        
+                        if (i >= 150) {
+                            alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
+                        } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                            alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
+                        } else if (i < 150) {
+                            alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
+                        }
+
+                        if (cell.textContent) {
+                            spanTitle.innerHTML = cell.textContent;
+                        } else {
+                            spanTitle.innerHTML = '';
+                        }
+                       }
+                       else
+                       {
+                           return false;
+                       }
+                   }
 
                     /* Time title input default */
                     this.handleUpdateTimeOfInput(i);
@@ -939,22 +976,22 @@ let calenderApp = {
                                 roomNameSaved.innerText = roomNameCreate.innerText;
                             }
                             if (obj.timefrom) {
-                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.changeToAMPM(obj.timefrom);
+                                timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ (obj.timefrom);
                                 timefrom.value = obj.timefrom;
                             } else {
                                 this.handleUpdateTimeOfInput(i);
                                 timefromvalue.textContent = this.handleDatePickerSetting() +' / '+ this.timeFromStorage;
-                                timefrom.value = this.changeToTime(this.timeFromStorage);
+                                timefrom.value = (this.timeFromStorage);
                             }
 
 
                             if (obj.timeto) {
-                                timetovalue.textContent =  this.changeToAMPM(obj.timeto);
+                                timetovalue.textContent =  (obj.timeto);
                                 timeto.value = obj.timeto;
                             } else {
                                 this.handleUpdateTimeOfInput(i);
                                 timetovalue.textContent = this.timeToStorage;
-                                timeto.value = this.changeToTime(this.timeToStorage);
+                                timeto.value = (this.timeToStorage);
                             }
 
                             if (obj.members) {
