@@ -523,33 +523,44 @@ let calenderApp = {
         let remainingIndex = [];
         let amountNum = [];
         let lastIndex = [];
-        let totalIndex = [];
+
+        let resultGroupMerge = [];
         resultObj.map(arr => {
+            let temp = {};
+            let firstGroup = [];
+            let remainGroup = [];
             if (arr.length !== 0) {
-                amountNum.push(arr.length)
+                amountNum.push(arr.length);
+                arr.map((obj, i) => {
+                    if (i === 0) {
+                        firstIndex.push(obj.index);
+                        firstGroup.push(obj.index);
+                    } else {
+                        remainingIndex.push(obj.index);
+                        remainGroup.push(obj.index);
+                    }
+                    if (i === arr.length - 1) {
+                        lastIndex.push(obj.index);
+                    }
+                    temp.first = firstGroup;
+                    temp.remain = remainGroup;
+                })
+                resultGroupMerge.push(temp);
             }
-            return arr.map((obj, i) => {
-                totalIndex.push(obj.index)
-                if (i === 0) {
-                    firstIndex.push(obj.index);
-                } else {
-                    remainingIndex.push(obj.index)
-                }
-                if (i === arr.length - 1) {
-                    lastIndex.push(obj.index);
-                }
-            })
         })
-        return [firstIndex, remainingIndex, amountNum, lastIndex];
+
+        return [firstIndex, remainingIndex, amountNum, lastIndex, resultGroupMerge];
     },
     handleMergeOneCollumn: function(room, color, indexFilter) {
         let text = room.map(obj => {
             return obj.cell.textContent
         })
+        /* console.log(this.findFirstIndexAndAmount(text)) */
         let indexOfFirst = this.findFirstIndexAndAmount(text)[0];
         let remainingIndex = this.findFirstIndexAndAmount(text)[1];
         let amountNum = this.findFirstIndexAndAmount(text)[2]; 
         let indexOfLast = this.findFirstIndexAndAmount(text)[3];
+        let resultGroupMerge = this.findFirstIndexAndAmount(text)[4];
         let timeToArr = [];
         let timeFromArr = [];
         room.map((obj, index) => {
@@ -602,7 +613,7 @@ let calenderApp = {
         this.setToDefaultStorage(trueFirstIndex, trueRemainIndex, datePicker.value);
 
         let _this = this;
-        room.map((obj) => {
+        room.map((obj, index) => {
             obj.cell.addEventListener('click', function (event) {
                 if (event.target === obj.cell && event.target.getAttribute('data-is-merged')) {
                     timetovalue.textContent = event.target.getAttribute('data-time-to');
@@ -610,14 +621,15 @@ let calenderApp = {
 
                     removeFormBtn.addEventListener('click', (e) => {
                         e.preventDefault();
-                        alreadyForm.setAttribute('style', 'display: none')
-                        obj.cell.textContent = '';
-                        trueRemainIndex.map(index => {
-                            _this.removeFromLocalStorage(index);
+                        resultGroupMerge.map((obj, i) => {
+                            if (obj.first == index) {
+                                obj.remain.map(remain => {
+                                    _this.removeFromLocalStorage(indexFilter + remain*10);
+                                })
+                            }
                         })
-                        inputTitleForm.value = 'Add Title';
-                        email_area.textContent ='';
                     })
+                    
                 }
             })
         })
@@ -700,7 +712,7 @@ let calenderApp = {
                         if (i >= 150) {
                             alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
                         } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                            alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
+                            alreadyForm.style.top = (y + cell.offsetWidth/2) + 'px';
                         } else if (i < 150) {
                             alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
                         }
