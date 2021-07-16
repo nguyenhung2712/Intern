@@ -122,11 +122,13 @@ tr#title th{
   position: absolute;
   top: 15px;
   right:  15px;
-  padding-bottom: 0px !important;
+  padding: 8px 8px;
+  border-radius: 50%;
 }
 .button-close p{
   font-size: 15px;
 }
+
 #modal-event-input {
   display:none ;
   justify-content: center;
@@ -165,8 +167,13 @@ tr#title th{
   margin-top: 12px;
 }
 
+.save_cls {
+  margin-top: 12px;
+}
+
 .save_cls .btn-save,.modal_buttonclose{
-  float:right;
+  float: right;
+  margin-left: 8px;
 }
 .btn-delete:hover{
 
@@ -251,7 +258,6 @@ padding: 0 4px;
 .already-form-footer{
   padding:15px;
   color:#838383;
-  
 }
 .already-form-footer button{
   margin-left: 10px;
@@ -391,15 +397,18 @@ padding: 0 4px;
 }
 
 #email--form .form-headding #email-close{
-  border:none;
-  outline:none;
   float:right;
   width:15%;
-  border-radius: 15%;
 }
-#email--form .form-headding #email-close:hover{
-  opacity: 0.5;
+
+#email--form textarea {
+  border-radius: 6px;
 }
+
+.mail-icon {
+  color: #3399FF;
+}
+
 .from{
   position: relative;
 }
@@ -409,4 +418,61 @@ padding: 0 4px;
   right:0.5%;
   padding:9px 10px;
   color:rgb(116, 110, 110);
+}
+
+#btn--add, #btn--remove, #btn--sent, #email-close {
+  border: 1px solid #fff;
+  outline: none;
+  border-radius: 8px;
+  background-color: #3399FF;
+  color: #fff;
+  transition: all .34s ease-in;
+}
+
+#btn--add:hover, #btn--remove:hover, #btn--sent:hover, #email-close:hover {
+  color: #3399FF;
+  background-color: transparent;
+  border: 1px solid #3399FF !important;
+}
+
+.btn-detail, .btn-save {
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
+}
+
+.btn-detail:hover {
+  background-color: #8a8a8a;
+  border-radius: 3px;
+  transition: all .32s ease-in;
+}
+
+.btn-save:hover {
+  background-color: #3399FF;
+}
+
+.btn-detail {
+  color: #000;
+  transition: all .32s ease-in;
+}
+
+.btn-save {
+  color: #3399FF;
+  transition: all .32s ease-in;
+}
+
+.btn-detail-form {
+  color: #3399FF;
+  font-weight: 600;
+  transition: all .32s ease-in;
+}
+
+.btn-detail-form:hover {
+  background-color: #3399FF !important;
+  color: #fff !important;
+}
+
+.modal_buttonclose {
+  font-weight: 600;
+  transition: all .32s ease-in;
 }

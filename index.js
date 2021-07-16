@@ -557,7 +557,6 @@ let calenderApp = {
         let text = room.map(obj => {
             return obj.cell.textContent
         })
-        /* console.log(this.findFirstIndexAndAmount(text)) */
         let indexOfFirst = this.findFirstIndexAndAmount(text)[0];
         let remainingIndex = this.findFirstIndexAndAmount(text)[1];
         let amountNum = this.findFirstIndexAndAmount(text)[2]; 
@@ -622,23 +621,21 @@ let calenderApp = {
                     timeto.value = (timetovalue.textContent);
 
                     removeFormBtn.addEventListener('click', (e) => {
-                     if(isLogin == true)  
-                      {   
-                          e.preventDefault();
-                        resultGroupMerge.map((obj, i) => {
-                            if (obj.first == index) {
-                                obj.remain.map(remain => {
-                                    _this.removeFromLocalStorage(indexFilter + remain*10);
-                                   }
-                                )
-                            }
-                        })
-                         document.location.reload()
-                    }
-                    else{
-                        return false;
-                    }
-                })
+                        if(isLogin == true) {   
+                            e.preventDefault();
+                            resultGroupMerge.map((obj, i) => {
+                                if (obj.first == index) {
+                                    obj.remain.map(remain => {
+                                        _this.removeFromLocalStorage(indexFilter + remain*10);
+                                    }
+                                    )
+                                }
+                            })
+                            document.location.reload();
+                        } else {
+                            return false;
+                        }
+                    })
                     
                 }
             })
@@ -891,10 +888,10 @@ let calenderApp = {
                             return false;
                         }
                     }
-                   validateEmail = (email) =>{
-                     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    validateEmail = (email) => {
+                        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         return re.test(email);
-                   }
+                    }
 
                     btn_saveEmail.onclick = () => {
                         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -915,7 +912,7 @@ let calenderApp = {
                                 this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);
                             }
                           
-                            email_input.value ='';
+                            email_input.value = '';
                           
                         } else {
                             return false;
@@ -1020,6 +1017,8 @@ let calenderApp = {
                         }
                     })
                 })
+            } else if (cell.textContent === 'Lunch Break') {
+                cell.style.background = 'rgb(151, 150, 150)';
             }
 
             if (i >= 10 && i < 100) {
@@ -1038,6 +1037,7 @@ let calenderApp = {
                 this.dataOfCells.push(objDataRoom);
             }
         })
+
 
         previousDay.onclick = () => {
             this.toPreviousDay();
