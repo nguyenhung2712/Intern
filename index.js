@@ -187,6 +187,7 @@ let calenderApp = {
     dataOfCells: [],
     timeFromStorage: '',
     timeToStorage: '',
+    isFilterType: false,
     render: function() {    
         roomHeadingTitle.innerHTML = this.roomDetails.map((room) => {
             return `
@@ -457,6 +458,7 @@ let calenderApp = {
                             element.style.display = 'table-cell';
                         }
                     })
+                    this.isFilterType = true;
                 } else if (roomType.value === 'Meeting Room') {
                     if (cell.roomName.split(' ').length !== 1) {
                         cell.cell.classList.add('hide-cell');
@@ -470,6 +472,7 @@ let calenderApp = {
                             element.style.display = 'none';
                         }
                     })
+                    this.isFilterType = true;
                 } else {
                     if (cell.roomName.split(' ').length !== 1 || cell.roomName.split(' ').length === 1) {
                         cell.cell.classList.remove('hide-cell');
@@ -477,6 +480,7 @@ let calenderApp = {
                     titleRoomArr.map((element) => {
                         element.style.display = 'table-cell';
                     })
+                    this.isFilterType = false;
                 }
             })
             this.changeSelectBox(roomType);
@@ -630,10 +634,9 @@ let calenderApp = {
                                 let tempText = obj.cell.textContent;
                                 arrs.remain.map(remain => {
                                     _this.dataIn.map((data) => {
-                                        if (indexFilter + remain*10 === data.index) {
+                                        if (indexFilter + remain*10 === data.index && data.datePickerVal === datePicker.value) {
                                             data.name = tempText;
                                         }
-                                        console.log(data)
                                     })
                                     _this.setDataIn();
                                 })
@@ -679,59 +682,117 @@ let calenderApp = {
                     let x = Math.round(cellRec.left - bodyRect.left);
                     const lastNum = Number(i.toString().split('').pop());
                     if(isLogin === true) {
-                        if(cell.textContent === '') {
-                            alreadyForm.setAttribute('style', 'display: none !important');
-                            titleForm.setAttribute('style', 'display: block !important');
-                            if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
-                                titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                                this.resetAnimation(titleForm);
-                            } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
-                                titleForm.style.left = (x - cell.offsetWidth*2)  + 'px';
-                                this.resetAnimation(titleForm);
+                        if (this.isFilterType === false) {
+                            if(cell.textContent === '') {
+                                alreadyForm.setAttribute('style', 'display: none !important');
+                                titleForm.setAttribute('style', 'display: block !important');
+                                if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
+                                    titleForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                                    this.resetAnimation(titleForm);
+                                } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
+                                    titleForm.style.left = (x - cell.offsetWidth*2)  + 'px';
+                                    this.resetAnimation(titleForm);
+                                } else {
+                                    titleForm.style.left = x  + 'px';
+                                    this.resetAnimation(titleForm);
+                                }
+    
+                                if (i >= 150) {
+                                    titleForm.style.top = (y + cell.offsetHeight*2.8) + 'px';
+                                } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                                    titleForm.style.top = (y + cell.offsetHeight*3) + 'px';
+                                } else if (i < 150) {
+                                    titleForm.style.top = y + 'px';
+                                }
+    
+                                if (cell.textContent) {
+                                    inputTitleForm.value = cell.textContent;
+                                } else {
+                                    inputTitleForm.value = 'Add Title';
+                                }
                             } else {
-                                titleForm.style.left = x  + 'px';
-                                this.resetAnimation(titleForm);
-                            }
-
-                            if (i >= 150) {
-                                titleForm.style.top = (y + cell.offsetHeight*2.8) + 'px';
-                            } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                                titleForm.style.top = (y + cell.offsetHeight*3) + 'px';
-                            } else if (i < 150) {
-                                titleForm.style.top = y + 'px';
-                            }
-
-                            if (cell.textContent) {
-                                inputTitleForm.value = cell.textContent;
-                            } else {
-                                inputTitleForm.value = 'Add Title';
+                                alreadyForm.setAttribute('style', 'display: block !important')
+                                titleForm.setAttribute('style', 'display: none !important')
+                                if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
+                                    alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
+                                    this.resetAnimation(alreadyForm);
+                                } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
+                                    alreadyForm.style.left = (x - cell.offsetWidth*2)  + 'px';
+                                    this.resetAnimation(alreadyForm);
+                                } else {
+                                    alreadyForm.style.left = x  + 'px';
+                                    this.resetAnimation(alreadyForm);
+                                }
+                                
+                                if (i >= 150) {
+                                    alreadyForm.style.top = (y + cell.offsetHeight) + 'px';
+                                } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                                    alreadyForm.style.top = (y + cell.offsetHeight) + 'px';
+                                } else if (i < 150) {
+                                    alreadyForm.style.top = (y  + cell.offsetHeight) + 'px';
+                                }
+    
+                                if (cell.textContent) {
+                                    spanTitle.innerHTML = cell.textContent;
+                                } else {
+                                    spanTitle.innerHTML = '';
+                                }
                             }
                         } else {
-                            alreadyForm.setAttribute('style', 'display: block !important')
-                            titleForm.setAttribute('style', 'display: none !important')
-                            if ((i > 10 && (lastNum === 9 || lastNum === 8))||(i === 9 || i === 8)) {
-                                alreadyForm.style.left = (x - cell.offsetWidth*2) + 'px';
-                                this.resetAnimation(alreadyForm);
-                            } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8))) {
-                                alreadyForm.style.left = (x - cell.offsetWidth*2)  + 'px';
-                                this.resetAnimation(alreadyForm);
+                            if(cell.textContent === '') {
+                                alreadyForm.setAttribute('style', 'display: none !important');
+                                titleForm.setAttribute('style', 'display: block !important');
+                                if ((i > 10 && (lastNum === 9 || lastNum === 8 || lastNum === 4))||(i === 9 || i === 8 || i === 4)) {
+                                    titleForm.style.left = (x - cell.offsetWidth) + 'px';
+                                    this.resetAnimation(titleForm);
+                                } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8 || lastNum === 4))) {
+                                    titleForm.style.left = (x - cell.offsetWidth)  + 'px';
+                                    this.resetAnimation(titleForm);
+                                } else {
+                                    titleForm.style.left = x  + 'px';
+                                    this.resetAnimation(titleForm);
+                                }
+    
+                                if (i >= 150) {
+                                    titleForm.style.top = (y + cell.offsetHeight*2.8) + 'px';
+                                } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                                    titleForm.style.top = (y + cell.offsetHeight*3) + 'px';
+                                } else if (i < 150) {
+                                    titleForm.style.top = y + 'px';
+                                }
+    
+                                if (cell.textContent) {
+                                    inputTitleForm.value = cell.textContent;
+                                } else {
+                                    inputTitleForm.value = 'Add Title';
+                                }
                             } else {
-                                alreadyForm.style.left = x  + 'px';
-                                this.resetAnimation(alreadyForm);
-                            }
-                            
-                            if (i >= 150) {
-                                alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
-                            } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                                alreadyForm.style.top = (y + cell.offsetWidth/2) + 'px';
-                            } else if (i < 150) {
-                                alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
-                            }
-
-                            if (cell.textContent) {
-                                spanTitle.innerHTML = cell.textContent;
-                            } else {
-                                spanTitle.innerHTML = '';
+                                alreadyForm.setAttribute('style', 'display: block !important')
+                                titleForm.setAttribute('style', 'display: none !important')
+                                if ((i > 10 && (lastNum === 9 || lastNum === 8 || lastNum === 4))||(i === 9 || i === 8 || i === 4)) {
+                                    alreadyForm.style.left = (x - cell.offsetWidth) + 'px';
+                                    this.resetAnimation(alreadyForm);
+                                } else if (document.documentElement.scrollTop > 10 && (i >= 100 && (lastNum === 9 || lastNum === 8 || lastNum === 4))) {
+                                    alreadyForm.style.left = (x - cell.offsetWidth)  + 'px';
+                                    this.resetAnimation(alreadyForm);
+                                } else {
+                                    alreadyForm.style.left = x  + 'px';
+                                    this.resetAnimation(alreadyForm);
+                                }
+                                
+                                if (i >= 150) {
+                                    alreadyForm.style.top = (y + cell.offsetHeight) + 'px';
+                                } else if (i < 150 && document.documentElement.scrollTop > 10) {
+                                    alreadyForm.style.top = (y + cell.offsetHeight/2) + 'px';
+                                } else if (i < 150) {
+                                    alreadyForm.style.top = (y  + cell.offsetHeight/2) + 'px';
+                                }
+    
+                                if (cell.textContent) {
+                                    spanTitle.innerHTML = cell.textContent;
+                                } else {
+                                    spanTitle.innerHTML = '';
+                                }
                             }
                         }
                     } else {
@@ -752,9 +813,9 @@ let calenderApp = {
                             if (i >= 150) {
                                 alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
                             } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                                alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
+                                alreadyForm.style.top = (y + cell.offsetWidth/2 - 20) + 'px';
                             } else if (i < 150) {
-                                alreadyForm.style.top = y  + cell.offsetWidth/2 + 'px';
+                                alreadyForm.style.top = (y  + cell.offsetWidth/2 - 20) + 'px';
                             }
 
                             if (cell.textContent) {
