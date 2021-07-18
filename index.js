@@ -811,11 +811,11 @@ let calenderApp = {
                             }
                             
                             if (i >= 150) {
-                                alreadyForm.style.top = (y + cell.offsetWidth) + 'px';
+                                alreadyForm.style.top = (y + cell.offsetHeight) + 'px';
                             } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                                alreadyForm.style.top = (y + cell.offsetWidth/2 - 20) + 'px';
+                                alreadyForm.style.top = (y + cell.offsetHeight/2) + 'px';
                             } else if (i < 150) {
-                                alreadyForm.style.top = (y  + cell.offsetWidth/2 - 20) + 'px';
+                                alreadyForm.style.top = (y  + cell.offsetHeight/2) + 'px';
                             }
 
                             if (cell.textContent) {
