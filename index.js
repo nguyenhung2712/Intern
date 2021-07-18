@@ -821,7 +821,7 @@ let calenderApp = {
                             if (cell.textContent) {
                                 spanTitle.innerHTML = cell.textContent;
                             } else {
-                                spanTitle.innerHTML = '';
+                                spanTitle.innerHTML = 'Add Title';
                             }
                         } else {
                             return false;
@@ -1013,9 +1013,14 @@ let calenderApp = {
                                 To :old_data[i],
                                 From : "nguyenthach617@gmail.com",
                                 Subject : "You have been added to plan:" + planName_data ,
-                                Body :+ 'Room: ' + roomName_data  + '     ||     '
+                                Body :'Room: ' + roomName_data  + '     ||     '
                                     + 'Location: ' + placeName_data + '     ||     '
-                                    + 'Time: ' + timefromvalue.textContent + ' - ' + timetovalue.textContent
+                                    + 'Time: ' + timefromvalue.textContent + ' - ' + timetovalue.textContent,
+                                    Attachments : [
+                                        {
+                                            name : "thumbnail-2.jpg",
+                                            path : "https://raw.githubusercontent.com/notepower2k1/Internship2021/main/RoomImageDetail/ImgShowPage-1/media/thumbnail-2.jpg"
+                                        }]
                                 }).then(message => {
                                         if(message=='OK') { 
                                             alert('Calendar Plan is sent!')
