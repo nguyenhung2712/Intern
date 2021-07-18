@@ -266,17 +266,6 @@ let calenderApp = {
         data.members = members
         return data;
     },
-    mergeDataIn: function(index, name, timefrom, timeto, datePickerVal, room, comments, place, flagIndex, members) {
-        this.dataIn[flagIndex].name = name;
-        this.dataIn[flagIndex].room = room;
-        this.dataIn[flagIndex].timefrom = timefrom;
-        this.dataIn[flagIndex].timeto = timeto;
-        this.dataIn[flagIndex].index = index;
-        this.dataIn[flagIndex].datePickerVal = datePickerVal;
-        this.dataIn[flagIndex].comments = comments;
-        this.dataIn[flagIndex].place = place;
-        this.dataIn[flagIndex].members = members;
-    },
     cleanCell: function() {
         cells.forEach((cell, indexCell) => {
             if (cell.textContent !== 'Lunch Break') {
@@ -395,28 +384,27 @@ let calenderApp = {
         this.setDefaultData();
     },
     setToLocalStorage: function(cell, i, room = '', comments = '', place = '', tfrom='', tto='', members=[]) {
-        let objData = this.createNewData(i, cell.textContent, datePicker.value, room, comments, place, tfrom, tto,members);
+        let objData = this.createNewData(i, cell.textContent, datePicker.value, room, comments, place, tfrom, tto, members);
         let flag = true;
         let indexCheck;
         for (let i = 0; i < this.dataIn.length; i++) {
-            if (this.dataIn[i].index === objData.index && this.dataIn[i].datePickerVal === datePicker.value) {
+            if (this.dataIn[i].index === objData.index && this.dataIn[i].datePickerVal === objData.datePickerVal) {
                 flag = false;
                 indexCheck = i;
                 break;
             }
         }
-
-        if (flag === false && objData.datePickerVal !== datePicker.value) {
-            this.mergeDataIn(objData.index, objData.name, objData.tfrom, objData.tto, objData.datePickerVal, objData.room, objData.comments, objData.place, indexCheck,obj.members);
+        
+        if (!flag) {
+            this.dataIn.splice(indexCheck, 1);
+            this.dataIn.push(objData);
         } else {
             this.dataIn.push(objData);
         }
-
         this.setDataIn();
-    },
+    },  
     removeFromLocalStorage: function(i) {
         this.dataIn = this.dataIn.filter(obj => obj.index !== i || obj.datePickerVal !== datePicker.value);
-
         this.setDataIn();
     },
     resetAnimation: function(element) {
@@ -627,8 +615,7 @@ let calenderApp = {
                                 if (obj.first == index) {
                                     obj.remain.map(remain => {
                                         _this.removeFromLocalStorage(indexFilter + remain*10);
-                                    }
-                                    )
+                                    })
                                 }
                             })
                             document.location.reload();
@@ -636,7 +623,23 @@ let calenderApp = {
                             return false;
                         }
                     })
-                    
+
+                    save1.addEventListener('click', () => {
+                        resultGroupMerge.map((arrs) => {
+                            if (arrs.first == index) {
+                                let tempText = obj.cell.textContent;
+                                arrs.remain.map(remain => {
+                                    _this.dataIn.map((data) => {
+                                        if (indexFilter + remain*10 === data.index) {
+                                            data.name = tempText;
+                                        }
+                                        console.log(data)
+                                    })
+                                    _this.setDataIn();
+                                })
+                            }
+                        })
+                    })
                 }
             })
         })
@@ -798,7 +801,8 @@ let calenderApp = {
                             e.preventDefault();
                             titleForm.setAttribute('style', 'display: none')
                             cell.textContent = titleInput.value;
-                            this.setToLocalStorage(cell, i, roomNameSaved.innerText);
+                            let timeRoomValue = timeRoom.textContent.split(' ');
+                            this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timeRoomValue[0] + ' ' + timeRoomValue[1], timeRoomValue[3] + ' ' + timeRoomValue[4]);
                             inputTitleForm.value = '';
                         } else {
                             return false;
@@ -832,11 +836,12 @@ let calenderApp = {
                         
                         modal_input.setAttribute('style', 'display: none')
                         cell.textContent = summary.value;
-                        var old_data
+                        var old_data;
                         this.dataIn.map(obj => {
-                            old_data = obj.members
+                            old_data = obj.members;
                         })
-                        this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);
+
+                        this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value, old_data);
                     }
                     email_close.onclick =(e) => {
                         e.preventDefault();
