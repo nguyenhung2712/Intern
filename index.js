@@ -630,7 +630,7 @@ let calenderApp = {
                                 let tempText = obj.cell.textContent;
                                 arrs.remain.map(remain => {
                                     _this.dataIn.map((data) => {
-                                        if (indexFilter + remain*10 === data.index) {
+                                        if (indexFilter + remain*10 === data.index && data.datePickerVal === datePicker.value) {
                                             data.name = tempText;
                                         }
                                         console.log(data)
