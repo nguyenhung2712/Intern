@@ -783,9 +783,9 @@ let calenderApp = {
                                 if (i >= 150) {
                                     alreadyForm.style.top = (y + cell.offsetHeight) + 'px';
                                 } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                                    alreadyForm.style.top = (y + cell.offsetHeight/2) + 'px';
+                                    alreadyForm.style.top = (y + cell.offsetHeight) + 'px';
                                 } else if (i < 150) {
-                                    alreadyForm.style.top = (y  + cell.offsetHeight/2) + 'px';
+                                    alreadyForm.style.top = (y  + cell.offsetHeight) + 'px';
                                 }
     
                                 if (cell.textContent) {
@@ -813,9 +813,9 @@ let calenderApp = {
                             if (i >= 150) {
                                 alreadyForm.style.top = (y + cell.offsetHeight) + 'px';
                             } else if (i < 150 && document.documentElement.scrollTop > 10) {
-                                alreadyForm.style.top = (y + cell.offsetHeight/2) + 'px';
+                                alreadyForm.style.top = (y + cell.offsetHeight) + 'px';
                             } else if (i < 150) {
-                                alreadyForm.style.top = (y  + cell.offsetHeight/2) + 'px';
+                                alreadyForm.style.top = (y  + cell.offsetHeight) + 'px';
                             }
 
                             if (cell.textContent) {
