@@ -188,6 +188,8 @@ let calenderApp = {
     timeFromStorage: '',
     timeToStorage: '',
     isFilterType: false,
+    isMeeting: false,
+    isThinkTank: false,
     render: function() {    
         roomHeadingTitle.innerHTML = this.roomDetails.map((room) => {
             return `
@@ -245,13 +247,13 @@ let calenderApp = {
         data.date = date;
         return data;
     },
-    createDataOfRoom: function(cell, roomName, tFrom, tTo,members) {
+    createDataOfRoom: function(cell, roomName, tFrom, tTo, date) {
         let data = {};
         data.cell = cell;
         data.roomName = roomName;
         data.tFrom = tFrom;
         data.tTo = tTo;
-        data.members = members;
+        data.date = date;
         return data;
     },
     createNewData: function(index, name, datePickerVal, room = '', comments = '', place = '', timefrom = '', timeto = '', members =[]) {
@@ -278,14 +280,52 @@ let calenderApp = {
                         cell.rowSpan = '1';
                         cell.style.backgroundColor = 'transparent';
                         cell.style.color = 'black';
-                        cell.style.fontWeight = '400'
+                        cell.style.fontWeight = '400';
                     }
                 })
-                this.defaultData[i].remainIndexArr.map(index => {
-                    if (index === indexCell) {
-                        cell.style.display = 'table-cell';
+                if (this.isFilterType) {
+                    if (this.isMeeting) {
+                        this.defaultData[i].remainIndexArr.map(index => {
+                            const lastNum = Number(index.toString().split('').pop());
+                            if (lastNum < 5) {
+                                if (index === indexCell) {
+                                    cell.style.display = 'table-cell';
+                                }
+                            } else if (lastNum > 4) {
+                                index = index - 5;
+                                if (index === indexCell) {
+                                    cell.style.display = 'table-cell';
+                                }
+                            }
+                        })
+                    } else if (this.isThinkTank) {
+                        this.defaultData[i].remainIndexArr.map(index => {
+                            const lastNum = Number(index.toString().split('').pop());
+                            if (lastNum < 5) {
+                                index = index + 5;
+                                if (index === indexCell) {
+                                    cell.style.display = 'table-cell';
+                                }
+                            } else if (lastNum > 4) {
+                                if (index === indexCell) {
+                                    cell.style.display = 'table-cell';
+                                }
+                            }
+                        })
+                    } else if ((!this.isThinkTank || !this.isMeeting)) {
+                        this.defaultData[i].remainIndexArr.map(index => {
+                            if (index === indexCell) {
+                                cell.style.display = 'table-cell';
+                            }
+                        })
                     }
-                })
+                } else {
+                    this.defaultData[i].remainIndexArr.map(index => {
+                        if (index === indexCell) {
+                            cell.style.display = 'table-cell';
+                        }
+                    })
+                }
             }
         })
 
@@ -459,6 +499,8 @@ let calenderApp = {
                         }
                     })
                     this.isFilterType = true;
+                    this.isMeeting = false;
+                    this.isThinkTank = true;
                 } else if (roomType.value === 'Meeting Room') {
                     if (cell.roomName.split(' ').length !== 1) {
                         cell.cell.classList.add('hide-cell');
@@ -473,6 +515,8 @@ let calenderApp = {
                         }
                     })
                     this.isFilterType = true;
+                    this.isMeeting = true;
+                    this.isThinkTank = false;
                 } else {
                     if (cell.roomName.split(' ').length !== 1 || cell.roomName.split(' ').length === 1) {
                         cell.cell.classList.remove('hide-cell');
@@ -481,11 +525,12 @@ let calenderApp = {
                         element.style.display = 'table-cell';
                     })
                     this.isFilterType = false;
+                    this.isMeeting = false;
+                    this.isThinkTank = false;
                 }
             })
             this.changeSelectBox(roomType);
         }
-        
     },
     findFirstIndexAndAmount: function(arr) {
         let newArr = [];
@@ -991,7 +1036,7 @@ let calenderApp = {
                             old_data = obj.members;
                         })
                         old_data.splice(old_data.length-1,1);
-                        this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value,old_data);
+                        this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value, old_data);
                         email_area.textContent = old_data;
                     }
                     btn_sent.onclick = () => {
@@ -1095,16 +1140,16 @@ let calenderApp = {
             if (i >= 10 && i < 100) {
                 this.handleUpdateTimeOfInput(i);
                 const firstNum = Number(i.toString().split('').splice(1, 1).join(''));
-                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[firstNum + 1].name, this.timeFromStorage, this.timeToStorage);
+                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[firstNum + 1].name, this.timeFromStorage, this.timeToStorage, datePicker.value);
                 this.dataOfCells.push(objDataRoom);
             } else if (i >= 100) {
                 this.handleUpdateTimeOfInput(i);
                 const firstNum = Number(i.toString().split('').splice(2, 2).join(''));
-                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[firstNum + 1].name, this.timeFromStorage, this.timeToStorage);
+                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[firstNum + 1].name, this.timeFromStorage, this.timeToStorage, datePicker.value);
                 this.dataOfCells.push(objDataRoom);
             } else if (i < 10) {
                 this.handleUpdateTimeOfInput(i);
-                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[i + 1].name, this.timeFromStorage, this.timeToStorage);
+                let objDataRoom = this.createDataOfRoom(cell, this.roomDetails[i + 1].name, this.timeFromStorage, this.timeToStorage, datePicker.value);
                 this.dataOfCells.push(objDataRoom);
             }
         })
