@@ -210,7 +210,7 @@ let calenderApp = {
                     this.roomDetails[index].isImgShow = true;
                     element.childNodes[5].style.display = 'block';
                     if (index === 10) {
-                        element.childNodes[5].style.right = '10px';
+                        element.childNodes[5].style.left = '10px';
                     }
                 }
             }
@@ -219,7 +219,7 @@ let calenderApp = {
                     this.roomDetails[index].isImgShow = false;
                     element.childNodes[5].style.display = 'none';
                     if (index === 10) {
-                        element.childNodes[5].style.right = '10px';
+                        element.childNodes[5].style.left = '10px';
                     }
                 }
             }
