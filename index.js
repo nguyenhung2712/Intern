@@ -1166,6 +1166,7 @@ let calenderApp = {
         datePicker.addEventListener('change', () => {
             this.handleDatePickerSetting();
             this.handleUpdateDay();
+            this.cleanCell();
         }) 
 
     },
