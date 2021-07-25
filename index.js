@@ -291,7 +291,8 @@ let calenderApp = {
                                 if (index === indexCell) {
                                     cell.style.display = 'table-cell';
                                 }
-                            } else if (lastNum > 4) {
+                            } 
+                            if (lastNum > 4) {
                                 index = index - 5;
                                 if (index === indexCell) {
                                     cell.style.display = 'table-cell';
@@ -306,7 +307,8 @@ let calenderApp = {
                                 if (index === indexCell) {
                                     cell.style.display = 'table-cell';
                                 }
-                            } else if (lastNum > 4) {
+                            } 
+                            if (lastNum > 4) {
                                 if (index === indexCell) {
                                     cell.style.display = 'table-cell';
                                 }
@@ -654,10 +656,28 @@ let calenderApp = {
         room.map((obj, index) => {
             obj.cell.addEventListener('click', function (event) {
                 if (event.target === obj.cell && event.target.getAttribute('data-is-merged')) {
-                    timetovalue.textContent = event.target.getAttribute('data-time-to');
-                    timeto.value = (timetovalue.textContent);
+                    if (obj.date === datePicker.value) {
+                        timetovalue.textContent = event.target.getAttribute('data-time-to');
+                        timeto.value = (timetovalue.textContent);
+                    }
 
                     removeFormBtn.addEventListener('click', (e) => {
+                        if(isLogin == true) {   
+                            e.preventDefault();
+                            resultGroupMerge.map((obj, i) => {
+                                if (obj.first == index) {
+                                    obj.remain.map(remain => {
+                                        _this.removeFromLocalStorage(indexFilter + remain*10);
+                                    })
+                                }
+                            })
+                            document.location.reload();
+                        } else {
+                            return false;
+                        }
+                    })
+
+                    btnDelete.addEventListener('click', (e) => {
                         if(isLogin == true) {   
                             e.preventDefault();
                             resultGroupMerge.map((obj, i) => {
@@ -687,6 +707,7 @@ let calenderApp = {
                                 })
                             }
                         })
+                        this.loadDataIn();
                     })
                 }
             })
@@ -910,6 +931,7 @@ let calenderApp = {
                             let timeRoomValue = timeRoom.textContent.split(' ');
                             this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timeRoomValue[0] + ' ' + timeRoomValue[1], timeRoomValue[3] + ' ' + timeRoomValue[4]);
                             inputTitleForm.value = '';
+                            this.loadDataIn();
                         } else {
                             return false;
                         }
@@ -917,13 +939,13 @@ let calenderApp = {
                     /* Remove data when click removeFormBtn*/
                     removeFormBtn.addEventListener('click', (e) => {
                         if(isLogin == true) {
-                           
                             e.preventDefault();
                             alreadyForm.setAttribute('style', 'display: none')
                             cell.textContent = '';
                             this.removeFromLocalStorage(i);
                             inputTitleForm.value = 'Add Title';
                             email_area.textContent ='';
+                            this.loadDataIn();
                         } else {
                            removeFormBtn.disabled = true;
                         }
@@ -948,6 +970,7 @@ let calenderApp = {
                         })
 
                         this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value, old_data);
+                        this.loadDataIn();
                     }
                     email_close.onclick =(e) => {
                         e.preventDefault();

@@ -319,9 +319,8 @@ padding: 0 4px;
 }
 
 .hide-cell {
-  display: none;
+  display: none !important;
   border: none;
-  
 }
 
 @keyframes growth {
