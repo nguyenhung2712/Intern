@@ -672,6 +672,7 @@ let calenderApp = {
                                 }
                             })
                             document.location.reload();
+                           
                         } else {
                             return false;
                         }
