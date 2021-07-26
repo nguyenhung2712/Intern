@@ -659,6 +659,11 @@ let calenderApp = {
                     if (obj.date === datePicker.value) {
                         timetovalue.textContent = event.target.getAttribute('data-time-to');
                         timeto.value = (timetovalue.textContent);
+                    } else {
+                        timetovalue.textContent = '';
+                        timeto.value = '';
+                        timetovalue.textContent = event.target.getAttribute('data-time-to');
+                        timeto.value = (timetovalue.textContent);
                     }
 
                     removeFormBtn.addEventListener('click', (e) => {
@@ -951,7 +956,13 @@ let calenderApp = {
                            removeFormBtn.disabled = true;
                         }
                     })
-
+                    resetdata = () => {
+                        summary.value = '';
+                        locationInput.value = '';
+                        commentsArea.value = '';
+                        timefrom.value = timeRoom.textContent.split(' ').slice(0,2).join(' ');
+                        timeto.value = timeRoom.textContent.split(' ').slice(3,5).join(' ');
+                    }
                     btnDelete.onclick = (e) => {
                         e.preventDefault();
                         modal_input.setAttribute('style', 'display: none')
@@ -969,21 +980,17 @@ let calenderApp = {
                         this.dataIn.map(obj => {
                             old_data = obj.members;
                         })
-
                         this.setToLocalStorage(cell, i, roomNameSaved.innerText, commentsArea.value, locationInput.value, timefrom.value, timeto.value, old_data);
                         this.loadDataIn();
+                        resetdata();
+                        commentsValue.textContent = '';
+                        place.textContent = '';
                     }
                     email_close.onclick =(e) => {
                         e.preventDefault();
                         email_form.setAttribute('style', 'display: none !important');
                     }
-                    resetdata = () => {
-                        summary.value = '';
-                        locationInput.value = '';
-                        commentsArea.value = '';
-                        timefrom.value = timeRoom.textContent.split(' ').slice(0,2).join(' ');
-                        timeto.value = timeRoom.textContent.split(' ').slice(3,5).join(' ');
-                    }
+                    
                     /* Focus input form when click any cells */
                     titleInput.focus();
                     editBtn.focus();
